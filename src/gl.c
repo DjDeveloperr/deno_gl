@@ -150,10 +150,6 @@ unsigned int glGetUniformLocation(unsigned int (*fnptr)(unsigned int, const char
   (*fnptr)(program, name);
 }
 
-void glUniformMatrix4fv(void (*fnptr)(int, unsigned int, int, const float*), int loc, unsigned int count, int transpose, const float* value) {
-  (*fnptr)(loc, count, transpose, value);
-}
-
 void glDepthFunc(void (*fnptr)(int), int func) {
   (*fnptr)(func);
 }
@@ -516,4 +512,232 @@ void glStencilOpSeparate(void (*fnptr)(int, int, int, int), int face, int sfail,
 
 void glViewport(void (*fnptr)(int, int, int, int), int x, int y, int width, int height) {
   (*fnptr)(x, y, width, height);
+}
+
+void glValidateProgram(void (*fnptr)(unsigned int), unsigned int program) {
+  (*fnptr)(program);
+}
+
+void glBindAttribLocation(void (*fnptr)(unsigned int, unsigned int, const char*), unsigned int program, unsigned int index, const char* name) {
+  (*fnptr)(program, index, name);
+}
+
+void glBindFragDataLocation(void (*fnptr)(unsigned int, unsigned int, const char*), unsigned int program, unsigned int color, const char* name) {
+  (*fnptr)(program, color, name);
+}
+
+void glBindFragDataLocationIndexed(void (*fnptr)(unsigned int, unsigned int, unsigned int, const char*), unsigned int program, unsigned int colorNumber, unsigned int index, const char* name) {
+  (*fnptr)(program, colorNumber, index, name);
+}
+
+void glGetActiveAttrib(void (*fnptr)(unsigned int, unsigned int, int, int*, int*, int*, char*), unsigned int program, unsigned int index, int bufSize, int* length, int* size, int* type, char* name) {
+  (*fnptr)(program, index, bufSize, length, size, type, name);
+}
+
+void glGetActiveUniform(void (*fnptr)(unsigned int, unsigned int, int, int*, int*, int*, char*), unsigned int program, unsigned int index, int bufSize, int* length, int* size, int* type, char* name) {
+  (*fnptr)(program, index, bufSize, length, size, type, name);
+}
+
+void glGetActiveUniformBlockiv(void (*fnptr)(unsigned int, unsigned int, int, int*), unsigned int program, unsigned int uniformBlockIndex, int pname, int* params) {
+  (*fnptr)(program, uniformBlockIndex, pname, params);
+}
+
+void glGetActiveUniformBlockName(void (*fnptr)(unsigned int, unsigned int, int, int*, char*), unsigned int program, unsigned int uniformBlockIndex, int bufSize, int* length, char* uniformBlockName) {
+  (*fnptr)(program, uniformBlockIndex, bufSize, length, uniformBlockName);
+}
+
+void glGetActiveUniformName(void (*fnptr)(unsigned int, unsigned int, int, int*, char*), unsigned int program, unsigned int uniformIndex, int bufSize, int* length, char* uniformName) {
+  (*fnptr)(program, uniformIndex, bufSize, length, uniformName);
+}
+
+void glGetActiveUniformsiv(void (*fnptr)(unsigned int, int, unsigned int*, int, int*), unsigned int program, int uniformCount, unsigned int* uniformIndices, int pname, int* params) {
+  (*fnptr)(program, uniformCount, uniformIndices, pname, params);
+}
+
+void glGetAttachedShaders(void (*fnptr)(unsigned int, int, int*, unsigned int*), unsigned int program, int maxCount, int* count, unsigned int* shaders) {
+  (*fnptr)(program, maxCount, count, shaders);
+}
+
+int glGetAttribLocation(int (*fnptr)(unsigned int, const char*), unsigned int program, const char* name) {
+  return (*fnptr)(program, name);
+}
+
+int glGetFragDataIndex(int (*fnptr)(unsigned int, const char*), unsigned int program, const char* name) {
+  return (*fnptr)(program, name);
+}
+
+int glGetFragDataLocation(int (*fnptr)(unsigned int, const char*), unsigned int program, const char* name) {
+  return (*fnptr)(program, name);
+}
+
+void glGetShaderSource(void (*fnptr)(unsigned int, int, int*, char*), unsigned int shader, int bufSize, int* length, char* source) {
+  (*fnptr)(shader, bufSize, length, source);
+}
+
+void glGetUniformfv(void (*fnptr)(unsigned int, int, float*), unsigned int program, int location, float* params) {
+  (*fnptr)(program, location, params);
+}
+
+void glGetUniformiv(void (*fnptr)(unsigned int, int, int*), unsigned int program, int location, int* params) {
+  (*fnptr)(program, location, params);
+}
+
+void glGetUniformuiv(void (*fnptr)(unsigned int, int, unsigned int*), unsigned int program, int location, unsigned int* params) {
+  (*fnptr)(program, location, params);
+}
+
+unsigned int glGetUniformBlockIndex(unsigned int (*fnptr)(unsigned int, const char*), unsigned int program, const char* uniformBlockName) {
+  (*fnptr)(program, uniformBlockName);
+}
+
+void glGetUniformIndices(void (*fnptr)(unsigned int, int, const char**, unsigned int*), unsigned int program, int uniformCount, const char** uniformNames, unsigned int* uniformIndices) {
+  (*fnptr)(program, uniformCount, uniformNames, uniformIndices);
+}
+
+int glIsProgram(int (*fnptr)(unsigned int), unsigned int program) {
+  return (*fnptr)(program);
+}
+
+int glIsShader(int (*fnptr)(unsigned int), unsigned int shader) {
+  return (*fnptr)(shader);
+}
+
+void glUniform1f(void (*fnptr)(int, float), int location, float v0) {
+  (*fnptr)(location, v0);
+}
+
+void glUniform2f(void (*fnptr)(int, float, float), int location, float v0, float v1) {
+  (*fnptr)(location, v0, v1);
+}
+
+void glUniform3f(void (*fnptr)(int, float, float, float), int location, float v0, float v1, float v2) {
+  (*fnptr)(location, v0, v1, v2);
+}
+
+void glUniform4f(void (*fnptr)(int, float, float, float, float), int location, float v0, float v1, float v2, float v3) {
+  (*fnptr)(location, v0, v1, v2, v3);
+}
+
+void glUniform1i(void (*fnptr)(int, int), int location, int v0) {
+  (*fnptr)(location, v0);
+}
+
+void glUniform2i(void (*fnptr)(int, int, int), int location, int v0, int v1) {
+  (*fnptr)(location, v0, v1);
+}
+
+void glUniform3i(void (*fnptr)(int, int, int, int), int location, int v0, int v1, int v2) {
+  (*fnptr)(location, v0, v1, v2);
+}
+
+void glUniform4i(void (*fnptr)(int, int, int, int, int), int location, int v0, int v1, int v2, int v3) {
+  (*fnptr)(location, v0, v1, v2, v3);
+}
+
+void glUniform1ui(void (*fnptr)(int, unsigned int), int location, unsigned int v0) {
+  (*fnptr)(location, v0);
+}
+
+void glUniform2ui(void (*fnptr)(int, unsigned int, unsigned int), int location, unsigned int v0, unsigned int v1) {
+  (*fnptr)(location, v0, v1);
+}
+
+void glUniform3ui(void (*fnptr)(int, unsigned int, unsigned int, unsigned int), int location, unsigned int v0, unsigned int v1, unsigned int v2) {
+  (*fnptr)(location, v0, v1, v2);
+}
+
+void glUniform4ui(void (*fnptr)(int, unsigned int, unsigned int, unsigned int, unsigned int), int location, unsigned int v0, unsigned int v1, unsigned int v2, unsigned int v3) {
+  (*fnptr)(location, v0, v1, v2, v3);
+}
+
+void glUniform1fv(void (*fnptr)(int, int, const float*), int location, int count, const float* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform2fv(void (*fnptr)(int, int, const float*), int location, int count, const float* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform3fv(void (*fnptr)(int, int, const float*), int location, int count, const float* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform4fv(void (*fnptr)(int, int, const float*), int location, int count, const float* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform1iv(void (*fnptr)(int, int, const int*), int location, int count, const int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform2iv(void (*fnptr)(int, int, const int*), int location, int count, const int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform3iv(void (*fnptr)(int, int, const int*), int location, int count, const int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform4iv(void (*fnptr)(int, int, const int*), int location, int count, const int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform1uiv(void (*fnptr)(int, int, const unsigned int*), int location, int count, const unsigned int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform2uiv(void (*fnptr)(int, int, const unsigned int*), int location, int count, const unsigned int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform3uiv(void (*fnptr)(int, int, const unsigned int*), int location, int count, const unsigned int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniform4uiv(void (*fnptr)(int, int, const unsigned int*), int location, int count, const unsigned int* value) {
+  (*fnptr)(location, count, value);
+}
+
+void glUniformMatrix1fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix2fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix3fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix4fv(void (*fnptr)(int, int, int, const float*), int loc, int count, int transpose, const float* value) {
+  (*fnptr)(loc, count, transpose, value);
+}
+
+void glUniformMatrix2x3fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix3x2fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix2x4fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix4x2fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix3x4fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformMatrix4x3fv(void (*fnptr)(int, int, int, const float*), int location, int count, int transpose, const float* value) {
+  (*fnptr)(location, count, transpose, value);
+}
+
+void glUniformBlockBinding(void (*fnptr)(unsigned int, unsigned int, unsigned int), unsigned int program, unsigned int uniformBlockIndex, unsigned int uniformBlockBinding) {
+  (*fnptr)(program, uniformBlockIndex, uniformBlockBinding);
 }

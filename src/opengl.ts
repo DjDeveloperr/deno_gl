@@ -165,11 +165,6 @@ export const symbols = {
     result: "u32",
   },
 
-  glUniformMatrix4fv: {
-    parameters: ["i32", "u32", "i32", "pointer"],
-    result: "void",
-  },
-
   glDepthFunc: {
     parameters: ["i32"],
     result: "void",
@@ -745,6 +740,302 @@ export const symbols = {
 
   glViewport: {
     parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glValidateProgram: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glBindAttribLocation: {
+    parameters: ["u32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glBindFragDataLocation: {
+    parameters: ["u32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glBindFragDataLocationIndexed: {
+    parameters: ["u32", "u32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glGetActiveAttrib: {
+    parameters: [
+      "u32",
+      "u32",
+      "i32",
+      "pointer",
+      "pointer",
+      "pointer",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glGetActiveUniform: {
+    parameters: [
+      "u32",
+      "u32",
+      "i32",
+      "pointer",
+      "pointer",
+      "pointer",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glGetActiveUniformBlockiv: {
+    parameters: ["u32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetActiveUniformBlockName: {
+    parameters: ["u32", "u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glGetActiveUniformName: {
+    parameters: ["u32", "u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glGetActiveUniformsiv: {
+    parameters: ["u32", "i32", "pointer", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetAttachedShaders: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glGetAttribLocation: {
+    parameters: ["u32", "pointer"],
+    result: "i32",
+  },
+
+  glGetFragDataIndex: {
+    parameters: ["u32", "pointer"],
+    result: "i32",
+  },
+
+  glGetFragDataLocation: {
+    parameters: ["u32", "pointer"],
+    result: "i32",
+  },
+
+  glGetShaderSource: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glGetUniformfv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetUniformiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetUniformuiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetUniformBlockIndex: {
+    parameters: ["u32", "pointer"],
+    result: "i32",
+  },
+
+  glGetUniformIndices: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glIsProgram: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  glIsShader: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  glUniform1f: {
+    parameters: ["i32", "f32"],
+    result: "void",
+  },
+
+  glUniform2f: {
+    parameters: ["i32", "f32", "f32"],
+    result: "void",
+  },
+
+  glUniform3f: {
+    parameters: ["i32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glUniform4f: {
+    parameters: ["i32", "f32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glUniform1i: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glUniform2i: {
+    parameters: ["i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glUniform3i: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glUniform4i: {
+    parameters: ["i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glUniform1ui: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  glUniform2ui: {
+    parameters: ["i32", "u32", "u32"],
+    result: "void",
+  },
+
+  glUniform3ui: {
+    parameters: ["i32", "u32", "u32", "u32"],
+    result: "void",
+  },
+
+  glUniform4ui: {
+    parameters: ["i32", "u32", "u32", "u32", "u32"],
+    result: "void",
+  },
+
+  glUniform1fv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform2fv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform3fv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform4fv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform1iv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform2iv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform3iv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform4iv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform1uiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform2uiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform3uiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniform4uiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix2fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix3fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix4fv: {
+    parameters: ["i32", "u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix2x3fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix3x2fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix2x4fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix4x2fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix3x4fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformMatrix4x3fv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glUniformBlockBinding: {
+    parameters: ["u32", "u32", "u32"],
     result: "void",
   },
 } as const;
