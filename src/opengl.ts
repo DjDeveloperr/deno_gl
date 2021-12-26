@@ -144,6 +144,21 @@ export const symbols = {
     parameters: [],
     result: "void",
   },
+
+  glDeleteBuffers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glDeleteVertexArrays: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glDeleteProgram: {
+    parameters: ["u32"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {

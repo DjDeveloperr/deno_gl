@@ -183,4 +183,8 @@ do {
   glfw.glfwPollEvents();
 } while (!glfw.glfwWindowShouldClose(win));
 
+gl.glDeleteBuffers(1, vertexBuffer);
+gl.glDeleteVertexArrays(1, vao);
+gl.glDeleteProgram(programID);
+
 glfw.glfwTerminate();

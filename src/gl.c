@@ -132,3 +132,15 @@ void MessageCallback(
 void glDebugMessageCallback(void (*fnptr)(void*)) {
   (*fnptr)((void*)MessageCallback);
 }
+
+void glDeleteBuffers(void (*fnptr)(int, unsigned int*), int n, unsigned int* buffers) {
+  (*fnptr)(n, buffers);
+}
+
+void glDeleteVertexArrays(void (*fnptr)(int, unsigned int*), int n, unsigned int* arrays) {
+  (*fnptr)(n, arrays);
+}
+
+void glDeleteProgram(void (*fnptr)(unsigned int), unsigned int program) {
+  (*fnptr)(program);
+}
