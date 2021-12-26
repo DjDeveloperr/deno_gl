@@ -1,4 +1,4 @@
-import { cstr, MapFFI, OS_LIB_SUFFIX } from "./util.ts";
+import { cstr, MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
 import { init } from "./opengl.ts";
 import { GLFW_CONST } from "./const.ts";
 
@@ -69,7 +69,7 @@ export type Symbols = {
 };
 
 export const LIB_PATH = new URL(
-  `../dist/glfw3.${OS_LIB_SUFFIX}`,
+  `../dist/${OS_LIB_PREFIX}glfw3.${OS_LIB_SUFFIX}`,
   import.meta.url,
 );
 

@@ -43,6 +43,8 @@ export function cstr(str: string) {
   return buffer;
 }
 
+export const OS_LIB_PREFIX = Deno.build.os === "windows" ? "" : "lib";
+
 export const OS_LIB_SUFFIX = Deno.build.os === "windows"
   ? "dll"
   : Deno.build.os === "darwin"
