@@ -152,3 +152,7 @@ unsigned int glGetUniformLocation(unsigned int (*fnptr)(unsigned int, const char
 void glUniformMatrix4fv(void (*fnptr)(int, unsigned int, int, const float*), int loc, unsigned int count, int transpose, const float* value) {
   (*fnptr)(loc, count, transpose, value);
 }
+
+void glDepthFunc(void (*fnptr)(int), int func) {
+  (*fnptr)(func);
+}

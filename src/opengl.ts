@@ -169,6 +169,11 @@ export const symbols = {
     parameters: ["i32", "u32", "i32", "pointer"],
     result: "void",
   },
+
+  glDepthFunc: {
+    parameters: ["i32"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
