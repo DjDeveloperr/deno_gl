@@ -1,4 +1,10 @@
 import { cstr, gl, glfw, initGL } from "../mod.ts";
+import {
+  Matrix4,
+  PerspectiveFov,
+  Rad,
+  Vector3,
+} from "https://deno.land/x/gmath@0.1.11/mod.ts";
 
 if (!glfw.glfwInit()) {
   throw new Error("Failed to initialize GLFW");
@@ -10,9 +16,11 @@ glfw.glfwWindowHint(glfw.CONTEXT_VERSION_MINOR, 3);
 glfw.glfwWindowHint(glfw.OPENGL_FORWARD_COMPAT, gl.TRUE);
 glfw.glfwWindowHint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE);
 
+const width = 600, height = 500;
+
 const win = glfw.glfwCreateWindow(
-  600,
-  500,
+  width,
+  height,
   cstr("Hello World"),
   null,
   null,
@@ -121,9 +129,10 @@ const VERTEX = `
 
 layout(location = 0) in vec3 vertexPosition_modelspace;
 
+uniform mat4 mvp;
+
 void main() {
-  gl_Position.xyz = vertexPosition_modelspace;
-  gl_Position.w = 1.0;
+  gl_Position =  mvp * vec4(vertexPosition_modelspace,1);
 }
 `;
 
@@ -159,10 +168,25 @@ gl.glBufferData(
   gl.STATIC_DRAW,
 );
 
+const proj = new PerspectiveFov(new Rad(45.0), width / height, 0.1, 100.0)
+  .toPerspective()
+  .toMatrix4();
+const view = Matrix4.lookAtRh(
+  new Vector3(4, 4, 3),
+  Vector3.zero(), // origin
+  new Vector3(0, 1, 0),
+);
+const model = Matrix4.identity();
+const mvp = proj.mul(view.mul(model));
+
+const matrixID = gl.glGetUniformLocation(programID, cstr("mvp"));
+
 do {
   gl.glClear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   gl.glUseProgram(programID);
+
+  gl.glUniformMatrix4fv(matrixID, 1, gl.FALSE, mvp.toFloat32Array());
 
   gl.glEnableVertexAttribArray(0);
   gl.glBindBuffer(gl.ARRAY_BUFFER, vertexBuffer[0]);

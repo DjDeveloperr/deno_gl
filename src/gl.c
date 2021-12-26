@@ -144,3 +144,11 @@ void glDeleteVertexArrays(void (*fnptr)(int, unsigned int*), int n, unsigned int
 void glDeleteProgram(void (*fnptr)(unsigned int), unsigned int program) {
   (*fnptr)(program);
 }
+
+unsigned int glGetUniformLocation(unsigned int (*fnptr)(unsigned int, const char*), unsigned int program, const char* name) {
+  (*fnptr)(program, name);
+}
+
+void glUniformMatrix4fv(void (*fnptr)(int, unsigned int, int, const float*), int loc, unsigned int count, int transpose, const float* value) {
+  (*fnptr)(loc, count, transpose, value);
+}

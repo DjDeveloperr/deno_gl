@@ -159,6 +159,16 @@ export const symbols = {
     parameters: ["u32"],
     result: "void",
   },
+
+  glGetUniformLocation: {
+    parameters: ["u32", "pointer"],
+    result: "u32",
+  },
+
+  glUniformMatrix4fv: {
+    parameters: ["i32", "u32", "i32", "pointer"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
