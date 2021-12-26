@@ -12,15 +12,14 @@ export type MapType<T extends Deno.NativeType> = T extends "u8" ? number
   : T extends "void" ? void
   : never;
 
-export type MapParamType<T extends Deno.NativeType> = T extends "pointer"
-  ? (
-    | Deno.UnsafePointer
-    | null
-    | Uint8Array
-    | Float32Array
-    | Uint32Array
-    | BigUint64Array
-  )
+export type MapParamType<T extends Deno.NativeType> = T extends "pointer" ? (
+  | Deno.UnsafePointer
+  | null
+  | Uint8Array
+  | Float32Array
+  | Uint32Array
+  | BigUint64Array
+)
   : MapType<T>;
 
 export type MapParameters<T extends Deno.NativeType[]> = [
@@ -43,3 +42,9 @@ export function cstr(str: string) {
   new TextEncoder().encodeInto(str, buffer);
   return buffer;
 }
+
+export const OS_LIB_SUFFIX = Deno.build.os === "windows"
+  ? "dll"
+  : Deno.build.os === "darwin"
+  ? "dylib"
+  : "so";

@@ -1,5 +1,5 @@
 import { GL_CONST } from "./const.ts";
-import { MapFFI } from "./util.ts";
+import { MapFFI, OS_LIB_SUFFIX } from "./util.ts";
 
 export const symbols = {
   glClear: {
@@ -171,7 +171,8 @@ export type Symbols = {
 
 const gl = GL_CONST as unknown as MapFFI<Symbols> & typeof GL_CONST;
 
-export const LIB_PATH = new URL("../dist/gl.dll", import.meta.url);
+// TODO: Should FFI support dynamic calls (via pointers)?
+export const LIB_PATH = new URL(`../dist/gl.${OS_LIB_SUFFIX}`, import.meta.url);
 const cbind = Deno.dlopen(
   LIB_PATH,
   Object.fromEntries(

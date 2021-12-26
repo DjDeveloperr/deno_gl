@@ -1,4 +1,4 @@
-import { cstr, MapFFI } from "./util.ts";
+import { cstr, MapFFI, OS_LIB_SUFFIX } from "./util.ts";
 import { init } from "./opengl.ts";
 import { GLFW_CONST } from "./const.ts";
 
@@ -68,7 +68,10 @@ export type Symbols = {
   };
 };
 
-export const LIB_PATH = new URL("../dist/glfw3.dll", import.meta.url);
+export const LIB_PATH = new URL(
+  `../dist/glfw3.${OS_LIB_SUFFIX}`,
+  import.meta.url,
+);
 
 export const lib = Deno.dlopen(LIB_PATH, symbols as Symbols);
 
