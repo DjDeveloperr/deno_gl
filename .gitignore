@@ -1,0 +1,6 @@
+# my testing scripts
+*.bat
+# dlls etc
+dist/
+# vscode config
+.vscode/
