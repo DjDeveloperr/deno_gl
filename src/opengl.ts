@@ -459,6 +459,11 @@ export const symbols = {
     ],
     result: "void",
   },
+
+  glIsVertexArray: {
+    parameters: ["u32"],
+    result: "i32",
+  },
 } as const;
 
 export type Symbols = {

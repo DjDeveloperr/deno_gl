@@ -292,3 +292,7 @@ void glTexSubImage2D(void (*fnptr)(int, int, int, int, int, int, int, int, const
 void glTexSubImage3D(void (*fnptr)(int, int, int, int, int, int, int, int, int, int, const void*), int target, int level, int xoffset, int yoffset, int zoffset, int width, int height, int depth, int format, int ty, const void* data) {
   (*fnptr)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, ty, data);
 }
+
+int glIsVertexArray(int (*fnptr)(unsigned int), unsigned int array) {
+  return (*fnptr)(array);
+}
