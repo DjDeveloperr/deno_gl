@@ -296,3 +296,47 @@ void glTexSubImage3D(void (*fnptr)(int, int, int, int, int, int, int, int, int, 
 int glIsVertexArray(int (*fnptr)(unsigned int), unsigned int array) {
   return (*fnptr)(array);
 }
+
+void glClearBufferiv(void (*fnptr)(int, int, const int*), int buffer, int drawbuffer, const int* value) {
+  (*fnptr)(buffer, drawbuffer, value);
+}
+
+void glClearBufferuiv(void (*fnptr)(int, int, const unsigned int*), int buffer, int drawbuffer, const unsigned int* value) {
+  (*fnptr)(buffer, drawbuffer, value);
+}
+
+void glClearBufferfv(void (*fnptr)(int, int, const float*), int buffer, int drawbuffer, const float* value) {
+  (*fnptr)(buffer, drawbuffer, value);
+}
+
+void glClearBufferfi(void (*fnptr)(int, int, float, int), int buffer, int drawbuffer, float depth, int stencil) {
+  (*fnptr)(buffer, drawbuffer, depth, stencil);
+}
+
+void glClearDepth(void (*fnptr)(float), float d) {
+  (*fnptr)(d);
+}
+
+void glClearStencil(void (*fnptr)(int), int s) {
+  (*fnptr)(s);
+}
+
+void glDrawBuffer(void (*fnptr)(int), int buf) {
+  (*fnptr)(buf);
+}
+
+void glFinish(void (*fnptr)(void)) {
+  (*fnptr)();
+}
+
+void glFlush(void (*fnptr)(void)) {
+  (*fnptr)();
+}
+
+void glReadBuffer(void (*fnptr)(int), int src) {
+  (*fnptr)(src);
+}
+
+void glReadPixels(void (*fnptr)(int, int, int, int, int, int, void*), int x, int y, int width, int height, int format, int ty, void* pixels) {
+  (*fnptr)(x, y, width, height, format, ty, pixels);
+}

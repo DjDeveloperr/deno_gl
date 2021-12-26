@@ -464,6 +464,69 @@ export const symbols = {
     parameters: ["u32"],
     result: "i32",
   },
+
+  glClearBufferiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glClearBufferuiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glClearBufferfv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glClearBufferfi: {
+    parameters: ["i32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glClearDepth: {
+    parameters: ["f32"],
+    result: "void",
+  },
+
+  glClearStencil: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glDrawBuffer: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glFinish: {
+    parameters: [],
+    result: "void",
+  },
+
+  glFlush: {
+    parameters: [],
+    result: "void",
+  },
+
+  glReadBuffer: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glReadPixels: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
