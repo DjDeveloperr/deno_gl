@@ -174,6 +174,291 @@ export const symbols = {
     parameters: ["i32"],
     result: "void",
   },
+
+  glActiveTexture: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glBindTexture: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  glCompressedTexImage1D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glCompressedTexImage2D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glCompressedTexImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glCompressedTexSubImage1D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glCompressedTexSubImage2D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glCompressedTexSubImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glCopyTexImage1D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glCopyTexImage2D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glCopyTexSubImage1D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glCopyTexSubImage2D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glDeleteTextures: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGenTextures: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetCompressedTexImage: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexImage: {
+    parameters: ["i32", "i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexLevelParameterfv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexLevelParameteriv: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexParameterfv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexParameteriv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexParameterIiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetTexParameterIuiv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glIsTexture: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  glTexBuffer: {
+    parameters: ["i32", "i32", "u32"],
+    result: "void",
+  },
+
+  glTexImage1D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glTexImage2D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glTexImage2DMultisample: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+    ],
+    result: "void",
+  },
+
+  glTexImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glTexImage3DMultisample: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+    ],
+    result: "void",
+  },
+
+  glTexParameterf: {
+    parameters: ["i32", "i32", "f32"],
+    result: "void",
+  },
+
+  glTexParameteri: {
+    parameters: ["i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glTexSubImage1D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glTexSubImage2D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  glTexSubImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
