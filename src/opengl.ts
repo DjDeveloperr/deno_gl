@@ -527,6 +527,226 @@ export const symbols = {
     ],
     result: "void",
   },
+
+  glBlendColor: {
+    parameters: ["f32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glBlendEquation: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glBlendEquationSeparate: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glBlendFunc: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glBlendFuncSeparate: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glClampColor: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glColorMask: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glColorMaski: {
+    parameters: ["u32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glCullFace: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glDepthMask: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glDepthRange: {
+    parameters: ["f32", "f32"],
+    result: "void",
+  },
+
+  glDisable: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glFrontFace: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glGetBooleanv: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetDoublev: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetFloatv: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetIntegerv: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetInteger64v: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetBooleani_v: {
+    parameters: ["i32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glGetIntegeri_v: {
+    parameters: ["i32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glGetInteger64i_v: {
+    parameters: ["i32", "u32", "pointer"],
+    result: "void",
+  },
+
+  glHint: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glIsEnabled: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  glIsEnabledi: {
+    parameters: ["i32", "u32"],
+    result: "i32",
+  },
+
+  glEnablei: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  glDisablei: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  glLineWidth: {
+    parameters: ["f32"],
+    result: "void",
+  },
+
+  glLogicOp: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glPixelStoref: {
+    parameters: ["i32", "f32"],
+    result: "void",
+  },
+
+  glPixelStorei: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glPointParameterf: {
+    parameters: ["i32", "f32"],
+    result: "void",
+  },
+
+  glPointParameteri: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glPointSize: {
+    parameters: ["f32"],
+    result: "void",
+  },
+
+  glPolygonMode: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
+  glPolygonOffset: {
+    parameters: ["f32", "f32"],
+    result: "void",
+  },
+
+  glSampleCoverage: {
+    parameters: ["f32", "i32"],
+    result: "void",
+  },
+
+  glScissor: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glStencilFunc: {
+    parameters: ["i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glStencilFuncSeparate: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glStencilMask: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glStencilMaskSeparate: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  glStencilOp: {
+    parameters: ["i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glStencilOpSeparate: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glViewport: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {

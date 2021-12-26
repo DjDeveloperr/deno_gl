@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 
 void glClear(void (*fnptr)(int), int bit) {
   (*fnptr)(bit);
@@ -339,4 +340,180 @@ void glReadBuffer(void (*fnptr)(int), int src) {
 
 void glReadPixels(void (*fnptr)(int, int, int, int, int, int, void*), int x, int y, int width, int height, int format, int ty, void* pixels) {
   (*fnptr)(x, y, width, height, format, ty, pixels);
+}
+
+void glBlendColor(void (*fnptr)(float, float, float, float), float red, float green, float blue, float alpha) {
+  (*fnptr)(red, green, blue, alpha);
+}
+
+void glBlendEquation(void (*fnptr)(int), int mode) {
+  (*fnptr)(mode);
+}
+
+void glBlendEquationSeparate(void (*fnptr)(int, int), int modeRGB, int modeAlpha) {
+  (*fnptr)(modeRGB, modeAlpha);
+}
+
+void glBlendFunc(void (*fnptr)(int, int), int sfactor, int dfactor) {
+  (*fnptr)(sfactor, dfactor);
+}
+
+void glBlendFuncSeparate(void (*fnptr)(int, int, int, int), int srcRGB, int dstRGB, int srcAlpha, int dstAlpha) {
+  (*fnptr)(srcRGB, dstRGB, srcAlpha, dstAlpha);
+}
+
+void glClampColor(void (*fnptr)(int, int), int target, int clamp) {
+  (*fnptr)(target, clamp);
+}
+
+void glColorMask(void (*fnptr)(int, int, int, int), int red, int green, int blue, int alpha) {
+  (*fnptr)(red, green, blue, alpha);
+}
+
+void glColorMaski(void (*fnptr)(unsigned int, int, int, int, int), unsigned int index, int r, int g, int b, int a) {
+  (*fnptr)(index, r, g, b, a);
+}
+
+void glCullFace(void (*fnptr)(int), int mode) {
+  (*fnptr)(mode);
+}
+
+void glDepthMask(void (*fnptr)(int), int flag) {
+  (*fnptr)(flag);
+}
+
+void glDepthRange(void (*fnptr)(float, float), float n, float f) {
+  (*fnptr)(n, f);
+}
+
+void glDisable(void (*fnptr)(int), int cap) {
+  (*fnptr)(cap);
+}
+
+void glFrontFace(void (*fnptr)(int), int mode) {
+  (*fnptr)(mode);
+}
+
+void glGetBooleanv(void (*fnptr)(int, int*), int pname, int* params) {
+  (*fnptr)(pname, params);
+}
+
+void glGetDoublev(void (*fnptr)(int, double*), int pname, double* params) {
+  (*fnptr)(pname, params);
+}
+
+void glGetFloatv(void (*fnptr)(int, float*), int pname, float* params) {
+  (*fnptr)(pname, params);
+}
+
+void glGetIntegerv(void (*fnptr)(int, int*), int pname, int* params) {
+  (*fnptr)(pname, params);
+}
+
+void glGetInteger64v(void (*fnptr)(int, int64_t*), int pname, int64_t* params) {
+  (*fnptr)(pname, params);
+}
+
+void glGetBooleani_v(void (*fnptr)(int, unsigned int, int*), int target, unsigned int index, int* data) {
+  (*fnptr)(target, index, data);
+}
+
+void glGetIntegeri_v(void (*fnptr)(int, unsigned int, int*), int target, unsigned int index, int* data) {
+  (*fnptr)(target, index, data);
+}
+
+void glGetInteger64i_v(void (*fnptr)(int, unsigned int, int64_t*), int target, unsigned int index, int64_t* data) {
+  (*fnptr)(target, index, data);
+}
+
+void glHint(void (*fnptr)(int, int), int target, int mode) {
+  (*fnptr)(target, mode);
+}
+
+int glIsEnabled(int (*fnptr)(int), int cap) {
+  return (*fnptr)(cap);
+}
+
+int glIsEnabledi(int (*fnptr)(int, unsigned int), int target, unsigned int index) {
+  return (*fnptr)(target, index);
+}
+
+void glEnablei(void (*fnptr)(int, unsigned int), int target, unsigned int index) {
+  (*fnptr)(target, index);
+}
+
+void glDisablei(void (*fnptr)(int, unsigned int), int target, unsigned int index) {
+  (*fnptr)(target, index);
+}
+
+void glLineWidth(void (*fnptr)(float), float width) {
+  (*fnptr)(width);
+}
+
+void glLogicOp(void (*fnptr)(int), int opcode) {
+  (*fnptr)(opcode);
+}
+
+void glPixelStoref(void (*fnptr)(int, float), int pname, float param) {
+  (*fnptr)(pname, param);
+}
+
+void glPixelStorei(void (*fnptr)(int, int), int pname, int param) {
+  (*fnptr)(pname, param);
+}
+
+void glPointParameterf(void (*fnptr)(int, float), int pname, float param) {
+  (*fnptr)(pname, param);
+}
+
+void glPointParameteri(void (*fnptr)(int, int), int pname, int param) {
+  (*fnptr)(pname, param);
+}
+
+void glPointSize(void (*fnptr)(float), float size) {
+  (*fnptr)(size);
+}
+
+void glPolygonMode(void (*fnptr)(int, int), int face, int mode) {
+  (*fnptr)(face, mode);
+}
+
+void glPolygonOffset(void (*fnptr)(float, float), float factor, float units) {
+  (*fnptr)(factor, units);
+}
+
+void glSampleCoverage(void (*fnptr)(float, int), float value, int invert) {
+  (*fnptr)(value, invert);
+}
+
+void glScissor(void (*fnptr)(int, int, int, int), int x, int y, int width, int height) {
+  (*fnptr)(x, y, width, height);
+}
+
+void glStencilFunc(void (*fnptr)(int, int, unsigned int), int func, int ref, unsigned int mask) {
+  (*fnptr)(func, ref, mask);
+}
+
+void glStencilFuncSeparate(void (*fnptr)(int, int, unsigned int, int), int face, int func, int ref, unsigned int mask) {
+  (*fnptr)(face, func, ref, mask);
+}
+
+void glStencilMask(void (*fnptr)(unsigned int), unsigned int mask) {
+  (*fnptr)(mask);
+}
+
+void glStencilMaskSeparate(void (*fnptr)(int, unsigned int), int face, unsigned int mask) {
+  (*fnptr)(face, mask);
+}
+
+void glStencilOp(void (*fnptr)(int, int, int), int fail, int zfail, int zpass) {
+  (*fnptr)(fail, zfail, zpass);
+}
+
+void glStencilOpSeparate(void (*fnptr)(int, int, int, int), int face, int sfail, int dpfail, int dppass) {
+  (*fnptr)(face, sfail, dpfail, dppass);
+}
+
+void glViewport(void (*fnptr)(int, int, int, int), int x, int y, int width, int height) {
+  (*fnptr)(x, y, width, height);
 }
