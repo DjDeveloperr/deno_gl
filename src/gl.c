@@ -741,3 +741,43 @@ void glUniformMatrix4x3fv(void (*fnptr)(int, int, int, const float*), int locati
 void glUniformBlockBinding(void (*fnptr)(unsigned int, unsigned int, unsigned int), unsigned int program, unsigned int uniformBlockIndex, unsigned int uniformBlockBinding) {
   (*fnptr)(program, uniformBlockIndex, uniformBlockBinding);
 }
+
+void glBindSampler(void (*fnptr)(unsigned int, unsigned int), unsigned int unit, unsigned int sampler) {
+  (*fnptr)(unit, sampler);
+}
+
+void glDeleteSamplers(void (*fnptr)(int, const unsigned int*), int count, const unsigned int* samplers) {
+  (*fnptr)(count, samplers);
+}
+
+void glGenSamplers(void (*fnptr)(int, unsigned int*), int count, unsigned int* samplers) {
+  (*fnptr)(count, samplers);
+}
+
+void glGetSamplerParameterfv(void (*fnptr)(unsigned int, unsigned int, float*), unsigned int sampler, unsigned int pname, float* params) {
+  (*fnptr)(sampler, pname, params);
+}
+
+void glGetSamplerParameteriv(void (*fnptr)(unsigned int, unsigned int, int*), unsigned int sampler, unsigned int pname, int* params) {
+  (*fnptr)(sampler, pname, params);
+}
+
+void glGetSamplerParameterIiv(void (*fnptr)(unsigned int, unsigned int, int*), unsigned int sampler, unsigned int pname, int* params) {
+  (*fnptr)(sampler, pname, params);
+}
+
+void glGetSamplerParameterIuiv(void (*fnptr)(unsigned int, unsigned int, unsigned int*), unsigned int sampler, unsigned int pname, unsigned int* params) {
+  (*fnptr)(sampler, pname, params);
+}
+
+int glIsSampler(int (*fnptr)(unsigned int), unsigned int sampler) {
+  return (*fnptr)(sampler);
+}
+
+void glSamplerParameterf(void (*fnptr)(unsigned int, unsigned int, float), unsigned int sampler, unsigned int pname, float param) {
+  (*fnptr)(sampler, pname, param);
+}
+
+void glSamplerParameteri(void (*fnptr)(unsigned int, unsigned int, int), unsigned int sampler, unsigned int pname, int param) {
+  (*fnptr)(sampler, pname, param);
+}

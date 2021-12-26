@@ -1038,6 +1038,56 @@ export const symbols = {
     parameters: ["u32", "u32", "u32"],
     result: "void",
   },
+
+  glBindSampler: {
+    parameters: ["u32", "u32"],
+    result: "void",
+  },
+
+  glDeleteSamplers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGenSamplers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glGetSamplerParameterfv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetSamplerParameteriv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetSamplerParameterIiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetSamplerParameterIuiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glIsSampler: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  glSamplerParameterf: {
+    parameters: ["u32", "i32", "f32"],
+    result: "void",
+  },
+
+  glSamplerParameteri: {
+    parameters: ["u32", "i32", "i32"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
