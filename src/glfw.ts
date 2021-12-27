@@ -3,9 +3,34 @@ import { init } from "./opengl.ts";
 import { GLFW_CONST } from "./const.ts";
 
 export const symbols = {
+  initHint: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
   init: {
     parameters: [],
     result: "i32",
+  },
+
+  getVersion: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getVersionString: {
+    parameters: [],
+    result: "pointer",
+  },
+
+  getError: {
+    parameters: ["pointer"],
+    result: "i32",
+  },
+
+  setErrorCallback: {
+    parameters: ["pointer"],
+    result: "pointer",
   },
 
   terminate: {
