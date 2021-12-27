@@ -3,82 +3,82 @@ import { MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
 
 export const symbols = {
   //#region Buffer Objects
-  glGenBuffers: {
+  genBuffers: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glBindBuffer: {
+  bindBuffer: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glBindBufferBase: {
+  bindBufferBase: {
     parameters: ["i32", "u32", "u32"],
     result: "void",
   },
 
-  glBindBufferRange: {
+  bindBufferRange: {
     parameters: ["i32", "u32", "u32", "i32", "i32"],
     result: "void",
   },
 
-  glBufferData: {
+  bufferData: {
     parameters: ["i32", "i32", "pointer", "i32"],
     result: "void",
   },
 
-  glBufferSubData: {
+  bufferSubData: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glCopyBufferSubData: {
+  copyBufferSubData: {
     parameters: ["i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glDrawArraysInstanced: {
+  drawArraysInstanced: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glDrawElements: {
+  drawElements: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glDrawElementsBaseVertex: {
+  drawElementsBaseVertex: {
     parameters: ["i32", "i32", "i32", "pointer", "i32"],
     result: "void",
   },
 
-  glDrawElementsInstanced: {
+  drawElementsInstanced: {
     parameters: ["i32", "i32", "i32", "pointer", "i32"],
     result: "void",
   },
 
-  glDrawElementsInstancedBaseVertex: {
+  drawElementsInstancedBaseVertex: {
     parameters: ["i32", "i32", "i32", "pointer", "i32", "i32"],
     result: "void",
   },
 
-  glDrawRangeElements: {
+  drawRangeElements: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glDrawRangeElementsBaseVertex: {
+  drawRangeElementsBaseVertex: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "pointer", "i32"],
     result: "void",
   },
 
-  glEnableVertexAttribArray: {
+  enableVertexAttribArray: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glVertexAttribPointer: {
+  vertexAttribPointer: {
     parameters: [
       "i32",
       "i32",
@@ -90,444 +90,444 @@ export const symbols = {
     result: "void",
   },
 
-  glVertexAttribDivisor: {
+  vertexAttribDivisor: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glDrawArrays: {
+  drawArrays: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glDisableVertexAttribArray: {
+  disableVertexAttribArray: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glDeleteBuffers: {
+  deleteBuffers: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glFlushMappedBufferRange: {
+  flushMappedBufferRange: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glGetBufferParameteriv: {
+  getBufferParameteriv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetBufferPointerv: {
+  getBufferPointerv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetBufferSubData: {
+  getBufferSubData: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribdv: {
+  getVertexAttribdv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribfv: {
+  getVertexAttribfv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribiv: {
+  getVertexAttribiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribIiv: {
+  getVertexAttribIiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribIuiv: {
+  getVertexAttribIuiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetVertexAttribPointerv: {
+  getVertexAttribPointerv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glIsBuffer: {
+  isBuffer: {
     parameters: ["u32"],
     result: "i32",
   },
 
-  glMapBuffer: {
+  mapBuffer: {
     parameters: ["i32", "i32"],
     result: "pointer",
   },
 
-  glMapBufferRange: {
+  mapBufferRange: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "pointer",
   },
 
-  glMultiDrawArrays: {
+  multiDrawArrays: {
     parameters: ["i32", "pointer", "pointer", "i32"],
     result: "void",
   },
 
-  glMultiDrawElements: {
+  multiDrawElements: {
     parameters: ["i32", "pointer", "i32", "pointer", "i32"],
     result: "void",
   },
 
-  glMultiDrawElementsBaseVertex: {
+  multiDrawElementsBaseVertex: {
     parameters: ["i32", "pointer", "i32", "pointer", "i32", "pointer"],
     result: "void",
   },
 
-  glPrimitiveRestartIndex: {
+  primitiveRestartIndex: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glProvokingVertex: {
+  provokingVertex: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glUnmapBuffer: {
+  unmapBuffer: {
     parameters: ["i32"],
     result: "i32",
   },
 
-  glVertexAttrib1f: {
+  vertexAttrib1f: {
     parameters: ["u32", "f32"],
     result: "void",
   },
 
-  glVertexAttrib1s: {
+  vertexAttrib1s: {
     parameters: ["u32", "i16"],
     result: "void",
   },
 
-  glVertexAttrib1d: {
+  vertexAttrib1d: {
     parameters: ["u32", "f64"],
     result: "void",
   },
 
-  glVertexAttribI1i: {
+  vertexAttribI1i: {
     parameters: ["u32", "i32"],
     result: "void",
   },
 
-  glVertexAttribI1ui: {
+  vertexAttribI1ui: {
     parameters: ["u32", "u32"],
     result: "void",
   },
 
-  glVertexAttrib2f: {
+  vertexAttrib2f: {
     parameters: ["u32", "f32", "f32"],
     result: "void",
   },
 
-  glVertexAttrib2s: {
+  vertexAttrib2s: {
     parameters: ["u32", "i16", "i16"],
     result: "void",
   },
 
-  glVertexAttrib2d: {
+  vertexAttrib2d: {
     parameters: ["u32", "f64", "f64"],
     result: "void",
   },
 
-  glVertexAttribI2i: {
+  vertexAttribI2i: {
     parameters: ["u32", "i32", "i32"],
     result: "void",
   },
 
-  glVertexAttribI2ui: {
+  vertexAttribI2ui: {
     parameters: ["u32", "u32", "u32"],
     result: "void",
   },
 
-  glVertexAttrib3f: {
+  vertexAttrib3f: {
     parameters: ["u32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glVertexAttrib3s: {
+  vertexAttrib3s: {
     parameters: ["u32", "i16", "i16", "i16"],
     result: "void",
   },
 
-  glVertexAttrib3d: {
+  vertexAttrib3d: {
     parameters: ["u32", "f64", "f64", "f64"],
     result: "void",
   },
 
-  glVertexAttribI3i: {
+  vertexAttribI3i: {
     parameters: ["u32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glVertexAttribI3ui: {
+  vertexAttribI3ui: {
     parameters: ["u32", "u32", "u32", "u32"],
     result: "void",
   },
 
-  glVertexAttrib4f: {
+  vertexAttrib4f: {
     parameters: ["u32", "f32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glVertexAttrib4s: {
+  vertexAttrib4s: {
     parameters: ["u32", "i16", "i16", "i16", "i16"],
     result: "void",
   },
 
-  glVertexAttrib4d: {
+  vertexAttrib4d: {
     parameters: ["u32", "f64", "f64", "f64", "f64"],
     result: "void",
   },
 
-  glVertexAttrib4Nub: {
+  vertexAttrib4Nub: {
     parameters: ["u32", "u8", "u8", "u8", "u8"],
     result: "void",
   },
 
-  glVertexAttribI4i: {
+  vertexAttribI4i: {
     parameters: ["u32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glVertexAttribI4ui: {
+  vertexAttribI4ui: {
     parameters: ["u32", "u32", "u32", "u32", "u32"],
     result: "void",
   },
 
-  glVertexAttrib1fv: {
+  vertexAttrib1fv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib1sv: {
+  vertexAttrib1sv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib1dv: {
+  vertexAttrib1dv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI1iv: {
+  vertexAttribI1iv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI1uiv: {
+  vertexAttribI1uiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib2fv: {
+  vertexAttrib2fv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib2sv: {
+  vertexAttrib2sv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib2dv: {
+  vertexAttrib2dv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI2iv: {
+  vertexAttribI2iv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI2uiv: {
+  vertexAttribI2uiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib3fv: {
+  vertexAttrib3fv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib3sv: {
+  vertexAttrib3sv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib3dv: {
+  vertexAttrib3dv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI3iv: {
+  vertexAttribI3iv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI3uiv: {
+  vertexAttribI3uiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4fv: {
+  vertexAttrib4fv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4sv: {
+  vertexAttrib4sv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4dv: {
+  vertexAttrib4dv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4iv: {
+  vertexAttrib4iv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4bv: {
+  vertexAttrib4bv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4ubv: {
+  vertexAttrib4ubv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4usv: {
+  vertexAttrib4usv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4uiv: {
+  vertexAttrib4uiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Nbv: {
+  vertexAttrib4Nbv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Nsv: {
+  vertexAttrib4Nsv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Niv: {
+  vertexAttrib4Niv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Nubv: {
+  vertexAttrib4Nubv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Nusv: {
+  vertexAttrib4Nusv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttrib4Nuiv: {
+  vertexAttrib4Nuiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4bv: {
+  vertexAttribI4bv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4ubv: {
+  vertexAttribI4ubv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4sv: {
+  vertexAttribI4sv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4usv: {
+  vertexAttribI4usv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4iv: {
+  vertexAttribI4iv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribI4uiv: {
+  vertexAttribI4uiv: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glVertexAttribP1ui: {
+  vertexAttribP1ui: {
     parameters: ["u32", "i32", "i32", "u32"],
     result: "void",
   },
 
-  glVertexAttribP2ui: {
+  vertexAttribP2ui: {
     parameters: ["u32", "i32", "i32", "u32"],
     result: "void",
   },
 
-  glVertexAttribP3ui: {
+  vertexAttribP3ui: {
     parameters: ["u32", "i32", "i32", "u32"],
     result: "void",
   },
 
-  glVertexAttribP4ui: {
+  vertexAttribP4ui: {
     parameters: ["u32", "i32", "i32", "u32"],
     result: "void",
   },
   //#endregion
 
   //#region Textures
-  glActiveTexture: {
+  activeTexture: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glBindTexture: {
+  bindTexture: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glCompressedTexImage1D: {
+  compressedTexImage1D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glCompressedTexImage2D: {
+  compressedTexImage2D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glCompressedTexImage3D: {
+  compressedTexImage3D: {
     parameters: [
       "i32",
       "i32",
@@ -542,7 +542,7 @@ export const symbols = {
     result: "void",
   },
 
-  glCompressedTexSubImage1D: {
+  compressedTexSubImage1D: {
     parameters: [
       "i32",
       "i32",
@@ -555,24 +555,8 @@ export const symbols = {
     result: "void",
   },
 
-  glCompressedTexSubImage2D: {
+  compressedTexSubImage2D: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  glCompressedTexSubImage3D: {
-    parameters: [
-      "i32",
       "i32",
       "i32",
       "i32",
@@ -586,87 +570,103 @@ export const symbols = {
     result: "void",
   },
 
-  glCopyTexImage1D: {
+  compressedTexSubImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  copyTexImage1D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glCopyTexImage2D: {
+  copyTexImage2D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glCopyTexSubImage1D: {
+  copyTexSubImage1D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glCopyTexSubImage2D: {
+  copyTexSubImage2D: {
     parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glDeleteTextures: {
+  deleteTextures: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGenTextures: {
+  genTextures: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetCompressedTexImage: {
+  getCompressedTexImage: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexImage: {
+  getTexImage: {
     parameters: ["i32", "i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexLevelParameterfv: {
+  getTexLevelParameterfv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexLevelParameteriv: {
+  getTexLevelParameteriv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexParameterfv: {
+  getTexParameterfv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexParameteriv: {
+  getTexParameteriv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexParameterIiv: {
+  getTexParameterIiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetTexParameterIuiv: {
+  getTexParameterIuiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glIsTexture: {
+  isTexture: {
     parameters: ["u32"],
     result: "i32",
   },
 
-  glTexBuffer: {
+  texBuffer: {
     parameters: ["i32", "i32", "u32"],
     result: "void",
   },
 
-  glTexImage1D: {
+  texImage1D: {
     parameters: [
       "i32",
       "i32",
@@ -681,35 +681,7 @@ export const symbols = {
     result: "void",
   },
 
-  glTexImage2D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  glTexImage2DMultisample: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-    ],
-    result: "void",
-  },
-
-  glTexImage3D: {
+  texImage2D: {
     parameters: [
       "i32",
       "i32",
@@ -725,7 +697,35 @@ export const symbols = {
     result: "void",
   },
 
-  glTexImage3DMultisample: {
+  texImage2DMultisample: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+    ],
+    result: "void",
+  },
+
+  texImage3D: {
+    parameters: [
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "i32",
+      "pointer",
+    ],
+    result: "void",
+  },
+
+  texImage3DMultisample: {
     parameters: [
       "i32",
       "i32",
@@ -738,17 +738,17 @@ export const symbols = {
     result: "void",
   },
 
-  glTexParameterf: {
+  texParameterf: {
     parameters: ["i32", "i32", "f32"],
     result: "void",
   },
 
-  glTexParameteri: {
+  texParameteri: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glTexSubImage1D: {
+  texSubImage1D: {
     parameters: [
       "i32",
       "i32",
@@ -761,7 +761,7 @@ export const symbols = {
     result: "void",
   },
 
-  glTexSubImage2D: {
+  texSubImage2D: {
     parameters: [
       "i32",
       "i32",
@@ -776,7 +776,7 @@ export const symbols = {
     result: "void",
   },
 
-  glTexSubImage3D: {
+  texSubImage3D: {
     parameters: [
       "i32",
       "i32",
@@ -794,89 +794,89 @@ export const symbols = {
   //#endregion
 
   //#region Vertex Array Objects
-  glGenVertexArrays: {
+  genVertexArrays: {
     parameters: ["u32", "pointer"],
     result: "void",
   },
 
-  glDeleteVertexArrays: {
+  deleteVertexArrays: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glBindVertexArray: {
+  bindVertexArray: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glIsVertexArray: {
+  isVertexArray: {
     parameters: ["u32"],
     result: "i32",
   },
   //#endregion
 
   //#region Rendering
-  glClear: {
+  clear: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glClearColor: {
+  clearColor: {
     parameters: ["f32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glClearBufferiv: {
+  clearBufferiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glClearBufferuiv: {
+  clearBufferuiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glClearBufferfv: {
+  clearBufferfv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glClearBufferfi: {
+  clearBufferfi: {
     parameters: ["i32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glClearDepth: {
+  clearDepth: {
     parameters: ["f32"],
     result: "void",
   },
 
-  glClearStencil: {
+  clearStencil: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glDrawBuffer: {
+  drawBuffer: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glFinish: {
+  finish: {
     parameters: [],
     result: "void",
   },
 
-  glFlush: {
+  flush: {
     parameters: [],
     result: "void",
   },
 
-  glReadBuffer: {
+  readBuffer: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glReadPixels: {
+  readPixels: {
     parameters: [
       "i32",
       "i32",
@@ -891,340 +891,340 @@ export const symbols = {
   //#endregion
 
   //#region State Management
-  glGetError: {
+  getError: {
     parameters: [],
     result: "u32",
   },
 
   // TODO: Use JS callback when FFI supports Callbacks
-  glDebugMessageCallback: {
+  debugMessageCallback: {
     parameters: [],
     result: "void",
   },
 
-  glEnable: {
+  enable: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glBlendColor: {
+  blendColor: {
     parameters: ["f32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glBlendEquation: {
+  blendEquation: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glBlendEquationSeparate: {
+  blendEquationSeparate: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glBlendFunc: {
+  blendFunc: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glBlendFuncSeparate: {
+  blendFuncSeparate: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glClampColor: {
+  clampColor: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glColorMask: {
+  colorMask: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glColorMaski: {
+  colorMaski: {
     parameters: ["u32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glCullFace: {
+  cullFace: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glDepthFunc: {
+  depthFunc: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glDepthMask: {
+  depthMask: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glDepthRange: {
+  depthRange: {
     parameters: ["f32", "f32"],
     result: "void",
   },
 
-  glDisable: {
+  disable: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glFrontFace: {
+  frontFace: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glGetBooleanv: {
+  getBooleanv: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetDoublev: {
+  getDoublev: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetFloatv: {
+  getFloatv: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetIntegerv: {
+  getIntegerv: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetInteger64v: {
+  getInteger64v: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetBooleani_v: {
+  getBooleani_v: {
     parameters: ["i32", "u32", "pointer"],
     result: "void",
   },
 
-  glGetIntegeri_v: {
+  getIntegeri_v: {
     parameters: ["i32", "u32", "pointer"],
     result: "void",
   },
 
-  glGetInteger64i_v: {
+  getInteger64i_v: {
     parameters: ["i32", "u32", "pointer"],
     result: "void",
   },
 
-  glHint: {
+  hint: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glIsEnabled: {
+  isEnabled: {
     parameters: ["i32"],
     result: "i32",
   },
 
-  glIsEnabledi: {
+  isEnabledi: {
     parameters: ["i32", "u32"],
     result: "i32",
   },
 
-  glEnablei: {
+  enablei: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glDisablei: {
+  disablei: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glLineWidth: {
+  lineWidth: {
     parameters: ["f32"],
     result: "void",
   },
 
-  glLogicOp: {
+  logicOp: {
     parameters: ["i32"],
     result: "void",
   },
 
-  glPixelStoref: {
+  pixelStoref: {
     parameters: ["i32", "f32"],
     result: "void",
   },
 
-  glPixelStorei: {
+  pixelStorei: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glPointParameterf: {
+  pointParameterf: {
     parameters: ["i32", "f32"],
     result: "void",
   },
 
-  glPointParameteri: {
+  pointParameteri: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glPointSize: {
+  pointSize: {
     parameters: ["f32"],
     result: "void",
   },
 
-  glPolygonMode: {
+  polygonMode: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glPolygonOffset: {
+  polygonOffset: {
     parameters: ["f32", "f32"],
     result: "void",
   },
 
-  glSampleCoverage: {
+  sampleCoverage: {
     parameters: ["f32", "i32"],
     result: "void",
   },
 
-  glScissor: {
+  scissor: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glStencilFunc: {
+  stencilFunc: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glStencilFuncSeparate: {
+  stencilFuncSeparate: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glStencilMask: {
+  stencilMask: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glStencilMaskSeparate: {
+  stencilMaskSeparate: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glStencilOp: {
+  stencilOp: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glStencilOpSeparate: {
+  stencilOpSeparate: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glViewport: {
+  viewport: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
   //#endregion
 
   //#region Shaders
-  glAttachShader: {
+  attachShader: {
     parameters: ["u32", "u32"],
     result: "void",
   },
 
-  glCreateShader: {
+  createShader: {
     parameters: ["i32"],
     result: "u32",
   },
 
-  glShaderSource: {
+  shaderSource: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glCompileShader: {
+  compileShader: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glGetShaderiv: {
+  getShaderiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetShaderInfoLog: {
+  getShaderInfoLog: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glCreateProgram: {
+  createProgram: {
     parameters: [],
     result: "u32",
   },
 
-  glLinkProgram: {
+  linkProgram: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glGetProgramiv: {
+  getProgramiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetProgramInfoLog: {
+  getProgramInfoLog: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glDetachShader: {
+  detachShader: {
     parameters: ["u32", "u32"],
     result: "void",
   },
 
-  glDeleteShader: {
+  deleteShader: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glUseProgram: {
+  useProgram: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glBindAttribLocation: {
+  bindAttribLocation: {
     parameters: ["u32", "u32", "pointer"],
     result: "void",
   },
 
-  glBindFragDataLocation: {
+  bindFragDataLocation: {
     parameters: ["u32", "u32", "pointer"],
     result: "void",
   },
 
-  glBindFragDataLocationIndexed: {
+  bindFragDataLocationIndexed: {
     parameters: ["u32", "u32", "u32", "pointer"],
     result: "void",
   },
 
-  glDeleteProgram: {
+  deleteProgram: {
     parameters: ["u32"],
     result: "void",
   },
 
-  glGetUniformLocation: {
+  getUniformLocation: {
     parameters: ["u32", "pointer"],
     result: "u32",
   },
 
-  glGetActiveAttrib: {
+  getActiveAttrib: {
     parameters: [
       "u32",
       "u32",
@@ -1237,7 +1237,7 @@ export const symbols = {
     result: "void",
   },
 
-  glGetActiveUniform: {
+  getActiveUniform: {
     parameters: [
       "u32",
       "u32",
@@ -1250,309 +1250,309 @@ export const symbols = {
     result: "void",
   },
 
-  glGetActiveUniformBlockiv: {
+  getActiveUniformBlockiv: {
     parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetActiveUniformBlockName: {
+  getActiveUniformBlockName: {
     parameters: ["u32", "u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glGetActiveUniformName: {
+  getActiveUniformName: {
     parameters: ["u32", "u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glGetActiveUniformsiv: {
+  getActiveUniformsiv: {
     parameters: ["u32", "i32", "pointer", "i32", "pointer"],
     result: "void",
   },
 
-  glGetAttachedShaders: {
+  getAttachedShaders: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glGetAttribLocation: {
+  getAttribLocation: {
     parameters: ["u32", "pointer"],
     result: "i32",
   },
 
-  glGetFragDataIndex: {
+  getFragDataIndex: {
     parameters: ["u32", "pointer"],
     result: "i32",
   },
 
-  glGetFragDataLocation: {
+  getFragDataLocation: {
     parameters: ["u32", "pointer"],
     result: "i32",
   },
 
-  glGetShaderSource: {
+  getShaderSource: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glGetUniformfv: {
+  getUniformfv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetUniformiv: {
+  getUniformiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetUniformuiv: {
+  getUniformuiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetUniformBlockIndex: {
+  getUniformBlockIndex: {
     parameters: ["u32", "pointer"],
     result: "i32",
   },
 
-  glGetUniformIndices: {
+  getUniformIndices: {
     parameters: ["u32", "i32", "pointer", "pointer"],
     result: "void",
   },
 
-  glIsProgram: {
+  isProgram: {
     parameters: ["u32"],
     result: "i32",
   },
 
-  glIsShader: {
+  isShader: {
     parameters: ["u32"],
     result: "i32",
   },
 
-  glUniform1f: {
+  uniform1f: {
     parameters: ["i32", "f32"],
     result: "void",
   },
 
-  glUniform2f: {
+  uniform2f: {
     parameters: ["i32", "f32", "f32"],
     result: "void",
   },
 
-  glUniform3f: {
+  uniform3f: {
     parameters: ["i32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glUniform4f: {
+  uniform4f: {
     parameters: ["i32", "f32", "f32", "f32", "f32"],
     result: "void",
   },
 
-  glUniform1i: {
+  uniform1i: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glUniform2i: {
+  uniform2i: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
   },
 
-  glUniform3i: {
+  uniform3i: {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glUniform4i: {
+  uniform4i: {
     parameters: ["i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
-  glUniform1ui: {
+  uniform1ui: {
     parameters: ["i32", "u32"],
     result: "void",
   },
 
-  glUniform2ui: {
+  uniform2ui: {
     parameters: ["i32", "u32", "u32"],
     result: "void",
   },
 
-  glUniform3ui: {
+  uniform3ui: {
     parameters: ["i32", "u32", "u32", "u32"],
     result: "void",
   },
 
-  glUniform4ui: {
+  uniform4ui: {
     parameters: ["i32", "u32", "u32", "u32", "u32"],
     result: "void",
   },
 
-  glUniform1fv: {
+  uniform1fv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform2fv: {
+  uniform2fv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform3fv: {
+  uniform3fv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform4fv: {
+  uniform4fv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform1iv: {
+  uniform1iv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform2iv: {
+  uniform2iv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform3iv: {
+  uniform3iv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform4iv: {
+  uniform4iv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform1uiv: {
+  uniform1uiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform2uiv: {
+  uniform2uiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform3uiv: {
+  uniform3uiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniform4uiv: {
+  uniform4uiv: {
     parameters: ["i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix2fv: {
+  uniformMatrix2fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix3fv: {
+  uniformMatrix3fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix4fv: {
+  uniformMatrix4fv: {
     parameters: ["i32", "u32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix2x3fv: {
+  uniformMatrix2x3fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix3x2fv: {
+  uniformMatrix3x2fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix2x4fv: {
+  uniformMatrix2x4fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix4x2fv: {
+  uniformMatrix4x2fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix3x4fv: {
+  uniformMatrix3x4fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformMatrix4x3fv: {
+  uniformMatrix4x3fv: {
     parameters: ["i32", "i32", "i32", "pointer"],
     result: "void",
   },
 
-  glUniformBlockBinding: {
+  uniformBlockBinding: {
     parameters: ["u32", "u32", "u32"],
     result: "void",
   },
 
-  glValidateProgram: {
+  validateProgram: {
     parameters: ["u32"],
     result: "void",
   },
   //#endregion
 
   //#region Samplers
-  glBindSampler: {
+  bindSampler: {
     parameters: ["u32", "u32"],
     result: "void",
   },
 
-  glDeleteSamplers: {
+  deleteSamplers: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGenSamplers: {
+  genSamplers: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
 
-  glGetSamplerParameterfv: {
+  getSamplerParameterfv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetSamplerParameteriv: {
+  getSamplerParameteriv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetSamplerParameterIiv: {
+  getSamplerParameterIiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glGetSamplerParameterIuiv: {
+  getSamplerParameterIuiv: {
     parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
-  glIsSampler: {
+  isSampler: {
     parameters: ["u32"],
     result: "i32",
   },
 
-  glSamplerParameterf: {
+  samplerParameterf: {
     parameters: ["u32", "i32", "f32"],
     result: "void",
   },
 
-  glSamplerParameteri: {
+  samplerParameteri: {
     parameters: ["u32", "i32", "i32"],
     result: "void",
   },
@@ -1569,16 +1569,21 @@ export type Symbols = {
 
 const gl = GL_CONST as unknown as MapFFI<Symbols> & typeof GL_CONST;
 
+function prefixGl(name: string) {
+  return `gl${name[0].toUpperCase()}${name.slice(1)}`;
+}
+
 // TODO: Should FFI support dynamic calls (via pointers)?
 export const LIB_PATH = new URL(
   `../dist/${OS_LIB_PREFIX}gl.${OS_LIB_SUFFIX}`,
   import.meta.url,
 );
+
 const cbind = Deno.dlopen(
   LIB_PATH,
   Object.fromEntries(
     Object.entries(symbols).map(([name, def]) => {
-      return [name, {
+      return [prefixGl(name), {
         parameters: ["pointer", ...def.parameters],
         result: def.result,
       }];
@@ -1591,13 +1596,20 @@ const cbind = Deno.dlopen(
 
 export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
   for (const name in symbols) {
-    const ptr = GetProcAddress(name);
+    const glName = prefixGl(name);
+    const ptr = GetProcAddress(glName);
+    // For testing
     if (ptr.value === 0n) {
-      throw new Error(`Failed to load symbol: ${name}`);
+      throw new Error(`Failed to load symbol: ${glName}`);
     }
-    gl[name as keyof Symbols] = ((...args: any[]) => {
-      return cbind[name](ptr, ...args);
-    }) as any;
+    gl[name as keyof Symbols] = ptr.value === 0n
+      ? (() => {
+        // Lazy errors in case of older OpenGL versions being used.
+        throw new Error(`Failed to load symbol: ${glName}`);
+      })
+      : ((...args: any[]) => {
+        return cbind[glName](ptr, ...args);
+      }) as any;
   }
 }
 

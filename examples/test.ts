@@ -6,19 +6,19 @@ import {
   Vector3,
 } from "https://deno.land/x/gmath@0.1.11/mod.ts";
 
-if (!glfw.glfwInit()) {
+if (!glfw.init()) {
   throw new Error("Failed to initialize GLFW");
 }
 
-glfw.glfwWindowHint(glfw.SAMPLES, 4);
-glfw.glfwWindowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-glfw.glfwWindowHint(glfw.CONTEXT_VERSION_MINOR, 3);
-glfw.glfwWindowHint(glfw.OPENGL_FORWARD_COMPAT, gl.TRUE);
-glfw.glfwWindowHint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE);
+glfw.windowHint(glfw.SAMPLES, 4);
+glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
+glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 3);
+glfw.windowHint(glfw.OPENGL_FORWARD_COMPAT, gl.TRUE);
+glfw.windowHint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE);
 
 const width = 600, height = 500;
 
-const win = glfw.glfwCreateWindow(
+const win = glfw.createWindow(
   width,
   height,
   cstr("Hello World"),
@@ -27,23 +27,23 @@ const win = glfw.glfwCreateWindow(
 ) as Deno.UnsafePointer;
 
 if (win.value === 0n) {
-  glfw.glfwTerminate();
+  glfw.terminate();
   throw new Error("Failed to create GLFW window");
 }
 
-glfw.glfwMakeContextCurrent(win);
+glfw.makeContextCurrent(win);
 initGL();
-glfw.glfwSetInputMode(win, glfw.STICKY_KEYS, gl.TRUE);
+glfw.setInputMode(win, glfw.STICKY_KEYS, gl.TRUE);
 
-gl.glEnable(gl.DEBUG_OUTPUT);
-gl.glDebugMessageCallback();
+gl.enable(gl.DEBUG_OUTPUT);
+gl.debugMessageCallback();
 
-gl.glEnable(gl.DEPTH_TEST);
-gl.glDepthFunc(gl.LESS);
+gl.enable(gl.DEPTH_TEST);
+gl.depthFunc(gl.LESS);
 
 function loadShaders(vertex: string, fragment: string) {
-  const vertexShaderID = gl.glCreateShader(gl.VERTEX_SHADER);
-  const fragmentShaderID = gl.glCreateShader(gl.FRAGMENT_SHADER);
+  const vertexShaderID = gl.createShader(gl.VERTEX_SHADER);
+  const fragmentShaderID = gl.createShader(gl.FRAGMENT_SHADER);
 
   const result = new Uint32Array(1);
   const infoLogLength = new Uint32Array(1);
@@ -51,18 +51,18 @@ function loadShaders(vertex: string, fragment: string) {
   const vertPtr = new BigUint64Array(1);
   vertPtr[0] = Deno.UnsafePointer.of(cstr(vertex)).value;
 
-  gl.glShaderSource(vertexShaderID, 1, vertPtr, null);
+  gl.shaderSource(vertexShaderID, 1, vertPtr, null);
 
-  gl.glCompileShader(vertexShaderID);
-  gl.glGetShaderiv(vertexShaderID, gl.COMPILE_STATUS, result);
-  gl.glGetShaderiv(
+  gl.compileShader(vertexShaderID);
+  gl.getShaderiv(vertexShaderID, gl.COMPILE_STATUS, result);
+  gl.getShaderiv(
     vertexShaderID,
     gl.INFO_LOG_LENGTH,
     infoLogLength,
   );
   if (infoLogLength[0] > 0) {
     const infoLog = new Uint8Array(infoLogLength[0] + 1);
-    gl.glGetShaderInfoLog(
+    gl.getShaderInfoLog(
       vertexShaderID,
       infoLogLength[0],
       null,
@@ -73,17 +73,17 @@ function loadShaders(vertex: string, fragment: string) {
 
   const fragPtr = new BigUint64Array(1);
   fragPtr[0] = Deno.UnsafePointer.of(cstr(fragment)).value;
-  gl.glShaderSource(fragmentShaderID, 1, fragPtr, null);
-  gl.glCompileShader(fragmentShaderID);
-  gl.glGetShaderiv(vertexShaderID, gl.COMPILE_STATUS, result);
-  gl.glGetShaderiv(
+  gl.shaderSource(fragmentShaderID, 1, fragPtr, null);
+  gl.compileShader(fragmentShaderID);
+  gl.getShaderiv(vertexShaderID, gl.COMPILE_STATUS, result);
+  gl.getShaderiv(
     vertexShaderID,
     gl.INFO_LOG_LENGTH,
     infoLogLength,
   );
   if (infoLogLength[0] > 0) {
     const infoLog = new Uint8Array(infoLogLength[0] + 1);
-    gl.glGetShaderInfoLog(
+    gl.getShaderInfoLog(
       vertexShaderID,
       infoLogLength[0],
       null,
@@ -92,19 +92,19 @@ function loadShaders(vertex: string, fragment: string) {
     console.error(new TextDecoder().decode(infoLog));
   }
 
-  const programID = gl.glCreateProgram() as number;
-  gl.glAttachShader(programID, vertexShaderID);
-  gl.glAttachShader(programID, fragmentShaderID);
-  gl.glLinkProgram(programID);
-  gl.glGetProgramiv(programID, gl.LINK_STATUS, result);
-  gl.glGetProgramiv(
+  const programID = gl.createProgram() as number;
+  gl.attachShader(programID, vertexShaderID);
+  gl.attachShader(programID, fragmentShaderID);
+  gl.linkProgram(programID);
+  gl.getProgramiv(programID, gl.LINK_STATUS, result);
+  gl.getProgramiv(
     programID,
     gl.INFO_LOG_LENGTH,
     infoLogLength,
   );
   if (infoLogLength[0] > 0) {
     const infoLog = new Uint8Array(infoLogLength[0] + 1);
-    gl.glGetProgramInfoLog(
+    gl.getProgramInfoLog(
       programID,
       infoLogLength[0],
       null,
@@ -113,19 +113,19 @@ function loadShaders(vertex: string, fragment: string) {
     console.error(new TextDecoder().decode(infoLog));
   }
 
-  gl.glDetachShader(programID, vertexShaderID);
-  gl.glDetachShader(programID, fragmentShaderID);
-  gl.glDeleteShader(vertexShaderID);
-  gl.glDeleteShader(fragmentShaderID);
+  gl.detachShader(programID, vertexShaderID);
+  gl.detachShader(programID, fragmentShaderID);
+  gl.deleteShader(vertexShaderID);
+  gl.deleteShader(fragmentShaderID);
 
   return programID;
 }
 
-gl.glClearColor(0.1, 0.2, 0.3, 1.0);
+gl.clearColor(0.1, 0.2, 0.3, 1.0);
 
 const vao = new Uint32Array(1);
-gl.glGenVertexArrays(1, vao);
-gl.glBindVertexArray(vao[0]);
+gl.genVertexArrays(1, vao);
+gl.bindVertexArray(vao[0]);
 
 const VERTEX = `
 #version 330 core
@@ -197,9 +197,9 @@ const vertexBufferData = new Float32Array([
 ]);
 
 const vertexBuffer = new Uint32Array(1);
-gl.glGenBuffers(1, vertexBuffer);
-gl.glBindBuffer(gl.ARRAY_BUFFER, vertexBuffer[0]);
-gl.glBufferData(
+gl.genBuffers(1, vertexBuffer);
+gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer[0]);
+gl.bufferData(
   gl.ARRAY_BUFFER,
   vertexBufferData.byteLength,
   vertexBufferData,
@@ -247,9 +247,9 @@ const colorBufferData = new Float32Array([
 ]);
 
 const colorBuffer = new Uint32Array(1);
-gl.glGenBuffers(1, colorBuffer);
-gl.glBindBuffer(gl.ARRAY_BUFFER, colorBuffer[0]);
-gl.glBufferData(
+gl.genBuffers(1, colorBuffer);
+gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer[0]);
+gl.bufferData(
   gl.ARRAY_BUFFER,
   colorBufferData.byteLength,
   colorBufferData,
@@ -267,18 +267,18 @@ const view = Matrix4.lookAtRh(
 const model = Matrix4.identity();
 const mvp = proj.mul(view.mul(model));
 
-const matrixID = gl.glGetUniformLocation(programID, cstr("mvp"));
+const matrixID = gl.getUniformLocation(programID, cstr("mvp"));
 
 do {
-  gl.glClear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+  gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
-  gl.glUseProgram(programID);
+  gl.useProgram(programID);
 
-  gl.glUniformMatrix4fv(matrixID, 1, gl.FALSE, mvp.toFloat32Array());
+  gl.uniformMatrix4fv(matrixID, 1, gl.FALSE, mvp.toFloat32Array());
 
-  gl.glEnableVertexAttribArray(0);
-  gl.glBindBuffer(gl.ARRAY_BUFFER, vertexBuffer[0]);
-  gl.glVertexAttribPointer(
+  gl.enableVertexAttribArray(0);
+  gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer[0]);
+  gl.vertexAttribPointer(
     0,
     3,
     gl.FLOAT,
@@ -287,9 +287,9 @@ do {
     null,
   );
 
-  gl.glEnableVertexAttribArray(1);
-  gl.glBindBuffer(gl.ARRAY_BUFFER, colorBuffer[0]);
-  gl.glVertexAttribPointer(
+  gl.enableVertexAttribArray(1);
+  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer[0]);
+  gl.vertexAttribPointer(
     1,
     3,
     gl.FLOAT,
@@ -298,16 +298,16 @@ do {
     null,
   );
 
-  gl.glDrawArrays(gl.TRIANGLES, 0, 3 * 12);
+  gl.drawArrays(gl.TRIANGLES, 0, 3 * 12);
 
-  gl.glDisableVertexAttribArray(0);
+  gl.disableVertexAttribArray(0);
 
-  glfw.glfwSwapBuffers(win);
-  glfw.glfwPollEvents();
-} while (!glfw.glfwWindowShouldClose(win));
+  glfw.swapBuffers(win);
+  glfw.pollEvents();
+} while (!glfw.windowShouldClose(win));
 
-gl.glDeleteBuffers(2, new Uint32Array([...vertexBuffer, ...colorBuffer]));
-gl.glDeleteVertexArrays(1, vao);
-gl.glDeleteProgram(programID);
+gl.deleteBuffers(2, new Uint32Array([...vertexBuffer, ...colorBuffer]));
+gl.deleteVertexArrays(1, vao);
+gl.deleteProgram(programID);
 
-glfw.glfwTerminate();
+glfw.terminate();

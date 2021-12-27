@@ -3,22 +3,22 @@ import { init } from "./opengl.ts";
 import { GLFW_CONST } from "./const.ts";
 
 export const symbols = {
-  glfwInit: {
+  init: {
     parameters: [],
     result: "i32",
   },
 
-  glfwTerminate: {
+  terminate: {
     parameters: [],
     result: "void",
   },
 
-  glfwWindowHint: {
+  windowHint: {
     parameters: ["i32", "i32"],
     result: "void",
   },
 
-  glfwCreateWindow: {
+  createWindow: {
     parameters: [
       "i32",
       "i32",
@@ -29,32 +29,32 @@ export const symbols = {
     result: "pointer",
   },
 
-  glfwMakeContextCurrent: {
+  makeContextCurrent: {
     parameters: ["pointer"],
     result: "void",
   },
 
-  glfwSetInputMode: {
+  setInputMode: {
     parameters: ["pointer", "i32", "i32"],
     result: "void",
   },
 
-  glfwSwapBuffers: {
+  swapBuffers: {
     parameters: ["pointer"],
     result: "void",
   },
 
-  glfwPollEvents: {
+  pollEvents: {
     parameters: [],
     result: "void",
   },
 
-  glfwWindowShouldClose: {
+  windowShouldClose: {
     parameters: ["pointer"],
     result: "i32",
   },
 
-  glfwGetProcAddress: {
+  getProcAddress: {
     parameters: ["pointer"],
     result: "pointer",
   },
@@ -73,7 +73,21 @@ export const LIB_PATH = new URL(
   import.meta.url,
 );
 
-export const lib = Deno.dlopen(LIB_PATH, symbols as Symbols);
+function prefixGlfw(name: string) {
+  return `glfw${name[0].toUpperCase()}${name.slice(1)}`;
+}
+
+export const lib = Deno.dlopen(
+  LIB_PATH,
+  Object.fromEntries(
+    Object.entries(symbols).map(([name, def]) => {
+      return [prefixGlfw(name), def];
+    }),
+  ) as unknown as Record<
+    string,
+    Deno.ForeignFunction
+  >,
+);
 
 export function initGL() {
   init((name) =>
@@ -81,7 +95,12 @@ export function initGL() {
   );
 }
 
-const glfw = Object.assign(lib.symbols, GLFW_CONST) as
+const glfw = Object.assign(
+  Object.fromEntries(
+    Object.keys(symbols).map((name) => [name, lib.symbols[prefixGlfw(name)]]),
+  ),
+  GLFW_CONST,
+) as unknown as
   & MapFFI<Symbols>
   & typeof GLFW_CONST;
 
