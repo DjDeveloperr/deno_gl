@@ -256,20 +256,36 @@ gl.bufferData(
   gl.STATIC_DRAW,
 );
 
-const proj = new PerspectiveFov(new Rad(45.0), width / height, 0.1, 100.0)
-  .toPerspective()
-  .toMatrix4();
-const view = Matrix4.lookAtRh(
-  new Vector3(4, 4, 3),
-  Vector3.zero(), // origin
-  new Vector3(0, 1, 0),
-);
-const model = Matrix4.identity();
-const mvp = proj.mul(view.mul(model));
+let mvp!: Matrix4;
+
+function makeProjMatrix() {
+  const proj = new PerspectiveFov(new Rad(45.0), width / height, 0.1, 100.0)
+    .toPerspective()
+    .toMatrix4();
+  const view = Matrix4.lookAtRh(
+    new Vector3(4, 4, 3),
+    Vector3.zero(), // origin
+    new Vector3(0, 1, 0),
+  );
+  const model = Matrix4.identity();
+  mvp = proj.mul(view.mul(model));
+}
+makeProjMatrix();
 
 const matrixID = gl.getUniformLocation(programID, cstr("mvp"));
 
+const times = [];
+let fps;
+
 do {
+  const now = performance.now();
+  while (times.length > 0 && times[0] <= now - 1000) {
+    times.shift();
+  }
+  times.push(now);
+  fps = times.length;
+  glfw.setWindowTitle(win, cstr(`Hello World | ${fps} FPS`));
+
   gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
   gl.useProgram(programID);

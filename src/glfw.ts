@@ -58,6 +58,212 @@ export const symbols = {
     parameters: ["pointer"],
     result: "pointer",
   },
+
+  defaultWindowHints: {
+    parameters: [],
+    result: "void",
+  },
+
+  windowHintString: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  setWindowShouldClose: {
+    parameters: ["pointer", "i32"],
+    result: "void",
+  },
+
+  setWindowTitle: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowIcon: {
+    parameters: ["pointer", "i32", "pointer"],
+    result: "void",
+  },
+
+  getWindowPos: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowPos: {
+    parameters: ["pointer", "i32", "i32"],
+    result: "void",
+  },
+
+  getWindowSize: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowSizeLimits: {
+    parameters: ["pointer", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  setWindowAspectRatio: {
+    parameters: ["pointer", "i32", "i32"],
+    result: "void",
+  },
+
+  setWindowSize: {
+    parameters: ["pointer", "i32", "i32"],
+    result: "void",
+  },
+
+  getFramebufferSize: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getWindowFrameSize: {
+    parameters: ["pointer", "pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getWindowContentScale: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getWindowOpacity: {
+    parameters: ["pointer"],
+    result: "f32",
+  },
+
+  setWindowOpacity: {
+    parameters: ["pointer", "f32"],
+    result: "void",
+  },
+
+  iconifyWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  restoreWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  maximizeWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  showWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  hideWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  focusWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  requestWindowAttention: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  getWindowMonitor: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  setWindowMonitor: {
+    parameters: ["pointer", "pointer", "i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  getWindowAttrib: {
+    parameters: ["pointer", "i32"],
+    result: "i32",
+  },
+
+  setWindowAttrib: {
+    parameters: ["pointer", "i32", "i32"],
+    result: "void",
+  },
+
+  setWindowUserPointer: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  getWindowUserPointer: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  // TODO: callbacks
+  setWindowPosCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowSizeCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowCloseCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowRefreshCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowFocusCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowIconifyCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowMaximizeCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setFramebufferSizeCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setWindowContentScaleCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  waitEvents: {
+    parameters: [],
+    result: "void",
+  },
+
+  waitEventsTimeout: {
+    parameters: ["f64"],
+    result: "void",
+  },
+
+  postEmptyEvent: {
+    parameters: [],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
