@@ -2,21 +2,7 @@ import { GL_CONST } from "./const.ts";
 import { MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
 
 export const symbols = {
-  glClear: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  glGenVertexArrays: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  glBindVertexArray: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
+  //#region Buffer Objects
   glGenBuffers: {
     parameters: ["i32", "pointer"],
     result: "void",
@@ -59,117 +45,13 @@ export const symbols = {
     result: "void",
   },
 
-  glCreateShader: {
-    parameters: ["i32"],
-    result: "u32",
-  },
-
-  glShaderSource: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  glCompileShader: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  glGetShaderiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  glGetShaderInfoLog: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  glCreateProgram: {
-    parameters: [],
-    result: "u32",
-  },
-
-  glAttachShader: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  glLinkProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  glGetProgramiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  glGetProgramInfoLog: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  glDetachShader: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  glDeleteShader: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  glUseProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  glClearColor: {
-    parameters: ["f32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  glGetError: {
-    parameters: [],
-    result: "u32",
-  },
-
-  glEnable: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  // TODO: Use JS callback when FFI supports Callbacks
-  glDebugMessageCallback: {
-    parameters: [],
-    result: "void",
-  },
-
   glDeleteBuffers: {
     parameters: ["i32", "pointer"],
     result: "void",
   },
+  //#endregion
 
-  glDeleteVertexArrays: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  glDeleteProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  glGetUniformLocation: {
-    parameters: ["u32", "pointer"],
-    result: "u32",
-  },
-
-  glDepthFunc: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
+  //#region Textures
   glActiveTexture: {
     parameters: ["i32"],
     result: "void",
@@ -454,10 +336,39 @@ export const symbols = {
     ],
     result: "void",
   },
+  //#endregion
+
+  //#region Vertex Array Objects
+  glGenVertexArrays: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glDeleteVertexArrays: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glBindVertexArray: {
+    parameters: ["u32"],
+    result: "void",
+  },
 
   glIsVertexArray: {
     parameters: ["u32"],
     result: "i32",
+  },
+  //#endregion
+
+  //#region Rendering
+  glClear: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glClearColor: {
+    parameters: ["f32", "f32", "f32", "f32"],
+    result: "void",
   },
 
   glClearBufferiv: {
@@ -522,6 +433,24 @@ export const symbols = {
     ],
     result: "void",
   },
+  //#endregion
+
+  //#region State Management
+  glGetError: {
+    parameters: [],
+    result: "u32",
+  },
+
+  // TODO: Use JS callback when FFI supports Callbacks
+  glDebugMessageCallback: {
+    parameters: [],
+    result: "void",
+  },
+
+  glEnable: {
+    parameters: ["i32"],
+    result: "void",
+  },
 
   glBlendColor: {
     parameters: ["f32", "f32", "f32", "f32"],
@@ -564,6 +493,11 @@ export const symbols = {
   },
 
   glCullFace: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glDepthFunc: {
     parameters: ["i32"],
     result: "void",
   },
@@ -742,8 +676,70 @@ export const symbols = {
     parameters: ["i32", "i32", "i32", "i32"],
     result: "void",
   },
+  //#endregion
 
-  glValidateProgram: {
+  //#region Shaders
+  glAttachShader: {
+    parameters: ["u32", "u32"],
+    result: "void",
+  },
+
+  glCreateShader: {
+    parameters: ["i32"],
+    result: "u32",
+  },
+
+  glShaderSource: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glCompileShader: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glGetShaderiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetShaderInfoLog: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glCreateProgram: {
+    parameters: [],
+    result: "u32",
+  },
+
+  glLinkProgram: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glGetProgramiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetProgramInfoLog: {
+    parameters: ["u32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
+  glDetachShader: {
+    parameters: ["u32", "u32"],
+    result: "void",
+  },
+
+  glDeleteShader: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glUseProgram: {
     parameters: ["u32"],
     result: "void",
   },
@@ -761,6 +757,16 @@ export const symbols = {
   glBindFragDataLocationIndexed: {
     parameters: ["u32", "u32", "u32", "pointer"],
     result: "void",
+  },
+
+  glDeleteProgram: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glGetUniformLocation: {
+    parameters: ["u32", "pointer"],
+    result: "u32",
   },
 
   glGetActiveAttrib: {
@@ -1039,6 +1045,13 @@ export const symbols = {
     result: "void",
   },
 
+  glValidateProgram: {
+    parameters: ["u32"],
+    result: "void",
+  },
+  //#endregion
+
+  //#region Samplers
   glBindSampler: {
     parameters: ["u32", "u32"],
     result: "void",
@@ -1088,6 +1101,7 @@ export const symbols = {
     parameters: ["u32", "i32", "i32"],
     result: "void",
   },
+  //#endregion
 } as const;
 
 export type Symbols = {
