@@ -205,49 +205,50 @@ export const symbols = {
   },
 
   // TODO: callbacks
+
   setWindowPosCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowSizeCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowCloseCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowRefreshCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowFocusCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowIconifyCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowMaximizeCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setFramebufferSizeCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   setWindowContentScaleCallback: {
     parameters: ["pointer", "pointer"],
-    result: "void",
+    result: "pointer",
   },
 
   waitEvents: {
@@ -262,6 +263,81 @@ export const symbols = {
 
   postEmptyEvent: {
     parameters: [],
+    result: "void",
+  },
+
+  getMonitors: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  getPrimaryMonitor: {
+    parameters: [],
+    result: "pointer",
+  },
+
+  getMonitorPos: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getMonitorWorkarea: {
+    parameters: ["pointer", "pointer", "pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getMonitorPhysicalSize: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getMonitorContentScale: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  getMonitorName: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  setMonitorUserPointer: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  getMonitorUserPointer: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  setMonitorCallback: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  getVideoModes: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  getVideoMode: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  setGamma: {
+    parameters: ["pointer", "f32"],
+    result: "void",
+  },
+
+  getGammaRamp: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  setGammaRamp: {
+    parameters: ["pointer", "pointer"],
     result: "void",
   },
 } as const;
