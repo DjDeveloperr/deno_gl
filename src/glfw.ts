@@ -340,6 +340,216 @@ export const symbols = {
     parameters: ["pointer", "pointer"],
     result: "void",
   },
+
+  extensionSupported: {
+    parameters: ["pointer"],
+    result: "i32",
+  },
+
+  swapInterval: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  getCurrentContext: {
+    parameters: [],
+    result: "pointer",
+  },
+
+  getInputMode: {
+    parameters: ["pointer", "i32"],
+    result: "i32",
+  },
+
+  rawMouseMotionSupported: {
+    parameters: [],
+    result: "i32",
+  },
+
+  getKeyName: {
+    parameters: ["i32", "i32"],
+    result: "pointer",
+  },
+
+  getKeyScancode: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  getKey: {
+    parameters: ["pointer", "i32"],
+    result: "i32",
+  },
+
+  getMouseButton: {
+    parameters: ["pointer", "i32"],
+    result: "i32",
+  },
+
+  getCursorPos: {
+    parameters: ["pointer", "pointer", "pointer"],
+    result: "void",
+  },
+
+  setCursorPos: {
+    parameters: ["pointer", "f64", "f64"],
+    result: "void",
+  },
+
+  createCursor: {
+    parameters: ["pointer", "i32", "i32"],
+    result: "pointer",
+  },
+
+  createStandardCursor: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+
+  destroyCursor: {
+    parameters: ["pointer"],
+    result: "void",
+  },
+
+  setCursor: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  setKeyCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setCharCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setCharModsCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setMouseButtonCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setCursorPosCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setCursorEnterCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setScrollCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  setDropCallback: {
+    parameters: ["pointer", "pointer"],
+    result: "pointer",
+  },
+
+  joystickPresent: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  getJoystickAxes: {
+    parameters: ["i32", "pointer"],
+    result: "pointer",
+  },
+
+  getJoystickButtons: {
+    parameters: ["i32", "pointer"],
+    result: "pointer",
+  },
+
+  getJoystickHats: {
+    parameters: ["i32", "pointer"],
+    result: "pointer",
+  },
+
+  getJoystickName: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+
+  getJoystickGUID: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+
+  setJoystickUserPointer: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  getJoystickUserPointer: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+
+  joystickIsGamepad: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  setJoystickCallback: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  updateGamepadMappings: {
+    parameters: ["pointer"],
+    result: "i32",
+  },
+
+  getGamepadName: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+
+  getGamepadState: {
+    parameters: ["i32", "pointer"],
+    result: "i32",
+  },
+
+  setClipboardString: {
+    parameters: ["pointer", "pointer"],
+    result: "void",
+  },
+
+  getClipboardString: {
+    parameters: ["pointer"],
+    result: "pointer",
+  },
+
+  getTime: {
+    parameters: [],
+    result: "f64",
+  },
+
+  setTime: {
+    parameters: ["f64"],
+    result: "void",
+  },
+
+  getTimerValue: {
+    parameters: [],
+    result: "i64",
+  },
+
+  getTimerFrequency: {
+    parameters: [],
+    result: "i64",
+  },
 } as const;
 
 export type Symbols = {

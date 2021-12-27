@@ -277,6 +277,9 @@ const matrixID = gl.getUniformLocation(programID, cstr("mvp"));
 const times = [];
 let fps;
 
+// To limit FPS at ~60
+// glfw.swapInterval(1);
+
 do {
   const now = performance.now();
   while (times.length > 0 && times[0] <= now - 1000) {
