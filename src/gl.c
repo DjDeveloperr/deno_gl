@@ -781,3 +781,371 @@ void glSamplerParameterf(void (*fnptr)(unsigned int, unsigned int, float), unsig
 void glSamplerParameteri(void (*fnptr)(unsigned int, unsigned int, int), unsigned int sampler, unsigned int pname, int param) {
   (*fnptr)(sampler, pname, param);
 }
+
+void glBindBufferBase(void (*fnptr)(int, unsigned int, unsigned int), int target, unsigned int index, unsigned int buffer) {
+  (*fnptr)(target, index, buffer);
+}
+
+void glBindBufferRange(void (*fnptr)(int, unsigned int, unsigned int, int, int), int target, unsigned int index, unsigned int buffer, int offset, int size) {
+  (*fnptr)(target, index, buffer, offset, size);
+}
+
+void glBufferSubData(void (*fnptr)(int, int, int, const void*), int target, int offset, int size, const void* data) {
+  (*fnptr)(target, offset, size, data);
+}
+
+void glCopyBufferSubData(void (*fnptr)(int, int, int, int, int), int readTarget, int writeTarget, int readOffset, int writeOffset, int size) {
+  (*fnptr)(readTarget, writeTarget, readOffset, writeOffset, size);
+}
+
+void glDrawArraysInstanced(void (*fnptr)(int, int, int, int), int mode, int first, int count, int instancecount) {
+  (*fnptr)(mode, first, count, instancecount);
+}
+
+void glDrawElements(void (*fnptr)(int, int, int, const void*), int mode, int count, int type, const void* indices) {
+  (*fnptr)(mode, count, type, indices);
+}
+
+void glDrawElementsBaseVertex(void (*fnptr)(int, int, int, const void*, int), int mode, int count, int type, const void* indices, int basevertex) {
+  (*fnptr)(mode, count, type, indices, basevertex);
+}
+
+void glDrawElementsInstanced(void (*fnptr)(int, int, int, const void*, int), int mode, int count, int type, const void* indices, int instancecount) {
+  (*fnptr)(mode, count, type, indices, instancecount);
+}
+
+void glDrawElementsInstancedBaseVertex(void (*fnptr)(int, int, int, const void*, int, int), int mode, int count, int type, const void* indices, int instancecount, int basevertex) {
+  (*fnptr)(mode, count, type, indices, instancecount, basevertex);
+}
+
+void glDrawRangeElements(void (*fnptr)(int, unsigned int, unsigned int, int, int, const void*), int mode, unsigned int start, unsigned int end, int count, int type, const void* indices) {
+  (*fnptr)(mode, start, end, count, type, indices);
+}
+
+void glDrawRangeElementsBaseVertex(void (*fnptr)(int, unsigned int, unsigned int, int, int, const void*, int), int mode, unsigned int start, unsigned int end, int count, int type, const void* indices, int basevertex) {
+  (*fnptr)(mode, start, end, count, type, indices, basevertex);
+}
+
+void glFlushMappedBufferRange(void (*fnptr)(int, int, int), int target, int offset, int size) {
+  (*fnptr)(target, offset, size);
+}
+
+void glGetBufferParameteriv(void (*fnptr)(int, int, int*), int target, int pname, int* params) {
+  (*fnptr)(target, pname, params);
+}
+
+void glGetBufferParameteri64v(void (*fnptr)(int, int, int64_t*), int target, int pname, int64_t* params) {
+  (*fnptr)(target, pname, params);
+}
+
+void glGetBufferPointerv(void (*fnptr)(int, int, void**), int target, int pname, void** params) {
+  (*fnptr)(target, pname, params);
+}
+
+void glGetBufferSubData(void (*fnptr)(int, int, int, void*), int target, int offset, int size, void* data) {
+  (*fnptr)(target, offset, size, data);
+}
+
+void glGetVertexAttribdv(void (*fnptr)(unsigned int, int, double*), unsigned int index, int pname, double* params) {
+  (*fnptr)(index, pname, params);
+}
+
+void glGetVertexAttribfv(void (*fnptr)(unsigned int, int, float*), unsigned int index, int pname, float* params) {
+  (*fnptr)(index, pname, params);
+}
+
+void glGetVertexAttribiv(void (*fnptr)(unsigned int, int, int*), unsigned int index, int pname, int* params) {
+  (*fnptr)(index, pname, params);
+}
+
+void glGetVertexAttribIiv(void (*fnptr)(unsigned int, int, int*), unsigned int index, int pname, int* params) {
+  (*fnptr)(index, pname, params);
+}
+
+void glGetVertexAttribIuiv(void (*fnptr)(unsigned int, int, unsigned int*), unsigned int index, int pname, unsigned int* params) {
+  (*fnptr)(index, pname, params);
+}
+
+void glGetVertexAttribPointerv(void (*fnptr)(unsigned int, int, void**), unsigned int index, int pname, void** pointer) {
+  (*fnptr)(index, pname, pointer);
+}
+
+int glIsBuffer(int (*fnptr)(unsigned int), unsigned int buffer) {
+  return (*fnptr)(buffer);
+}
+
+void* glMapBuffer(void* (*fnptr)(int, int), int target, int access) {
+  return (*fnptr)(target, access);
+}
+
+void* glMapBufferRange(void* (*fnptr)(int, int, int, int), int target, int offset, int length, int access) {
+  return (*fnptr)(target, offset, length, access);
+}
+
+void glMultiDrawArrays(void (*fnptr)(int, const int*, const int*, int), int mode, const int* first, const int* count, int drawcount) {
+  (*fnptr)(mode, first, count, drawcount);
+}
+
+void glMultiDrawElements(void (*fnptr)(int, const int*, int, const void* const*, int), int mode, const int* count, int type, const void* const* indices, int drawcount) {
+  (*fnptr)(mode, count, type, indices, drawcount);
+}
+
+void glMultiDrawElementsBaseVertex(void (*fnptr)(int, const int*, int, const void* const*, int, const int*), int mode, const int* count, int type, const void* const* indices, int drawcount, const int* basevertex) {
+  (*fnptr)(mode, count, type, indices, drawcount, basevertex);
+}
+
+void glPrimitiveRestartIndex(void (*fnptr)(unsigned int), unsigned int index) {
+  (*fnptr)(index);
+}
+
+void glProvokingVertex(void (*fnptr)(int), int mode) {
+  (*fnptr)(mode);
+}
+
+void glUnmapBuffer(int (*fnptr)(int), int target) {
+  (*fnptr)(target);
+}
+
+void glVertexAttribDivisor(void (*fnptr)(unsigned int, unsigned int), unsigned int index, unsigned int divisor) {
+  (*fnptr)(index, divisor);
+}
+
+void glVertexAttrib1f(void (*fnptr)(unsigned int, float), unsigned int index, float x) {
+  (*fnptr)(index, x);
+}
+
+void glVertexAttrib1s(void (*fnptr)(unsigned int, short), unsigned int index, short x) {
+  (*fnptr)(index, x);
+}
+
+void glVertexAttrib1d(void (*fnptr)(unsigned int, double), unsigned int index, double x) {
+  (*fnptr)(index, x);
+}
+
+void glVertexAttribI1i(void (*fnptr)(unsigned int, int), unsigned int index, int x) {
+  (*fnptr)(index, x);
+}
+
+void glVertexAttribI1ui(void (*fnptr)(unsigned int, unsigned int), unsigned int index, unsigned int x) {
+  (*fnptr)(index, x);
+}
+
+void glVertexAttrib2f(void (*fnptr)(unsigned int, float, float), unsigned int index, float x, float y) {
+  (*fnptr)(index, x, y);
+}
+
+void glVertexAttrib2s(void (*fnptr)(unsigned int, short, short), unsigned int index, short x, short y) {
+  (*fnptr)(index, x, y);
+}
+
+void glVertexAttrib2d(void (*fnptr)(unsigned int, double, double), unsigned int index, double x, double y) {
+  (*fnptr)(index, x, y);
+}
+
+void glVertexAttribI2i(void (*fnptr)(unsigned int, int, int), unsigned int index, int x, int y) {
+  (*fnptr)(index, x, y);
+}
+
+void glVertexAttribI2ui(void (*fnptr)(unsigned int, unsigned int, unsigned int), unsigned int index, unsigned int x, unsigned int y) {
+  (*fnptr)(index, x, y);
+}
+
+void glVertexAttrib3f(void (*fnptr)(unsigned int, float, float, float), unsigned int index, float x, float y, float z) {
+  (*fnptr)(index, x, y, z);
+}
+
+void glVertexAttrib3s(void (*fnptr)(unsigned int, short, short, short), unsigned int index, short x, short y, short z) {
+  (*fnptr)(index, x, y, z);
+}
+
+void glVertexAttrib3d(void (*fnptr)(unsigned int, double, double, double), unsigned int index, double x, double y, double z) {
+  (*fnptr)(index, x, y, z);
+}
+
+void glVertexAttribI3i(void (*fnptr)(unsigned int, int, int, int), unsigned int index, int x, int y, int z) {
+  (*fnptr)(index, x, y, z);
+}
+
+void glVertexAttribI3ui(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int), unsigned int index, unsigned int x, unsigned int y, unsigned int z) {
+  (*fnptr)(index, x, y, z);
+}
+
+void glVertexAttrib4f(void (*fnptr)(unsigned int, float, float, float, float), unsigned int index, float x, float y, float z, float w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttrib4s(void (*fnptr)(unsigned int, short, short, short, short), unsigned int index, short x, short y, short z, short w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttrib4d(void (*fnptr)(unsigned int, double, double, double, double), unsigned int index, double x, double y, double z, double w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttrib4Nub(void (*fnptr)(unsigned int, unsigned char, unsigned char, unsigned char, unsigned char), unsigned int index, unsigned char x, unsigned char y, unsigned char z, unsigned char w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttribI4i(void (*fnptr)(unsigned int, int, int, int, int), unsigned int index, int x, int y, int z, int w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttribI4ui(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int, unsigned int), unsigned int index, unsigned int x, unsigned int y, unsigned int z, unsigned int w) {
+  (*fnptr)(index, x, y, z, w);
+}
+
+void glVertexAttrib1fv(void (*fnptr)(unsigned int, const float*), unsigned int index, const float* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib1sv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib1dv(void (*fnptr)(unsigned int, const double*), unsigned int index, const double* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI1iv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI1uiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib2fv(void (*fnptr)(unsigned int, const float*), unsigned int index, const float* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib2sv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib2dv(void (*fnptr)(unsigned int, const double*), unsigned int index, const double* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI2iv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI2uiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib3fv(void (*fnptr)(unsigned int, const float*), unsigned int index, const float* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib3sv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib3dv(void (*fnptr)(unsigned int, const double*), unsigned int index, const double* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI3iv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI3uiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4fv(void (*fnptr)(unsigned int, const float*), unsigned int index, const float* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4sv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4dv(void (*fnptr)(unsigned int, const double*), unsigned int index, const double* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4iv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4bv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4ubv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4usv(void (*fnptr)(unsigned int, const unsigned short*), unsigned int index, const unsigned short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4uiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Nbv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Nsv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Niv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Nubv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Nusv(void (*fnptr)(unsigned int, const unsigned short*), unsigned int index, const unsigned short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttrib4Nuiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4bv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4ubv(void (*fnptr)(unsigned int, const unsigned char*), unsigned int index, const unsigned char* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4sv(void (*fnptr)(unsigned int, const short*), unsigned int index, const short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4usv(void (*fnptr)(unsigned int, const unsigned short*), unsigned int index, const unsigned short* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4iv(void (*fnptr)(unsigned int, const int*), unsigned int index, const int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribI4uiv(void (*fnptr)(unsigned int, const unsigned int*), unsigned int index, const unsigned int* v) {
+  (*fnptr)(index, v);
+}
+
+void glVertexAttribP1ui(void (*fnptr)(unsigned int, int, int, unsigned int), unsigned int index, int type, int normalized, unsigned int value) {
+  (*fnptr)(index, type, normalized, value);
+}
+
+void glVertexAttribP2ui(void (*fnptr)(unsigned int, int, int, unsigned int), unsigned int index, int type, int normalized, unsigned int value) {
+  (*fnptr)(index, type, normalized, value);
+}
+
+void glVertexAttribP3ui(void (*fnptr)(unsigned int, int, int, unsigned int), unsigned int index, int type, int normalized, unsigned int value) {
+  (*fnptr)(index, type, normalized, value);
+}
+
+void glVertexAttribP4ui(void (*fnptr)(unsigned int, int, int, unsigned int), unsigned int index, int type, int normalized, unsigned int value) {
+  (*fnptr)(index, type, normalized, value);
+}

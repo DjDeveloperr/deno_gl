@@ -13,8 +13,63 @@ export const symbols = {
     result: "void",
   },
 
+  glBindBufferBase: {
+    parameters: ["i32", "u32", "u32"],
+    result: "void",
+  },
+
+  glBindBufferRange: {
+    parameters: ["i32", "u32", "u32", "i32", "i32"],
+    result: "void",
+  },
+
   glBufferData: {
     parameters: ["i32", "i32", "pointer", "i32"],
+    result: "void",
+  },
+
+  glBufferSubData: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glCopyBufferSubData: {
+    parameters: ["i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glDrawArraysInstanced: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glDrawElements: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glDrawElementsBaseVertex: {
+    parameters: ["i32", "i32", "i32", "pointer", "i32"],
+    result: "void",
+  },
+
+  glDrawElementsInstanced: {
+    parameters: ["i32", "i32", "i32", "pointer", "i32"],
+    result: "void",
+  },
+
+  glDrawElementsInstancedBaseVertex: {
+    parameters: ["i32", "i32", "i32", "pointer", "i32", "i32"],
+    result: "void",
+  },
+
+  glDrawRangeElements: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glDrawRangeElementsBaseVertex: {
+    parameters: ["i32", "i32", "i32", "i32", "i32", "pointer", "i32"],
     result: "void",
   },
 
@@ -35,6 +90,11 @@ export const symbols = {
     result: "void",
   },
 
+  glVertexAttribDivisor: {
+    parameters: ["i32", "i32"],
+    result: "void",
+  },
+
   glDrawArrays: {
     parameters: ["i32", "i32", "i32"],
     result: "void",
@@ -47,6 +107,401 @@ export const symbols = {
 
   glDeleteBuffers: {
     parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  glFlushMappedBufferRange: {
+    parameters: ["i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glGetBufferParameteriv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetBufferPointerv: {
+    parameters: ["i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetBufferSubData: {
+    parameters: ["i32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribdv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribfv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribIiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribIuiv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glGetVertexAttribPointerv: {
+    parameters: ["u32", "i32", "pointer"],
+    result: "void",
+  },
+
+  glIsBuffer: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  glMapBuffer: {
+    parameters: ["i32", "i32"],
+    result: "pointer",
+  },
+
+  glMapBufferRange: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "pointer",
+  },
+
+  glMultiDrawArrays: {
+    parameters: ["i32", "pointer", "pointer", "i32"],
+    result: "void",
+  },
+
+  glMultiDrawElements: {
+    parameters: ["i32", "pointer", "i32", "pointer", "i32"],
+    result: "void",
+  },
+
+  glMultiDrawElementsBaseVertex: {
+    parameters: ["i32", "pointer", "i32", "pointer", "i32", "pointer"],
+    result: "void",
+  },
+
+  glPrimitiveRestartIndex: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  glProvokingVertex: {
+    parameters: ["i32"],
+    result: "void",
+  },
+
+  glUnmapBuffer: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  glVertexAttrib1f: {
+    parameters: ["u32", "f32"],
+    result: "void",
+  },
+
+  glVertexAttrib1s: {
+    parameters: ["u32", "i16"],
+    result: "void",
+  },
+
+  glVertexAttrib1d: {
+    parameters: ["u32", "f64"],
+    result: "void",
+  },
+
+  glVertexAttribI1i: {
+    parameters: ["u32", "i32"],
+    result: "void",
+  },
+
+  glVertexAttribI1ui: {
+    parameters: ["u32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttrib2f: {
+    parameters: ["u32", "f32", "f32"],
+    result: "void",
+  },
+
+  glVertexAttrib2s: {
+    parameters: ["u32", "i16", "i16"],
+    result: "void",
+  },
+
+  glVertexAttrib2d: {
+    parameters: ["u32", "f64", "f64"],
+    result: "void",
+  },
+
+  glVertexAttribI2i: {
+    parameters: ["u32", "i32", "i32"],
+    result: "void",
+  },
+
+  glVertexAttribI2ui: {
+    parameters: ["u32", "u32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttrib3f: {
+    parameters: ["u32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glVertexAttrib3s: {
+    parameters: ["u32", "i16", "i16", "i16"],
+    result: "void",
+  },
+
+  glVertexAttrib3d: {
+    parameters: ["u32", "f64", "f64", "f64"],
+    result: "void",
+  },
+
+  glVertexAttribI3i: {
+    parameters: ["u32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glVertexAttribI3ui: {
+    parameters: ["u32", "u32", "u32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttrib4f: {
+    parameters: ["u32", "f32", "f32", "f32", "f32"],
+    result: "void",
+  },
+
+  glVertexAttrib4s: {
+    parameters: ["u32", "i16", "i16", "i16", "i16"],
+    result: "void",
+  },
+
+  glVertexAttrib4d: {
+    parameters: ["u32", "f64", "f64", "f64", "f64"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nub: {
+    parameters: ["u32", "u8", "u8", "u8", "u8"],
+    result: "void",
+  },
+
+  glVertexAttribI4i: {
+    parameters: ["u32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  glVertexAttribI4ui: {
+    parameters: ["u32", "u32", "u32", "u32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttrib1fv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib1sv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib1dv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI1iv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI1uiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib2fv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib2sv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib2dv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI2iv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI2uiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib3fv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib3sv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib3dv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI3iv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI3uiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4fv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4sv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4dv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4iv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4bv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4ubv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4usv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4uiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nbv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nsv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Niv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nubv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nusv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttrib4Nuiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4bv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4ubv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4sv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4usv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4iv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribI4uiv: {
+    parameters: ["u32", "pointer"],
+    result: "void",
+  },
+
+  glVertexAttribP1ui: {
+    parameters: ["u32", "i32", "i32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttribP2ui: {
+    parameters: ["u32", "i32", "i32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttribP3ui: {
+    parameters: ["u32", "i32", "i32", "u32"],
+    result: "void",
+  },
+
+  glVertexAttribP4ui: {
+    parameters: ["u32", "i32", "i32", "u32"],
     result: "void",
   },
   //#endregion
