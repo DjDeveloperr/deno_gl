@@ -323,7 +323,7 @@ do {
 
   glfw.swapBuffers(win);
   glfw.pollEvents();
-} while (!glfw.windowShouldClose(win));
+} while (!glfw.windowShouldClose(win) && !glfw.getKey(win, glfw.KEY_ESCAPE));
 
 gl.deleteBuffers(2, new Uint32Array([...vertexBuffer, ...colorBuffer]));
 gl.deleteVertexArrays(1, vao);
