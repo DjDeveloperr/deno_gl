@@ -1667,7 +1667,7 @@ export type Symbols = {
   };
 };
 
-const gl = { ...GL_CONST } as unknown as MapFFI<Symbols> & typeof GL_CONST;
+const gl = new GL_CONST() as unknown as MapFFI<Symbols> & GL_CONST;
 
 function prefixGl(name: string) {
   return `gl${name[0].toUpperCase()}${name.slice(1)}`;
@@ -1675,7 +1675,7 @@ function prefixGl(name: string) {
 
 // TODO: Should FFI support dynamic calls (via pointers)?
 export const LIB_PATH = new URL(
-  `../dist/${OS_LIB_PREFIX}gl.${OS_LIB_SUFFIX}`,
+  `../../dist/${OS_LIB_PREFIX}gl.${OS_LIB_SUFFIX}`,
   import.meta.url,
 );
 

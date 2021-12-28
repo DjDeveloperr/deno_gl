@@ -591,7 +591,7 @@ export type Symbols = {
 };
 
 export const LIB_PATH = new URL(
-  `../dist/${OS_LIB_PREFIX}glfw3.${OS_LIB_SUFFIX}`,
+  `../../dist/${OS_LIB_PREFIX}glfw3.${OS_LIB_SUFFIX}`,
   import.meta.url,
 );
 
@@ -626,9 +626,9 @@ const glfw = Object.assign(
       lib.symbols[prefixGlfw(name)],
     ]),
   ),
-  GLFW_CONST,
+  new GLFW_CONST(),
 ) as unknown as
   & MapFFI<Symbols>
-  & typeof GLFW_CONST;
+  & GLFW_CONST;
 
 export default glfw;

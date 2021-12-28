@@ -1,4 +1,2 @@
-export { default as gl } from "./src/opengl.ts";
-export { default as glfw, initGL } from "./src/glfw.ts";
-export * from "./src/util.ts";
-export * from "./src/canvas.ts";
+export * from "./src/core/mod.ts";
+export * from "./src/web/mod.ts";
