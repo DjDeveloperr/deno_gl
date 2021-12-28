@@ -1213,3 +1213,23 @@ void glWaitSync(void (*fnptr)(unsigned int, unsigned int, uint64_t), unsigned in
 void glGetShaderPrecisionFormat(void (*fnptr)(unsigned int, unsigned int, int*, int*), unsigned int shadertype, unsigned int precisiontype, int* range, int* precision) {
   (*fnptr)(shadertype, precisiontype, range, precision);
 }
+
+void glGenRenderbuffers(void (*fnptr)(unsigned int, unsigned int*), unsigned int n, unsigned int* renderbuffers) {
+  (*fnptr)(n, renderbuffers);
+}
+
+void glBindRenderbuffer(void (*fnptr)(unsigned int, unsigned int), unsigned int target, unsigned int renderbuffer) {
+  (*fnptr)(target, renderbuffer);
+}
+
+void glRenderbufferStorage(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int), unsigned int target, unsigned int internalformat, unsigned int width, unsigned int height) {
+  (*fnptr)(target, internalformat, width, height);
+}
+
+void glFramebufferRenderbuffer(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int), unsigned int target, unsigned int attachment, unsigned int renderbuffertarget, unsigned int renderbuffer) {
+  (*fnptr)(target, attachment, renderbuffertarget, renderbuffer);
+}
+
+void glGenerateMipmap(void (*fnptr)(unsigned int), unsigned int target) {
+  (*fnptr)(target);
+}

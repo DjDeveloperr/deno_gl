@@ -33,6 +33,10 @@ export class WebGLVertexArrayObject {
   constructor(public name: number) {}
 }
 
+export class WebGLRenderbuffer {
+  constructor(public name: number) {}
+}
+
 export class WebGLRenderingContext {
   constructor(public canvas: GlfwCanvas) {
     Object.assign(this, GL_CONST);
@@ -67,18 +71,72 @@ export class WebGLRenderingContext {
     format: number,
     type: number,
     pixels: Uint8Array | Uint8ClampedArray | null,
-  ) {
-    gl.texImage2D(
-      target,
-      level,
-      internalformat ?? 0,
-      width,
-      height,
-      border,
-      format,
-      type,
-      pixels,
-    );
+  ): void;
+  texImage2D(
+    target: number,
+    level: number,
+    internalformat: number,
+    format: number,
+    type: number,
+    img: any,
+  ): void;
+  texImage2D(...args: any[]) {
+    if (args.length === 9) {
+      const [
+        target,
+        level,
+        internalformat,
+        width,
+        height,
+        border,
+        format,
+        type,
+        pixels,
+      ] = args as [
+        target: number,
+        level: number,
+        internalformat: number,
+        width: number,
+        height: number,
+        border: number,
+        format: number,
+        type: number,
+        pixels: Uint8Array | Uint8ClampedArray | null,
+      ];
+      gl.texImage2D(
+        target,
+        level,
+        internalformat ?? 0,
+        width,
+        height,
+        border,
+        format,
+        type,
+        pixels,
+      );
+    } else if (args.length === 6) {
+      const [target, level, internalformat, format, type, img] = args as [
+        target: number,
+        level: number,
+        internalformat: number,
+        format: number,
+        type: number,
+        img: any,
+      ];
+      gl.texImage2D(
+        target,
+        level,
+        internalformat,
+        img.width,
+        img.height,
+        0,
+        format,
+        type,
+        img.rawData,
+      );
+    } else {
+      throw new Error("Invalid arguments");
+    }
   }
 
   clearColor(r: number, g: number, b: number, a: number) {
@@ -311,11 +369,15 @@ export class WebGLRenderingContext {
   }
 
   uniform1i(location: number, v0: number) {
-    gl.uniform1i(location, v0);
+    gl.uniform1i(location, Number(v0));
   }
 
   uniform2iv(location: number, value: Int32Array) {
     gl.uniform2iv(location, 1, new Int32Array(value));
+  }
+
+  uniform3fv(location: number, value: Float32Array) {
+    gl.uniform3fv(location, 1, new Float32Array(value));
   }
 
   readPixels(
@@ -468,6 +530,51 @@ export class WebGLRenderingContext {
     gl.deleteFramebuffers(1, new Uint32Array([framebuffer.name]));
   }
 
+  createRenderbuffer() {
+    const rb = new Uint32Array(1);
+    gl.genRenderbuffers(1, rb);
+    return new WebGLRenderbuffer(rb[0]);
+  }
+
+  bindRenderbuffer(target: number, renderbuffer: WebGLRenderbuffer | null) {
+    gl.bindRenderbuffer(target, renderbuffer?.name ?? 0);
+  }
+
+  renderbufferStorage(
+    target: number,
+    internalformat: number,
+    width: number,
+    height: number,
+  ) {
+    gl.renderbufferStorage(target, internalformat, width, height);
+  }
+
+  framebufferRenderbuffer(
+    target: number,
+    attachment: number,
+    renderbuffertarget: number,
+    renderbuffer: WebGLRenderbuffer | null,
+  ) {
+    gl.framebufferRenderbuffer(
+      target,
+      attachment,
+      renderbuffertarget,
+      renderbuffer?.name ?? 0,
+    );
+  }
+
+  pixelStorei(pname: number, param: number) {
+    gl.pixelStorei(Number(pname), Number(param));
+  }
+
+  texParameterf(
+    target: number,
+    pname: number,
+    param: number,
+  ) {
+    gl.texParameterf(target, pname, param);
+  }
+
   texStorage2D(
     target: number,
     levels: number,
@@ -539,6 +646,10 @@ export class WebGLRenderingContext {
     };
   }
 
+  generateMipmap(target: number) {
+    gl.generateMipmap(target);
+  }
+
   getExtension(name: string) {
     if (!glfw.extensionSupported(cstr("GL_" + name))) {
       return null;
@@ -557,6 +668,12 @@ export class WebGLRenderingContext {
       case "EXT_frag_depth":
       case "EXT_shader_texture_lod":
         return {};
+
+      case "EXT_texture_filter_anisotropic":
+        return {
+          TEXTURE_MAX_ANISOTROPY_EXT: 0x84FE,
+          MAX_TEXTURE_MAX_ANISOTROPY_EXT: 0x84FF,
+        };
 
       case "OES_vertex_array_object":
         return {
@@ -578,6 +695,9 @@ export class WebGLRenderingContext {
 
   getParameter(name: number) {
     switch (name) {
+      case undefined:
+        throw new Error("Invalid parameter name: undefined");
+
       case gl.MAX_TEXTURE_SIZE:
       case gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS:
       case gl.MAX_CUBE_MAP_TEXTURE_SIZE:
@@ -588,6 +708,7 @@ export class WebGLRenderingContext {
       case gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS:
       case gl.IMPLEMENTATION_COLOR_READ_FORMAT:
       case gl.IMPLEMENTATION_COLOR_READ_TYPE:
+      case gl.MAX_TEXTURE_MAX_ANISOTROPY:
       case gl.MAX_TEXTURE_IMAGE_UNITS: {
         const v = new Uint32Array(1);
         gl.getIntegerv(name, v);

@@ -1569,7 +1569,7 @@ export const symbols = {
   },
   //#endregion
 
-  //#region
+  //#region Frame buffers
   genFramebuffers: {
     parameters: ["i32", "pointer"],
     result: "void",
@@ -1592,6 +1592,26 @@ export const symbols = {
 
   deleteFramebuffers: {
     parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  genRenderbuffers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  bindRenderbuffer: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  renderbufferStorage: {
+    parameters: ["i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+
+  framebufferRenderbuffer: {
+    parameters: ["i32", "i32", "i32", "u32"],
     result: "void",
   },
 
@@ -1632,6 +1652,11 @@ export const symbols = {
     result: "void",
   },
   //#endregion
+
+  generateMipmap: {
+    parameters: ["i32"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
@@ -1700,7 +1725,6 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
             "color: red",
             "",
           );
-          Deno.exit();
         }
         return res;
       }) as any;
