@@ -61,6 +61,60 @@ export class WebGLRenderingContext {
     gl.texParameteri(target, pname, param);
   }
 
+  // https://github.com/servo/servo/blob/8c052d3593bfce51f787f0f3db4cfe756a6510ed/components/script/dom/webglrenderingcontext.rs#L869-L896
+  flipTeximageY(
+    pixels: Uint8Array,
+    internalformat: number,
+    type: number,
+    width: number,
+    height: number,
+    unpackAlignment: number,
+  ) {
+    if (!this._UNPACK_FLIP_Y_WEBGL) {
+      return pixels;
+    }
+
+    const cpp = ({
+      [gl.UNSIGNED_BYTE]: 1,
+      [gl.FLOAT]: 4,
+      [gl.HALF_FLOAT]: 2,
+      [gl.UNSIGNED_SHORT_4_4_4_4]: 2,
+      [gl.UNSIGNED_SHORT_5_5_5_1]: 2,
+      [gl.UNSIGNED_SHORT_5_6_5]: 2,
+    })[type]! * ({
+      [gl.RGBA]: 4,
+      [gl.RGB]: 3,
+      [gl.LUMINANCE_ALPHA]: 2,
+      [gl.LUMINANCE]: 1,
+      [gl.ALPHA]: 1,
+      [gl.DEPTH_COMPONENT]: 1,
+    })[internalformat]! / ({
+      [gl.UNSIGNED_BYTE]: 1,
+      [gl.FLOAT]: 1,
+      [gl.HALF_FLOAT]: 1,
+      [gl.UNSIGNED_SHORT_4_4_4_4]: 4,
+      [gl.UNSIGNED_SHORT_5_5_5_1]: 4,
+      [gl.UNSIGNED_SHORT_5_6_5]: 3,
+    })[type]!;
+
+    const stride = (width * cpp + unpackAlignment - 1) &
+      Number(!(unpackAlignment - 1));
+
+    const flipped = [];
+
+    for (let y = 0; y < height; y++) {
+      const flippedY = height - 1 - y;
+      const start = flippedY * stride;
+
+      const pixsub = pixels.subarray(start, start + width * cpp);
+      flipped.push(...pixsub);
+      const pad = Math.abs(stride - width * cpp);
+      flipped.push(...new Uint8Array(pad));
+    }
+
+    return new Uint8Array(flipped);
+  }
+
   texImage2D(
     target: number,
     level: number,
@@ -101,18 +155,25 @@ export class WebGLRenderingContext {
         border: number,
         format: number,
         type: number,
-        pixels: Uint8Array | Uint8ClampedArray | null,
+        pixels: Uint8Array,
       ];
       gl.texImage2D(
         target,
         level,
-        internalformat ?? 0,
+        internalformat ?? gl.UNSIGNED_BYTE,
         width,
         height,
         border,
         format,
-        type,
-        pixels,
+        type ?? gl.UNSIGNED_BYTE,
+        this.flipTeximageY(
+          pixels,
+          internalformat,
+          type ?? gl.UNSIGNED_BYTE,
+          width,
+          height,
+          4,
+        ),
       );
     } else if (args.length === 6) {
       const [target, level, internalformat, format, type, img] = args as [
@@ -133,7 +194,14 @@ export class WebGLRenderingContext {
         // The format we decode Image into.
         gl.RGBA,
         gl.UNSIGNED_BYTE,
-        img.rawData,
+        this.flipTeximageY(
+          img.rawData,
+          gl.RGBA,
+          gl.UNSIGNED_BYTE,
+          img.width,
+          img.height,
+          4,
+        ),
       );
     } else {
       throw new Error("Invalid arguments");
@@ -358,7 +426,7 @@ export class WebGLRenderingContext {
   }
 
   uniform1fv(location: number, value: Float32Array) {
-    gl.uniform1fv(location, 1, value);
+    gl.uniform1fv(location, 1, new Float32Array(value));
   }
 
   uniform3f(location: number, v0: number, v1: number, v2: number) {
@@ -379,6 +447,10 @@ export class WebGLRenderingContext {
 
   uniform3fv(location: number, value: Float32Array) {
     gl.uniform3fv(location, 1, new Float32Array(value));
+  }
+
+  uniform2f(location: number, v0: number, v1: number) {
+    gl.uniform2f(location, v0, v1);
   }
 
   readPixels(
@@ -564,10 +636,21 @@ export class WebGLRenderingContext {
     );
   }
 
+  _UNPACK_FLIP_Y_WEBGL = false;
+  _UNPACK_PREMULTIPLY_ALPHA_WEBGL = false;
+
   pixelStorei(pname: number, param: number) {
     switch (pname) {
-      case gl.UNPACK_FLIP_Y_WEBGL:
-      case gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL:
+      case gl.UNPACK_FLIP_Y_WEBGL: {
+        this._UNPACK_FLIP_Y_WEBGL = Boolean(param);
+        break;
+      }
+
+      case gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL: {
+        this._UNPACK_PREMULTIPLY_ALPHA_WEBGL = Boolean(param);
+        break;
+      }
+
       case gl.UNPACK_COLORSPACE_CONVERSION_WEBGL: {
         console.log("[gl::ignore] pixelStorei", pname, param);
         break;
@@ -697,6 +780,10 @@ export class WebGLRenderingContext {
           bindVertexArrayOES: (vao: WebGLVertexArrayObject | null) => {
             gl.bindVertexArray(vao?.name ?? 0);
           },
+
+          deleteVertexArrayOES: (vao: WebGLVertexArrayObject) => {
+            gl.deleteVertexArrays(1, new Uint32Array([vao.name]));
+          },
         };
 
       default:
@@ -738,6 +825,7 @@ export class WebGLRenderingContext {
         return v;
       }
 
+      case gl.SHADING_LANGUAGE_VERSION:
       case gl.VERSION: {
         return new Deno.UnsafePointerView(gl.getString(gl.VERSION))
           .getCString();
@@ -779,7 +867,7 @@ export class GlfwCanvas {
     }
 
     glfw.setInputMode(this.handle, glfw.STICKY_KEYS, gl.TRUE);
-    glfw.setInputMode(this.handle, glfw.CURSOR, glfw.CURSOR_DISABLED);
+    glfw.setInputMode(this.handle, glfw.CURSOR, glfw.CURSOR_NORMAL);
 
     glfw.makeContextCurrent(this.handle);
     initGL();
@@ -837,7 +925,6 @@ export class GlfwCanvas {
   listeners: { [key: string]: ((...args: any[]) => void)[] } = {};
 
   addEventListener(type: string, listener: any) {
-    this.listeners[type] = listener;
     if (Array.isArray(this.listeners[type])) {
       this.listeners[type].push(listener);
     } else {
@@ -871,6 +958,9 @@ export class GlfwCanvas {
     if (type in this.listeners) {
       for (const listener of this.listeners[type]) listener(...args);
     }
+    if (type === "pointermove") this.emit("mousemove", ...args);
+    if (type === "pointerdown") this.emit("mousedown", ...args);
+    if (type === "pointerup") this.emit("mouseup", ...args);
   }
 
   getCurrentState() {
