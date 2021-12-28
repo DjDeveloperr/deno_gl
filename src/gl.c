@@ -1149,3 +1149,63 @@ void glVertexAttribP3ui(void (*fnptr)(unsigned int, int, int, unsigned int), uns
 void glVertexAttribP4ui(void (*fnptr)(unsigned int, int, int, unsigned int), unsigned int index, int type, int normalized, unsigned int value) {
   (*fnptr)(index, type, normalized, value);
 }
+
+char* glGetStringi(char* (*fnptr)(unsigned int, unsigned int, unsigned int*), unsigned int name, unsigned int index) {
+  return (*fnptr)(name, index, 0);
+}
+
+char* glGetString(char* (*fnptr)(unsigned int, char*), unsigned int name) {
+  return (*fnptr)(name, 0);
+}
+
+void glGenFramebuffers(void (*fnptr)(unsigned int, unsigned int*), unsigned int n, unsigned int* framebuffers) {
+  (*fnptr)(n, framebuffers);
+}
+
+void glBindFramebuffer(void (*fnptr)(unsigned int, unsigned int), unsigned int target, unsigned int framebuffer) {
+  (*fnptr)(target, framebuffer);
+}
+
+void glFramebufferTexture2D(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int, int), unsigned int target, unsigned int attachment, unsigned int textarget, unsigned int texture, int level) {
+  (*fnptr)(target, attachment, textarget, texture, level);
+}
+
+int glCheckFramebufferStatus(int (*fnptr)(unsigned int), unsigned int target) {
+  return (*fnptr)(target);
+}
+
+void glDeleteFramebuffers(void (*fnptr)(unsigned int, unsigned int*), unsigned int n, unsigned int* framebuffers) {
+  (*fnptr)(n, framebuffers);
+}
+
+void glTexStorage2D(void (*fnptr)(unsigned int, int, unsigned int, unsigned int, unsigned int), unsigned int target, int levels, unsigned int internalformat, unsigned int width, unsigned int height) {
+  (*fnptr)(target, levels, internalformat, width, height);
+}
+
+int glClientWaitSync(int (*fnptr)(unsigned int, unsigned int, uint64_t), unsigned int sync, unsigned int flags, uint64_t timeout) {
+  return (*fnptr)(sync, flags, timeout);
+}
+
+void glDeleteSync(void (*fnptr)(unsigned int), unsigned int sync) {
+  (*fnptr)(sync);
+}
+
+unsigned int glFenceSync(unsigned int (*fnptr)(unsigned int, unsigned int), unsigned int condition, unsigned int flags) {
+  return (*fnptr)(condition, flags);
+}
+
+void glGetSynciv(void (*fnptr)(unsigned int, unsigned int, unsigned int, unsigned int*, int*), unsigned int sync, unsigned int pname, unsigned int bufSize, unsigned int* length, int* values) {
+  (*fnptr)(sync, pname, bufSize, length, values);
+}
+
+int glIsSync(int (*fnptr)(unsigned int), unsigned int sync) {
+  return (*fnptr)(sync);
+}
+
+void glTextureBarrier(void (*fnptr)(void)) {
+  (*fnptr)();
+}
+
+void glWaitSync(void (*fnptr)(unsigned int, unsigned int, uint64_t), unsigned int sync, unsigned int flags, uint64_t timeout) {
+  (*fnptr)(sync, flags, timeout);
+}

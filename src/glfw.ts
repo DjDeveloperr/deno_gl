@@ -575,6 +575,11 @@ export const symbols = {
     parameters: [],
     result: "i64",
   },
+
+  destroyWindow: {
+    parameters: ["pointer"],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
@@ -614,7 +619,12 @@ export function initGL() {
 
 const glfw = Object.assign(
   Object.fromEntries(
-    Object.keys(symbols).map((name) => [name, lib.symbols[prefixGlfw(name)]]),
+    Object.keys(symbols).map((
+      name,
+    ) => [
+      name,
+      lib.symbols[prefixGlfw(name)],
+    ]),
   ),
   GLFW_CONST,
 ) as unknown as

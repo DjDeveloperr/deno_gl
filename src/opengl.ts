@@ -691,7 +691,6 @@ export const symbols = {
       "i32",
       "i32",
       "i32",
-      "i32",
       "pointer",
     ],
     result: "void",
@@ -1331,167 +1330,167 @@ export const symbols = {
   },
 
   uniform1f: {
-    parameters: ["i32", "f32"],
+    parameters: ["u32", "f32"],
     result: "void",
   },
 
   uniform2f: {
-    parameters: ["i32", "f32", "f32"],
+    parameters: ["u32", "f32", "f32"],
     result: "void",
   },
 
   uniform3f: {
-    parameters: ["i32", "f32", "f32", "f32"],
+    parameters: ["u32", "f32", "f32", "f32"],
     result: "void",
   },
 
   uniform4f: {
-    parameters: ["i32", "f32", "f32", "f32", "f32"],
+    parameters: ["u32", "f32", "f32", "f32", "f32"],
     result: "void",
   },
 
   uniform1i: {
-    parameters: ["i32", "i32"],
+    parameters: ["u32", "i32"],
     result: "void",
   },
 
   uniform2i: {
-    parameters: ["i32", "i32", "i32"],
+    parameters: ["u32", "i32", "i32"],
     result: "void",
   },
 
   uniform3i: {
-    parameters: ["i32", "i32", "i32", "i32"],
+    parameters: ["u32", "i32", "i32", "i32"],
     result: "void",
   },
 
   uniform4i: {
-    parameters: ["i32", "i32", "i32", "i32", "i32"],
+    parameters: ["u32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
   uniform1ui: {
-    parameters: ["i32", "u32"],
+    parameters: ["u32", "u32"],
     result: "void",
   },
 
   uniform2ui: {
-    parameters: ["i32", "u32", "u32"],
+    parameters: ["u32", "u32", "u32"],
     result: "void",
   },
 
   uniform3ui: {
-    parameters: ["i32", "u32", "u32", "u32"],
+    parameters: ["u32", "u32", "u32", "u32"],
     result: "void",
   },
 
   uniform4ui: {
-    parameters: ["i32", "u32", "u32", "u32", "u32"],
+    parameters: ["u32", "u32", "u32", "u32", "u32"],
     result: "void",
   },
 
   uniform1fv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform2fv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform3fv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform4fv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform1iv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform2iv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform3iv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform4iv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform1uiv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform2uiv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform3uiv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniform4uiv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix2fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix3fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix4fv: {
-    parameters: ["i32", "u32", "i32", "pointer"],
+    parameters: ["u32", "u32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix2x3fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix3x2fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix2x4fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix4x2fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix3x4fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
   uniformMatrix4x3fv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: ["u32", "i32", "i32", "pointer"],
     result: "void",
   },
 
@@ -1557,6 +1556,77 @@ export const symbols = {
     result: "void",
   },
   //#endregion
+
+  //#region Utility
+  getString: {
+    parameters: ["i32"],
+    result: "pointer",
+  },
+  //#endregion
+
+  //#region
+  genFramebuffers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  bindFramebuffer: {
+    parameters: ["i32", "u32"],
+    result: "void",
+  },
+
+  framebufferTexture2D: {
+    parameters: ["i32", "i32", "i32", "u32", "i32"],
+    result: "void",
+  },
+
+  checkFramebufferStatus: {
+    parameters: ["i32"],
+    result: "i32",
+  },
+
+  deleteFramebuffers: {
+    parameters: ["i32", "pointer"],
+    result: "void",
+  },
+
+  texStorage2D: {
+    parameters: ["i32", "i32", "i32", "i32", "i32"],
+    result: "void",
+  },
+  //#endregion
+
+  //#region Syncing
+  clientWaitSync: {
+    parameters: ["u32", "i32", "u64"],
+    result: "i32",
+  },
+
+  deleteSync: {
+    parameters: ["u32"],
+    result: "void",
+  },
+
+  fenceSync: {
+    parameters: ["i32", "i32"],
+    result: "u32",
+  },
+
+  isSync: {
+    parameters: ["u32"],
+    result: "i32",
+  },
+
+  waitSync: {
+    parameters: ["u32", "i32", "u64"],
+    result: "void",
+  },
+
+  getSynciv: {
+    parameters: ["u32", "i32", "i32", "pointer"],
+    result: "void",
+  },
+  //#endregion
 } as const;
 
 export type Symbols = {
@@ -1567,7 +1637,7 @@ export type Symbols = {
   };
 };
 
-const gl = GL_CONST as unknown as MapFFI<Symbols> & typeof GL_CONST;
+const gl = { ...GL_CONST } as unknown as MapFFI<Symbols> & typeof GL_CONST;
 
 function prefixGl(name: string) {
   return `gl${name[0].toUpperCase()}${name.slice(1)}`;
@@ -1608,6 +1678,7 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
         throw new Error(`Failed to load symbol: ${glName}`);
       })
       : ((...args: any[]) => {
+        console.log(glName, args); // , new Error().stack);
         return cbind[glName](ptr, ...args);
       }) as any;
   }
