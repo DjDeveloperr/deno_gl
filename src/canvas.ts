@@ -130,8 +130,9 @@ export class WebGLRenderingContext {
         img.width,
         img.height,
         0,
-        format,
-        type,
+        // The format we decode Image into.
+        gl.RGBA,
+        gl.UNSIGNED_BYTE,
         img.rawData,
       );
     } else {
@@ -564,7 +565,17 @@ export class WebGLRenderingContext {
   }
 
   pixelStorei(pname: number, param: number) {
-    gl.pixelStorei(Number(pname), Number(param));
+    switch (pname) {
+      case gl.UNPACK_FLIP_Y_WEBGL:
+      case gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL:
+      case gl.UNPACK_COLORSPACE_CONVERSION_WEBGL: {
+        console.log("[gl::ignore] pixelStorei", pname, param);
+        break;
+      }
+
+      default:
+        gl.pixelStorei(pname, Number(param));
+    }
   }
 
   texParameterf(
@@ -748,6 +759,12 @@ export class WebGLRenderingContext {
 export class GlfwCanvas {
   handle: Deno.UnsafePointer;
   style: any = {};
+  ownerDocument = {
+    documentElement: {
+      clientLeft: 0,
+      clientTop: 0,
+    },
+  };
 
   constructor(title: string, width: number, height: number) {
     this.handle = glfw.createWindow(width, height, cstr(title), null, null);
@@ -760,9 +777,13 @@ export class GlfwCanvas {
         }`,
       );
     }
+
     glfw.setInputMode(this.handle, glfw.STICKY_KEYS, gl.TRUE);
+    glfw.setInputMode(this.handle, glfw.CURSOR, glfw.CURSOR_DISABLED);
+
     glfw.makeContextCurrent(this.handle);
     initGL();
+
     gl.enable(gl.DEBUG_OUTPUT);
     gl.debugMessageCallback();
   }
@@ -813,7 +834,116 @@ export class GlfwCanvas {
     glfw.destroyWindow(this.handle);
   }
 
+  listeners: { [key: string]: ((...args: any[]) => void)[] } = {};
+
   addEventListener(type: string, listener: any) {
-    console.log("[canvas::stub] addEventListener", type);
+    this.listeners[type] = listener;
+    if (Array.isArray(this.listeners[type])) {
+      this.listeners[type].push(listener);
+    } else {
+      this.listeners[type] = [listener];
+    }
   }
+
+  removeEventListener(type: string, listener: any) {
+    if (Array.isArray(this.listeners[type])) {
+      const index = this.listeners[type].indexOf(listener);
+      if (index > -1) {
+        this.listeners[type].splice(index, 1);
+      }
+    }
+  }
+
+  getBoundingClientRect() {
+    return {
+      top: 0,
+      left: 0,
+      width: this.width,
+      height: this.height,
+      right: this.width,
+      bottom: this.height,
+    };
+  }
+
+  state: any = {};
+
+  emit(type: string, ...args: any[]) {
+    if (type in this.listeners) {
+      for (const listener of this.listeners[type]) listener(...args);
+    }
+  }
+
+  getCurrentState() {
+    const cursorPosX = new Float64Array(1);
+    const cursorPosY = new Float64Array(1);
+    glfw.getCursorPos(this.handle, cursorPosX, cursorPosY);
+    return {
+      mouseButtonLeft: Boolean(
+        glfw.getMouseButton(this.handle, glfw.MOUSE_BUTTON_LEFT),
+      ),
+      mouseButtonRight: Boolean(glfw.getMouseButton(
+        this.handle,
+        glfw.MOUSE_BUTTON_RIGHT,
+      )),
+      mouseButtonMiddle: Boolean(glfw.getMouseButton(
+        this.handle,
+        glfw.MOUSE_BUTTON_MIDDLE,
+      )),
+      cursorX: cursorPosX[0],
+      cursorY: cursorPosY[0],
+    };
+  }
+
+  updateEvents() {
+    const oldState = this.state;
+    this.state = this.getCurrentState();
+    const changed = [];
+    for (const prop in oldState) {
+      if (oldState[prop] !== this.state[prop]) {
+        changed.push(prop);
+      }
+    }
+
+    const oldPointerDown = oldState.mouseButtonLeft ||
+      oldState.mouseButtonRight ||
+      oldState.mouseButtonMiddle;
+    const newPointerDown = this.state.mouseButtonLeft ||
+      this.state.mouseButtonRight ||
+      this.state.mouseButtonMiddle;
+
+    if (changed.includes("cursorX") || changed.includes("cursorY")) {
+      this.emit("pointermove", {
+        clientX: this.state.cursorX,
+        clientY: this.state.cursorY,
+        pageX: this.state.cursorX,
+        pageY: this.state.cursorY,
+      });
+    }
+
+    if (!oldPointerDown && newPointerDown) {
+      this.emit("pointerdown", {
+        clientX: this.state.cursorX,
+        clientY: this.state.cursorY,
+        pageX: this.state.cursorX,
+        pageY: this.state.cursorY,
+        button: this.state.mouseButtonLeft
+          ? 0
+          : this.state.mouseButtonMiddle
+          ? 1
+          : 2,
+      });
+    }
+
+    if (oldPointerDown && !newPointerDown) {
+      this.emit("pointerup", {
+        clientX: this.state.cursorX,
+        clientY: this.state.cursorY,
+        pageX: this.state.cursorX,
+        pageY: this.state.cursorY,
+      });
+    }
+  }
+
+  setPointerCapture() {}
+  releasePointerCapture() {}
 }

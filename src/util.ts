@@ -21,6 +21,7 @@ export type MapParamType<T extends Deno.NativeType> = T extends "pointer" ? (
   | Uint16Array
   | Int16Array
   | Float32Array
+  | Float64Array
   | Uint32Array
   | Int32Array
   | BigUint64Array
