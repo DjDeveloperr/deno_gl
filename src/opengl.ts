@@ -1193,6 +1193,11 @@ export const symbols = {
     result: "void",
   },
 
+  getShaderPrecisionFormat: {
+    parameters: ["i32", "i32", "pointer", "pointer"],
+    result: "void",
+  },
+
   useProgram: {
     parameters: ["u32"],
     result: "void",
@@ -1664,6 +1669,8 @@ const cbind = Deno.dlopen(
   >,
 ).symbols;
 
+const DEBUG = true;
+
 export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
   for (const name in symbols) {
     const glName = prefixGl(name);
@@ -1678,8 +1685,24 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
         throw new Error(`Failed to load symbol: ${glName}`);
       })
       : ((...args: any[]) => {
-        console.log(glName, args); // , new Error().stack);
-        return cbind[glName](ptr, ...args);
+        // if (glName != "glGetError") console.log(glName, args);
+        const res = cbind[glName](ptr, ...args);
+        let err;
+        while (
+          DEBUG && name !== "getError" && (err = gl.getError()) != gl.NO_ERROR
+        ) {
+          console.error(
+            `%cerror%c: ${glName}(${
+              args.map((e) => Deno.inspect(e, { colors: true })).join(", ")
+            }) threw 0x${err.toString(16)} (and returned ${
+              Deno.inspect(res, { colors: true })
+            })`,
+            "color: red",
+            "",
+          );
+          Deno.exit();
+        }
+        return res;
       }) as any;
   }
 }

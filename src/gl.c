@@ -1209,3 +1209,7 @@ void glTextureBarrier(void (*fnptr)(void)) {
 void glWaitSync(void (*fnptr)(unsigned int, unsigned int, uint64_t), unsigned int sync, unsigned int flags, uint64_t timeout) {
   (*fnptr)(sync, flags, timeout);
 }
+
+void glGetShaderPrecisionFormat(void (*fnptr)(unsigned int, unsigned int, int*, int*), unsigned int shadertype, unsigned int precisiontype, int* range, int* precision) {
+  (*fnptr)(shadertype, precisiontype, range, precision);
+}

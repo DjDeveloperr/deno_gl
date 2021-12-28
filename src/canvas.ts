@@ -29,6 +29,10 @@ export class WebGLSync {
   constructor(public name: number) {}
 }
 
+export class WebGLVertexArrayObject {
+  constructor(public name: number) {}
+}
+
 export class WebGLRenderingContext {
   constructor(public canvas: GlfwCanvas) {
     Object.assign(this, GL_CONST);
@@ -133,8 +137,12 @@ export class WebGLRenderingContext {
     gl.bindBuffer(target, buffer?.name ?? 0);
   }
 
-  bufferData(target: number, data: Uint8Array | number, usage: number) {
-    data = data instanceof Uint8Array ? data : new Uint8Array(data);
+  bufferData(
+    target: number,
+    data: Uint8Array | Float32Array | Uint16Array | number,
+    usage: number,
+  ) {
+    data = typeof data === "number" ? new Uint8Array([data]) : data;
     gl.bufferData(target, data.byteLength, data, usage);
   }
 
@@ -291,7 +299,7 @@ export class WebGLRenderingContext {
   }
 
   uniform1fv(location: number, value: Float32Array) {
-    gl.uniform1fv(location, value.length, value);
+    gl.uniform1fv(location, 1, value);
   }
 
   uniform3f(location: number, v0: number, v1: number, v2: number) {
@@ -307,7 +315,7 @@ export class WebGLRenderingContext {
   }
 
   uniform2iv(location: number, value: Int32Array) {
-    gl.uniform2iv(location, value.length, new Int32Array(value));
+    gl.uniform2iv(location, 1, new Int32Array(value));
   }
 
   readPixels(
@@ -317,7 +325,7 @@ export class WebGLRenderingContext {
     height: number,
     format: number,
     type: number,
-    pixels: Uint8Array | 0 | null,
+    pixels: Float32Array | Uint8Array | number,
   ) {
     gl.readPixels(
       x,
@@ -326,8 +334,12 @@ export class WebGLRenderingContext {
       height,
       format,
       type,
-      pixels || null,
+      typeof pixels === "number"
+        ? new Deno.UnsafePointer(BigInt(pixels))
+        : pixels,
     );
+
+    return pixels;
   }
 
   texSubImage2D(
@@ -513,6 +525,20 @@ export class WebGLRenderingContext {
     );
   }
 
+  getShaderPrecisionFormat(
+    shadertype: number,
+    precisiontype: number,
+  ) {
+    const range = new Int32Array(2);
+    const precision = new Int32Array(1);
+    gl.getShaderPrecisionFormat(shadertype, precisiontype, range, precision);
+    return {
+      rangeLow: range[0],
+      rangeHigh: range[1],
+      precision,
+    };
+  }
+
   getExtension(name: string) {
     if (!glfw.extensionSupported(cstr("GL_" + name))) {
       return null;
@@ -520,7 +546,30 @@ export class WebGLRenderingContext {
 
     switch (name) {
       case "EXT_color_buffer_float":
+      case "OES_texture_float":
+      case "OES_texture_half_float":
+      case "OES_texture_half_float_linear":
+      case "OES_standard_derivatives":
+      case "OES_element_index_uint":
+      case "OES_texture_float_linear":
+      case "EXT_color_buffer_half_float":
+      case "EXT_blend_minmax":
+      case "EXT_frag_depth":
+      case "EXT_shader_texture_lod":
         return {};
+
+      case "OES_vertex_array_object":
+        return {
+          createVertexArrayOES: () => {
+            const vbo = new Uint32Array(1);
+            gl.genVertexArrays(1, vbo);
+            return new WebGLVertexArrayObject(vbo[0]);
+          },
+
+          bindVertexArrayOES: (vao: WebGLVertexArrayObject | null) => {
+            gl.bindVertexArray(vao?.name ?? 0);
+          },
+        };
 
       default:
         throw new Error("Unsupported extension: " + name);
@@ -533,10 +582,12 @@ export class WebGLRenderingContext {
       case gl.MAX_VERTEX_TEXTURE_IMAGE_UNITS:
       case gl.MAX_CUBE_MAP_TEXTURE_SIZE:
       case gl.MAX_VERTEX_ATTRIBS:
-      case 0x8DFB:
-      case 0x8dfc:
-      case 0x8dfd:
+      case gl.MAX_VERTEX_UNIFORM_VECTORS:
+      case gl.MAX_VARYING_VECTORS:
+      case gl.MAX_FRAGMENT_UNIFORM_VECTORS:
       case gl.MAX_COMBINED_TEXTURE_IMAGE_UNITS:
+      case gl.IMPLEMENTATION_COLOR_READ_FORMAT:
+      case gl.IMPLEMENTATION_COLOR_READ_TYPE:
       case gl.MAX_TEXTURE_IMAGE_UNITS: {
         const v = new Uint32Array(1);
         gl.getIntegerv(name, v);
@@ -561,7 +612,7 @@ export class WebGLRenderingContext {
       }
 
       default: {
-        const v = Object.entries(gl).find(([k, v]) => v === name)?.[0] ??
+        const v = Object.entries(gl).find(([, v]) => v === name)?.[0] ??
           "Unknown";
         throw new Error(
           `[gl::stub] getParameter(${name}) not implemented: ${v} (${name}, 0x${
@@ -588,9 +639,9 @@ export class GlfwCanvas {
         }`,
       );
     }
+    glfw.setInputMode(this.handle, glfw.STICKY_KEYS, gl.TRUE);
     glfw.makeContextCurrent(this.handle);
     initGL();
-    glfw.setInputMode(this.handle, glfw.STICKY_KEYS, gl.TRUE);
     gl.enable(gl.DEBUG_OUTPUT);
     gl.debugMessageCallback();
   }
@@ -623,9 +674,10 @@ export class GlfwCanvas {
     glfw.setWindowSize(this.handle, this.width, value);
   }
 
-  getContext(type: string) {
-    console.log("[canvas::stub] getContext", type);
-    return new Proxy(new WebGLRenderingContext(this), {
+  getContext(_type: string) {
+    const ctx = new WebGLRenderingContext(this);
+    // return ctx;
+    return new Proxy(ctx, {
       get: (t, p, r) => {
         if (!(p in t)) {
           throw new Error(`${String(p)} not in t`);
