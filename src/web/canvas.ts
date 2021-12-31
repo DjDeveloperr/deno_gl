@@ -15,6 +15,7 @@ export class GlfwCanvas extends HTMLElement {
         throw new Error("Failed to initialize GLFW");
       }
 
+      glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
       glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
@@ -86,7 +87,15 @@ export class GlfwCanvas extends HTMLElement {
     switch (type) {
       case "webgl":
       case "webgl2": {
-        return new WebGLRenderingContext(this);
+        return new WebGLRenderingContext(this, {
+          alpha: false,
+          depth: false,
+          stencil: false,
+          antialias: false,
+          premultipliedAlpha: false,
+          preserveDrawingBuffer: false,
+          powerPreference: "default",
+        });
       }
 
       default:

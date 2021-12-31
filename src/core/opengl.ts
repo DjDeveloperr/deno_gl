@@ -1,862 +1,787 @@
 import { GL_CONST } from "./const.ts";
 import { MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
 
+export const GLenum = "u32" as const;
+export const GLboolean = "u8" as const;
+export const GLbitfield = "u32" as const;
+export const GLbyte = "i8" as const;
+export const GLshort = "i16" as const;
+export const GLint = "i32" as const;
+export const GLsizei = "i32" as const;
+export const GLintptr = "i32" as const;
+export const GLsizeiptr = "u64" as const;
+export const GLubyte = "u8" as const;
+export const GLushort = "u16" as const;
+export const GLuint = "u32" as const;
+export const GLfloat = "f32" as const;
+export const GLclampf = "f32" as const;
+export const GLfloatv = "pointer" as const;
+export const GLbooleanv = "pointer" as const;
+export const GLubyteptr = "pointer" as const;
+export const GLvoidptr = "pointer" as const;
+export const GLuintv = "pointer" as const;
+export const GLintv = "pointer" as const;
+export const GLcharptr = "pointer" as const;
+export const GLenumv = "pointer" as const;
+
 export const symbols = {
-  //#region Buffer Objects
-  genBuffers: {
-    parameters: ["i32", "pointer"],
+  /// 5.14.3 Setting and getting state
+
+  activeTexture: {
+    parameters: [GLenum],
     result: "void",
   },
+
+  blendColor: {
+    parameters: [GLclampf, GLclampf, GLclampf, GLclampf],
+    result: "void",
+  },
+
+  blendEquation: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  blendEquationSeparate: {
+    parameters: [GLenum, GLenum],
+    result: "void",
+  },
+
+  blendFunc: {
+    parameters: [GLenum, GLenum],
+    result: "void",
+  },
+
+  blendFuncSeparate: {
+    parameters: [GLenum, GLenum, GLenum, GLenum],
+    result: "void",
+  },
+
+  clearColor: {
+    parameters: [GLclampf, GLclampf, GLclampf, GLclampf],
+    result: "void",
+  },
+
+  clearDepth: {
+    parameters: [GLclampf],
+    result: "void",
+  },
+
+  clearStencil: {
+    parameters: [GLint],
+    result: "void",
+  },
+
+  colorMask: {
+    parameters: [GLboolean, GLboolean, GLboolean, GLboolean],
+    result: "void",
+  },
+
+  cullFace: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  depthFunc: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  depthMask: {
+    parameters: [GLboolean],
+    result: "void",
+  },
+
+  depthRange: {
+    parameters: [GLclampf, GLclampf],
+    result: "void",
+  },
+
+  disable: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  enable: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  frontFace: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  getIntegerv: {
+    parameters: [GLenum, GLintv],
+    result: "void",
+  },
+
+  getFloatv: {
+    parameters: [GLenum, GLfloatv],
+    result: "void",
+  },
+
+  getBooleanv: {
+    parameters: [GLenum, GLbooleanv],
+    result: "void",
+  },
+
+  getString: {
+    parameters: [GLenum],
+    result: GLubyteptr,
+  },
+
+  getError: {
+    parameters: [],
+    result: GLenum,
+  },
+
+  debugMessageCallback: {
+    parameters: [],
+    result: "void",
+  },
+
+  hint: {
+    parameters: [GLenum, GLenum],
+    result: "void",
+  },
+
+  isEnabled: {
+    parameters: [GLenum],
+    result: GLboolean,
+  },
+
+  lineWidth: {
+    parameters: [GLfloat],
+    result: "void",
+  },
+
+  pixelStorei: {
+    parameters: [GLenum, GLint],
+    result: "void",
+  },
+
+  polygonOffset: {
+    parameters: [GLfloat, GLfloat],
+    result: "void",
+  },
+
+  sampleCoverage: {
+    parameters: [GLclampf, GLboolean],
+    result: "void",
+  },
+
+  stencilFunc: {
+    parameters: [GLenum, GLint, GLuint],
+    result: "void",
+  },
+
+  stencilFuncSeparate: {
+    parameters: [GLenum, GLenum, GLint, GLuint],
+    result: "void",
+  },
+
+  stencilMask: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  stencilMaskSeparate: {
+    parameters: [GLenum, GLuint],
+    result: "void",
+  },
+
+  stencilOp: {
+    parameters: [GLenum, GLenum, GLenum],
+    result: "void",
+  },
+
+  /// 5.14.4 Viewing and clipping
+
+  scissor: {
+    parameters: [GLint, GLint, GLsizei, GLsizei],
+    result: "void",
+  },
+
+  viewport: {
+    parameters: [GLint, GLint, GLsizei, GLsizei],
+    result: "void",
+  },
+
+  /// 5.14.5 Buffer objects
 
   bindBuffer: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  bindBufferBase: {
-    parameters: ["i32", "u32", "u32"],
-    result: "void",
-  },
-
-  bindBufferRange: {
-    parameters: ["i32", "u32", "u32", "i32", "i32"],
+    parameters: [GLenum, GLuint],
     result: "void",
   },
 
   bufferData: {
-    parameters: ["i32", "i32", "pointer", "i32"],
+    parameters: [GLenum, GLsizeiptr, GLvoidptr, GLenum],
     result: "void",
   },
 
   bufferSubData: {
-    parameters: ["i32", "i32", "i32", "pointer"],
+    parameters: [GLenum, GLintptr, GLsizeiptr, GLvoidptr],
     result: "void",
   },
 
-  copyBufferSubData: {
-    parameters: ["i32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  drawArraysInstanced: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  drawElements: {
-    parameters: ["i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  drawElementsBaseVertex: {
-    parameters: ["i32", "i32", "i32", "pointer", "i32"],
-    result: "void",
-  },
-
-  drawElementsInstanced: {
-    parameters: ["i32", "i32", "i32", "pointer", "i32"],
-    result: "void",
-  },
-
-  drawElementsInstancedBaseVertex: {
-    parameters: ["i32", "i32", "i32", "pointer", "i32", "i32"],
-    result: "void",
-  },
-
-  drawRangeElements: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  drawRangeElementsBaseVertex: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "pointer", "i32"],
-    result: "void",
-  },
-
-  enableVertexAttribArray: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  vertexAttribPointer: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  vertexAttribDivisor: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  drawArrays: {
-    parameters: ["i32", "i32", "i32"],
-    result: "void",
-  },
-
-  disableVertexAttribArray: {
-    parameters: ["i32"],
+  genBuffers: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
   deleteBuffers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  flushMappedBufferRange: {
-    parameters: ["i32", "i32", "i32"],
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
   getBufferParameteriv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getBufferPointerv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getBufferSubData: {
-    parameters: ["i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribdv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribfv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribIiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribIuiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getVertexAttribPointerv: {
-    parameters: ["u32", "i32", "pointer"],
+    parameters: [GLenum, GLenum, GLintv],
     result: "void",
   },
 
   isBuffer: {
-    parameters: ["u32"],
-    result: "i32",
+    parameters: [GLuint],
+    result: GLboolean,
   },
 
-  mapBuffer: {
-    parameters: ["i32", "i32"],
-    result: "pointer",
-  },
-
-  mapBufferRange: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "pointer",
-  },
-
-  multiDrawArrays: {
-    parameters: ["i32", "pointer", "pointer", "i32"],
-    result: "void",
-  },
-
-  multiDrawElements: {
-    parameters: ["i32", "pointer", "i32", "pointer", "i32"],
-    result: "void",
-  },
-
-  multiDrawElementsBaseVertex: {
-    parameters: ["i32", "pointer", "i32", "pointer", "i32", "pointer"],
-    result: "void",
-  },
-
-  primitiveRestartIndex: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  provokingVertex: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  unmapBuffer: {
-    parameters: ["i32"],
-    result: "i32",
-  },
-
-  vertexAttrib1f: {
-    parameters: ["u32", "f32"],
-    result: "void",
-  },
-
-  vertexAttrib1s: {
-    parameters: ["u32", "i16"],
-    result: "void",
-  },
-
-  vertexAttrib1d: {
-    parameters: ["u32", "f64"],
-    result: "void",
-  },
-
-  vertexAttribI1i: {
-    parameters: ["u32", "i32"],
-    result: "void",
-  },
-
-  vertexAttribI1ui: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  vertexAttrib2f: {
-    parameters: ["u32", "f32", "f32"],
-    result: "void",
-  },
-
-  vertexAttrib2s: {
-    parameters: ["u32", "i16", "i16"],
-    result: "void",
-  },
-
-  vertexAttrib2d: {
-    parameters: ["u32", "f64", "f64"],
-    result: "void",
-  },
-
-  vertexAttribI2i: {
-    parameters: ["u32", "i32", "i32"],
-    result: "void",
-  },
-
-  vertexAttribI2ui: {
-    parameters: ["u32", "u32", "u32"],
-    result: "void",
-  },
-
-  vertexAttrib3f: {
-    parameters: ["u32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  vertexAttrib3s: {
-    parameters: ["u32", "i16", "i16", "i16"],
-    result: "void",
-  },
-
-  vertexAttrib3d: {
-    parameters: ["u32", "f64", "f64", "f64"],
-    result: "void",
-  },
-
-  vertexAttribI3i: {
-    parameters: ["u32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  vertexAttribI3ui: {
-    parameters: ["u32", "u32", "u32", "u32"],
-    result: "void",
-  },
-
-  vertexAttrib4f: {
-    parameters: ["u32", "f32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  vertexAttrib4s: {
-    parameters: ["u32", "i16", "i16", "i16", "i16"],
-    result: "void",
-  },
-
-  vertexAttrib4d: {
-    parameters: ["u32", "f64", "f64", "f64", "f64"],
-    result: "void",
-  },
-
-  vertexAttrib4Nub: {
-    parameters: ["u32", "u8", "u8", "u8", "u8"],
-    result: "void",
-  },
-
-  vertexAttribI4i: {
-    parameters: ["u32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
+  /// 5.14.6 Framebuffer objects
 
-  vertexAttribI4ui: {
-    parameters: ["u32", "u32", "u32", "u32", "u32"],
+  bindFramebuffer: {
+    parameters: [GLenum, GLuint],
     result: "void",
   },
 
-  vertexAttrib1fv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib1sv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib1dv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI1iv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI1uiv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib2fv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib2sv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib2dv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI2iv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI2uiv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib3fv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib3sv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib3dv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI3iv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
+  checkFramebufferStatus: {
+    parameters: [GLenum],
+    result: GLenum,
   },
 
-  vertexAttribI3uiv: {
-    parameters: ["u32", "pointer"],
+  genFramebuffers: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  vertexAttrib4fv: {
-    parameters: ["u32", "pointer"],
+  deleteFramebuffers: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  vertexAttrib4sv: {
-    parameters: ["u32", "pointer"],
+  framebufferRenderbuffer: {
+    parameters: [GLenum, GLenum, GLenum, GLuint],
     result: "void",
   },
 
-  vertexAttrib4dv: {
-    parameters: ["u32", "pointer"],
+  framebufferTexture2D: {
+    parameters: [GLenum, GLenum, GLenum, GLuint, GLint],
     result: "void",
   },
 
-  vertexAttrib4iv: {
-    parameters: ["u32", "pointer"],
+  getFramebufferAttachmentParameteriv: {
+    parameters: [GLenum, GLenum, GLenum, GLintv],
     result: "void",
   },
 
-  vertexAttrib4bv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4ubv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4usv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4uiv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Nbv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Nsv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Niv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Nubv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Nusv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttrib4Nuiv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI4bv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
-
-  vertexAttribI4ubv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
+  isFramebuffer: {
+    parameters: [GLuint],
+    result: GLboolean,
   },
 
-  vertexAttribI4sv: {
-    parameters: ["u32", "pointer"],
-    result: "void",
-  },
+  /// 5.14.7 Renderbuffer objects
 
-  vertexAttribI4usv: {
-    parameters: ["u32", "pointer"],
+  bindRenderbuffer: {
+    parameters: [GLenum, GLuint],
     result: "void",
   },
 
-  vertexAttribI4iv: {
-    parameters: ["u32", "pointer"],
+  genRenderbuffers: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  vertexAttribI4uiv: {
-    parameters: ["u32", "pointer"],
+  deleteRenderbuffers: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  vertexAttribP1ui: {
-    parameters: ["u32", "i32", "i32", "u32"],
+  getRenderbufferParameteriv: {
+    parameters: [GLenum, GLenum, GLintv],
     result: "void",
   },
 
-  vertexAttribP2ui: {
-    parameters: ["u32", "i32", "i32", "u32"],
-    result: "void",
+  isRenderbuffer: {
+    parameters: [GLuint],
+    result: GLboolean,
   },
 
-  vertexAttribP3ui: {
-    parameters: ["u32", "i32", "i32", "u32"],
+  renderbufferStorage: {
+    parameters: [GLenum, GLenum, GLsizei, GLsizei],
     result: "void",
   },
 
-  vertexAttribP4ui: {
-    parameters: ["u32", "i32", "i32", "u32"],
-    result: "void",
-  },
-  //#endregion
-
-  //#region Textures
-  activeTexture: {
-    parameters: ["i32"],
-    result: "void",
-  },
+  /// 5.14.8 Texture objects
 
   bindTexture: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  compressedTexImage1D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
+    parameters: [GLenum, GLuint],
     result: "void",
   },
 
   compressedTexImage2D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  compressedTexImage3D: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  compressedTexSubImage1D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
+      GLenum,
+      GLint,
+      GLenum,
+      GLsizei,
+      GLsizei,
+      GLint,
+      GLsizei,
+      GLvoidptr,
     ],
     result: "void",
   },
 
   compressedTexSubImage2D: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
+      GLenum,
+      GLint,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLenum,
+      GLsizei,
+      GLvoidptr,
     ],
-    result: "void",
-  },
-
-  compressedTexSubImage3D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  copyTexImage1D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
     result: "void",
   },
 
   copyTexImage2D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  copyTexSubImage1D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32"],
+    parameters: [
+      GLenum,
+      GLint,
+      GLenum,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLint,
+    ],
     result: "void",
   },
 
   copyTexSubImage2D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  deleteTextures: {
-    parameters: ["i32", "pointer"],
+    parameters: [
+      GLenum,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+    ],
     result: "void",
   },
 
   genTextures: {
-    parameters: ["i32", "pointer"],
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  getCompressedTexImage: {
-    parameters: ["i32", "i32", "pointer"],
+  deleteTextures: {
+    parameters: [GLsizei, GLuintv],
     result: "void",
   },
 
-  getTexImage: {
-    parameters: ["i32", "i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getTexLevelParameterfv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getTexLevelParameteriv: {
-    parameters: ["i32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getTexParameterfv: {
-    parameters: ["i32", "i32", "pointer"],
+  generateMipmap: {
+    parameters: [GLenum],
     result: "void",
   },
 
   getTexParameteriv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getTexParameterIiv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getTexParameterIuiv: {
-    parameters: ["i32", "i32", "pointer"],
+    parameters: [GLenum, GLenum, GLintv],
     result: "void",
   },
 
   isTexture: {
-    parameters: ["u32"],
-    result: "i32",
-  },
-
-  texBuffer: {
-    parameters: ["i32", "i32", "u32"],
-    result: "void",
-  },
-
-  texImage1D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
+    parameters: [GLuint],
+    result: GLboolean,
   },
 
   texImage2D: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  texImage2DMultisample: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-    ],
-    result: "void",
-  },
-
-  texImage3D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  texImage3DMultisample: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
+      GLenum,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLint,
+      GLenum,
+      GLenum,
+      GLvoidptr,
     ],
     result: "void",
   },
 
   texParameterf: {
-    parameters: ["i32", "i32", "f32"],
+    parameters: [GLenum, GLenum, GLfloat],
     result: "void",
   },
 
   texParameteri: {
-    parameters: ["i32", "i32", "i32"],
-    result: "void",
-  },
-
-  texSubImage1D: {
-    parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
+    parameters: [GLenum, GLenum, GLint],
     result: "void",
   },
 
   texSubImage2D: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
+      GLenum,
+      GLint,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLenum,
+      GLenum,
+      GLvoidptr,
     ],
     result: "void",
   },
 
-  texSubImage3D: {
+  /// 5.14.9 Programs and Shaders
+
+  attachShader: {
+    parameters: [GLuint, GLuint],
+    result: "void",
+  },
+
+  bindAttribLocation: {
+    parameters: [GLuint, GLuint, GLcharptr],
+    result: "void",
+  },
+
+  compileShader: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  createProgram: {
+    parameters: [],
+    result: GLuint,
+  },
+
+  createShader: {
+    parameters: [GLenum],
+    result: GLuint,
+  },
+
+  deleteProgram: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  deleteShader: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  detachShader: {
+    parameters: [GLuint, GLuint],
+    result: "void",
+  },
+
+  getAttachedShaders: {
+    parameters: [GLuint, GLsizei, GLuintv, GLuintv],
+    result: "void",
+  },
+
+  getProgramiv: {
+    parameters: [GLuint, GLenum, GLintv],
+    result: "void",
+  },
+
+  getProgramInfoLog: {
+    parameters: [GLuint, GLsizei, GLintv, GLcharptr],
+    result: "void",
+  },
+
+  getShaderiv: {
+    parameters: [GLuint, GLenum, GLintv],
+    result: "void",
+  },
+
+  getShaderPrecisionFormat: {
+    parameters: [GLenum, GLenum, GLintv, GLintv],
+    result: "void",
+  },
+
+  getShaderInfoLog: {
+    parameters: [GLuint, GLsizei, GLintv, GLcharptr],
+    result: "void",
+  },
+
+  getShaderSource: {
+    parameters: [GLuint, GLsizei, GLintv, GLcharptr],
+    result: "void",
+  },
+
+  isProgram: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  isShader: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  linkProgram: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  shaderSource: {
+    parameters: [GLuint, GLsizei, GLcharptr, GLintv],
+    result: "void",
+  },
+
+  useProgram: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  validateProgram: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  /// 5.14.10 Uniforms and attributes
+
+  disableVertexAttribArray: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  enableVertexAttribArray: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  getActiveAttrib: {
+    parameters: [GLuint, GLuint, GLsizei, GLuintv, GLintv, GLenumv, GLcharptr],
+    result: "void",
+  },
+
+  getActiveUniform: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
+      GLuint,
+      GLuint,
+      GLsizei,
+      GLuintv,
+      GLintv,
+      GLenumv,
+      GLcharptr,
     ],
     result: "void",
   },
-  //#endregion
 
-  //#region Vertex Array Objects
-  genVertexArrays: {
-    parameters: ["u32", "pointer"],
+  getAttribLocation: {
+    parameters: [GLuint, GLcharptr],
+    result: GLint,
+  },
+
+  getUniformfv: {
+    parameters: [GLuint, GLint, GLfloatv],
     result: "void",
   },
 
-  deleteVertexArrays: {
-    parameters: ["i32", "pointer"],
+  getUniformiv: {
+    parameters: [GLuint, GLint, GLintv],
     result: "void",
   },
 
-  bindVertexArray: {
-    parameters: ["u32"],
+  getUniformLocation: {
+    parameters: [GLuint, GLcharptr],
+    result: GLint,
+  },
+
+  getVertexAttribfv: {
+    parameters: [GLuint, GLenum, GLfloatv],
     result: "void",
   },
 
-  isVertexArray: {
-    parameters: ["u32"],
-    result: "i32",
+  getVertexAttribiv: {
+    parameters: [GLuint, GLenum, GLintv],
+    result: "void",
   },
-  //#endregion
 
-  //#region Rendering
+  getVertexAttribPointerv: {
+    parameters: [GLuint, GLenum, GLvoidptr],
+    result: "void",
+  },
+
+  uniform1f: {
+    parameters: [GLint, GLfloat],
+    result: "void",
+  },
+
+  uniform2f: {
+    parameters: [GLint, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  uniform3f: {
+    parameters: [GLint, GLfloat, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  uniform4f: {
+    parameters: [GLint, GLfloat, GLfloat, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  uniform1i: {
+    parameters: [GLint, GLint],
+    result: "void",
+  },
+
+  uniform2i: {
+    parameters: [GLint, GLint, GLint],
+    result: "void",
+  },
+
+  uniform3i: {
+    parameters: [GLint, GLint, GLint, GLint],
+    result: "void",
+  },
+
+  uniform4i: {
+    parameters: [GLint, GLint, GLint, GLint, GLint],
+    result: "void",
+  },
+
+  uniform1fv: {
+    parameters: [GLint, GLsizei, GLfloatv],
+    result: "void",
+  },
+
+  uniform2fv: {
+    parameters: [GLint, GLsizei, GLfloatv],
+    result: "void",
+  },
+
+  uniform3fv: {
+    parameters: [GLint, GLsizei, GLfloatv],
+    result: "void",
+  },
+
+  uniform4fv: {
+    parameters: [GLint, GLsizei, GLfloatv],
+    result: "void",
+  },
+
+  uniform1iv: {
+    parameters: [GLint, GLsizei, GLintv],
+    result: "void",
+  },
+
+  uniform2iv: {
+    parameters: [GLint, GLsizei, GLintv],
+    result: "void",
+  },
+
+  uniform3iv: {
+    parameters: [GLint, GLsizei, GLintv],
+    result: "void",
+  },
+
+  uniform4iv: {
+    parameters: [GLint, GLsizei, GLintv],
+    result: "void",
+  },
+
+  uniformMatrix2fv: {
+    parameters: [GLint, GLsizei, GLboolean, GLfloatv],
+    result: "void",
+  },
+
+  uniformMatrix3fv: {
+    parameters: [GLint, GLsizei, GLboolean, GLfloatv],
+    result: "void",
+  },
+
+  uniformMatrix4fv: {
+    parameters: [GLint, GLsizei, GLboolean, GLfloatv],
+    result: "void",
+  },
+
+  vertexAttrib1f: {
+    parameters: [GLuint, GLfloat],
+    result: "void",
+  },
+
+  vertexAttrib2f: {
+    parameters: [GLuint, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  vertexAttrib3f: {
+    parameters: [GLuint, GLfloat, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  vertexAttrib4f: {
+    parameters: [GLuint, GLfloat, GLfloat, GLfloat, GLfloat],
+    result: "void",
+  },
+
+  vertexAttrib1fv: {
+    parameters: [GLuint, GLfloatv],
+    result: "void",
+  },
+
+  vertexAttrib2fv: {
+    parameters: [GLuint, GLfloatv],
+    result: "void",
+  },
+
+  vertexAttrib3fv: {
+    parameters: [GLuint, GLfloatv],
+    result: "void",
+  },
+
+  vertexAttrib4fv: {
+    parameters: [GLuint, GLfloatv],
+    result: "void",
+  },
+
+  vertexAttribPointer: {
+    parameters: [
+      GLuint,
+      GLint,
+      GLenum,
+      GLboolean,
+      GLsizei,
+      GLvoidptr,
+    ],
+    result: "void",
+  },
+
+  /// 5.14.11 Writing to the drawing buffer
+
   clear: {
-    parameters: ["i32"],
+    parameters: [GLbitfield],
     result: "void",
   },
 
-  clearColor: {
-    parameters: ["f32", "f32", "f32", "f32"],
+  drawArrays: {
+    parameters: [GLenum, GLint, GLsizei],
     result: "void",
   },
 
-  clearBufferiv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  clearBufferuiv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  clearBufferfv: {
-    parameters: ["i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  clearBufferfi: {
-    parameters: ["i32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  clearDepth: {
-    parameters: ["f32"],
-    result: "void",
-  },
-
-  clearStencil: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  drawBuffer: {
-    parameters: ["i32"],
+  drawElements: {
+    parameters: [GLenum, GLsizei, GLenum, GLvoidptr],
     result: "void",
   },
 
@@ -870,792 +795,41 @@ export const symbols = {
     result: "void",
   },
 
-  readBuffer: {
-    parameters: ["i32"],
-    result: "void",
-  },
+  /// 5.14.12 Reading back pixels
 
   readPixels: {
     parameters: [
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "i32",
-      "pointer",
-    ],
-    result: "void",
-  },
-  //#endregion
-
-  //#region State Management
-  getError: {
-    parameters: [],
-    result: "u32",
-  },
-
-  // TODO: Use JS callback when FFI supports Callbacks
-  debugMessageCallback: {
-    parameters: [],
-    result: "void",
-  },
-
-  enable: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  blendColor: {
-    parameters: ["f32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  blendEquation: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  blendEquationSeparate: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  blendFunc: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  blendFuncSeparate: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  clampColor: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  colorMask: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  colorMaski: {
-    parameters: ["u32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  cullFace: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  depthFunc: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  depthMask: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  depthRange: {
-    parameters: ["f32", "f32"],
-    result: "void",
-  },
-
-  disable: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  frontFace: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  getBooleanv: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getDoublev: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getFloatv: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getIntegerv: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getInteger64v: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getBooleani_v: {
-    parameters: ["i32", "u32", "pointer"],
-    result: "void",
-  },
-
-  getIntegeri_v: {
-    parameters: ["i32", "u32", "pointer"],
-    result: "void",
-  },
-
-  getInteger64i_v: {
-    parameters: ["i32", "u32", "pointer"],
-    result: "void",
-  },
-
-  hint: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  isEnabled: {
-    parameters: ["i32"],
-    result: "i32",
-  },
-
-  isEnabledi: {
-    parameters: ["i32", "u32"],
-    result: "i32",
-  },
-
-  enablei: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  disablei: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  lineWidth: {
-    parameters: ["f32"],
-    result: "void",
-  },
-
-  logicOp: {
-    parameters: ["i32"],
-    result: "void",
-  },
-
-  pixelStoref: {
-    parameters: ["i32", "f32"],
-    result: "void",
-  },
-
-  pixelStorei: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  pointParameterf: {
-    parameters: ["i32", "f32"],
-    result: "void",
-  },
-
-  pointParameteri: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  pointSize: {
-    parameters: ["f32"],
-    result: "void",
-  },
-
-  polygonMode: {
-    parameters: ["i32", "i32"],
-    result: "void",
-  },
-
-  polygonOffset: {
-    parameters: ["f32", "f32"],
-    result: "void",
-  },
-
-  sampleCoverage: {
-    parameters: ["f32", "i32"],
-    result: "void",
-  },
-
-  scissor: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  stencilFunc: {
-    parameters: ["i32", "i32", "i32"],
-    result: "void",
-  },
-
-  stencilFuncSeparate: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  stencilMask: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  stencilMaskSeparate: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  stencilOp: {
-    parameters: ["i32", "i32", "i32"],
-    result: "void",
-  },
-
-  stencilOpSeparate: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  viewport: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-  //#endregion
-
-  //#region Shaders
-  attachShader: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  createShader: {
-    parameters: ["i32"],
-    result: "u32",
-  },
-
-  shaderSource: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  compileShader: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  getShaderiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getShaderInfoLog: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  createProgram: {
-    parameters: [],
-    result: "u32",
-  },
-
-  linkProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  getProgramiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getProgramInfoLog: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  detachShader: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  deleteShader: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  getShaderPrecisionFormat: {
-    parameters: ["i32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  useProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  bindAttribLocation: {
-    parameters: ["u32", "u32", "pointer"],
-    result: "void",
-  },
-
-  bindFragDataLocation: {
-    parameters: ["u32", "u32", "pointer"],
-    result: "void",
-  },
-
-  bindFragDataLocationIndexed: {
-    parameters: ["u32", "u32", "u32", "pointer"],
-    result: "void",
-  },
-
-  deleteProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  getUniformLocation: {
-    parameters: ["u32", "pointer"],
-    result: "u32",
-  },
-
-  getActiveAttrib: {
-    parameters: [
-      "u32",
-      "u32",
-      "i32",
-      "pointer",
-      "pointer",
-      "pointer",
-      "pointer",
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLenum,
+      GLenum,
+      GLvoidptr,
     ],
     result: "void",
   },
 
-  getActiveUniform: {
-    parameters: [
-      "u32",
-      "u32",
-      "i32",
-      "pointer",
-      "pointer",
-      "pointer",
-      "pointer",
-    ],
-    result: "void",
-  },
-
-  getActiveUniformBlockiv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getActiveUniformBlockName: {
-    parameters: ["u32", "u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  getActiveUniformName: {
-    parameters: ["u32", "u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  getActiveUniformsiv: {
-    parameters: ["u32", "i32", "pointer", "i32", "pointer"],
-    result: "void",
-  },
-
-  getAttachedShaders: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  getAttribLocation: {
-    parameters: ["u32", "pointer"],
-    result: "i32",
-  },
-
-  getFragDataIndex: {
-    parameters: ["u32", "pointer"],
-    result: "i32",
-  },
-
-  getFragDataLocation: {
-    parameters: ["u32", "pointer"],
-    result: "i32",
-  },
-
-  getShaderSource: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  getUniformfv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getUniformiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getUniformuiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getUniformBlockIndex: {
-    parameters: ["u32", "pointer"],
-    result: "i32",
-  },
-
-  getUniformIndices: {
-    parameters: ["u32", "i32", "pointer", "pointer"],
-    result: "void",
-  },
-
-  isProgram: {
-    parameters: ["u32"],
-    result: "i32",
-  },
-
-  isShader: {
-    parameters: ["u32"],
-    result: "i32",
-  },
-
-  uniform1f: {
-    parameters: ["u32", "f32"],
-    result: "void",
-  },
-
-  uniform2f: {
-    parameters: ["u32", "f32", "f32"],
-    result: "void",
-  },
-
-  uniform3f: {
-    parameters: ["u32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  uniform4f: {
-    parameters: ["u32", "f32", "f32", "f32", "f32"],
-    result: "void",
-  },
-
-  uniform1i: {
-    parameters: ["u32", "i32"],
-    result: "void",
-  },
-
-  uniform2i: {
-    parameters: ["u32", "i32", "i32"],
-    result: "void",
-  },
-
-  uniform3i: {
-    parameters: ["u32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  uniform4i: {
-    parameters: ["u32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  uniform1ui: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  uniform2ui: {
-    parameters: ["u32", "u32", "u32"],
-    result: "void",
-  },
-
-  uniform3ui: {
-    parameters: ["u32", "u32", "u32", "u32"],
-    result: "void",
-  },
-
-  uniform4ui: {
-    parameters: ["u32", "u32", "u32", "u32", "u32"],
-    result: "void",
-  },
-
-  uniform1fv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform2fv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform3fv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform4fv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform1iv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform2iv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform3iv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform4iv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform1uiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform2uiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform3uiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniform4uiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix2fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix3fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix4fv: {
-    parameters: ["u32", "u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix2x3fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix3x2fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix2x4fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix4x2fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix3x4fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformMatrix4x3fv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-
-  uniformBlockBinding: {
-    parameters: ["u32", "u32", "u32"],
-    result: "void",
-  },
-
-  validateProgram: {
-    parameters: ["u32"],
-    result: "void",
-  },
-  //#endregion
-
-  //#region Samplers
-  bindSampler: {
-    parameters: ["u32", "u32"],
-    result: "void",
-  },
-
-  deleteSamplers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  genSamplers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  getSamplerParameterfv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getSamplerParameteriv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getSamplerParameterIiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  getSamplerParameterIuiv: {
-    parameters: ["u32", "i32", "pointer"],
-    result: "void",
-  },
-
-  isSampler: {
-    parameters: ["u32"],
-    result: "i32",
-  },
-
-  samplerParameterf: {
-    parameters: ["u32", "i32", "f32"],
-    result: "void",
-  },
-
-  samplerParameteri: {
-    parameters: ["u32", "i32", "i32"],
-    result: "void",
-  },
-  //#endregion
-
-  //#region Utility
-  getString: {
-    parameters: ["i32"],
-    result: "pointer",
-  },
-  //#endregion
-
-  //#region Frame buffers
-  genFramebuffers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  bindFramebuffer: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  framebufferTexture2D: {
-    parameters: ["i32", "i32", "i32", "u32", "i32"],
-    result: "void",
-  },
+  /// EXT: OES_vertex_array_object
 
-  checkFramebufferStatus: {
-    parameters: ["i32"],
-    result: "i32",
-  },
-
-  deleteFramebuffers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  genRenderbuffers: {
-    parameters: ["i32", "pointer"],
-    result: "void",
-  },
-
-  bindRenderbuffer: {
-    parameters: ["i32", "u32"],
-    result: "void",
-  },
-
-  renderbufferStorage: {
-    parameters: ["i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-
-  framebufferRenderbuffer: {
-    parameters: ["i32", "i32", "i32", "u32"],
+  bindVertexArrayOES: {
+    parameters: [GLuint],
     result: "void",
   },
 
-  texStorage2D: {
-    parameters: ["i32", "i32", "i32", "i32", "i32"],
-    result: "void",
-  },
-  //#endregion
-
-  //#region Syncing
-  clientWaitSync: {
-    parameters: ["u32", "i32", "u64"],
-    result: "i32",
-  },
-
-  deleteSync: {
-    parameters: ["u32"],
-    result: "void",
-  },
-
-  fenceSync: {
-    parameters: ["i32", "i32"],
-    result: "u32",
-  },
-
-  isSync: {
-    parameters: ["u32"],
-    result: "i32",
+  genVertexArraysOES: {
+    parameters: [GLuint, GLuintv],
+    result: GLuint,
   },
 
-  waitSync: {
-    parameters: ["u32", "i32", "u64"],
+  deleteVertexArraysOES: {
+    parameters: [GLuint, GLuintv],
     result: "void",
   },
 
-  getSynciv: {
-    parameters: ["u32", "i32", "i32", "pointer"],
-    result: "void",
-  },
-  //#endregion
-
-  generateMipmap: {
-    parameters: ["i32"],
-    result: "void",
+  isVertexArrayOES: {
+    parameters: [GLuint],
+    result: GLboolean,
   },
 } as const;
 
@@ -1710,7 +884,7 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
         throw new Error(`Failed to load symbol: ${glName}`);
       })
       : ((...args: any[]) => {
-        // if (glName != "glGetError") console.log(glName, args);
+        // if (glName != "glGetError") console.log(name, args);
         const res = cbind[glName](ptr, ...args);
         let err;
         while (

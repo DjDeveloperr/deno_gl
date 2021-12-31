@@ -6,6 +6,9 @@ import * as THREE from "https://raw.githubusercontent.com/mrdoob/three.js/master
 import * as BufferGeometryUtils from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/utils/BufferGeometryUtils.js";
 import { TrackballControls } from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/controls/TrackballControls.js";
 
+window.innerWidth = 1200;
+window.innerHeight = 680;
+
 const canvas = new GlfwCanvas(
   "THREE.js Interactive Example",
   window.innerWidth,

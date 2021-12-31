@@ -50,8 +50,10 @@ Object.defineProperties(window, {
   },
   innerHeight: {
     value: 600,
+    writable: true,
   },
   innerWidth: {
     value: 800,
+    writable: true,
   },
 });
