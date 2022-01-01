@@ -11,9 +11,9 @@ export class Element extends EventTarget {
   }
 
   appendChild(element: Element) {
-    if (element.constructor.name === "GlfwCanvas") {
-      (element as GlfwCanvas).show();
-    }
+    // if (element.constructor.name === "GlfwCanvas") {
+    //   (element as GlfwCanvas).show();
+    // }
   }
 }
 

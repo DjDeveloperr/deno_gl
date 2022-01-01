@@ -8,7 +8,7 @@ export const GLbyte = "i8" as const;
 export const GLshort = "i16" as const;
 export const GLint = "i32" as const;
 export const GLsizei = "i32" as const;
-export const GLintptr = "i32" as const;
+export const GLintptr = "u64" as const;
 export const GLsizeiptr = "u64" as const;
 export const GLubyte = "u8" as const;
 export const GLushort = "u16" as const;
@@ -23,6 +23,7 @@ export const GLuintv = "pointer" as const;
 export const GLintv = "pointer" as const;
 export const GLcharptr = "pointer" as const;
 export const GLenumv = "pointer" as const;
+export const GLint64v = "pointer" as const;
 
 export const symbols = {
   /// 5.14.3 Setting and getting state
@@ -828,6 +829,150 @@ export const symbols = {
   },
 
   isVertexArrayOES: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  //// WebGL 2
+
+  /// 3.7.2 Setting and getting state
+
+  getInteger64v: {
+    parameters: [GLenum, GLint64v],
+    result: "void",
+  },
+
+  getIntegeri_v: {
+    parameters: [GLenum, GLuint, GLintv],
+    result: "void",
+  },
+
+  getInteger64i_v: {
+    parameters: [GLenum, GLuint, GLint64v],
+    result: "void",
+  },
+
+  /// 3.7.3 Buffer objects
+
+  getBufferParameteri64v: {
+    parameters: [GLenum, GLenum, GLint64v],
+    result: "void",
+  },
+
+  copyBufferSubData: {
+    parameters: [GLenum, GLenum, GLintptr, GLintptr, GLsizeiptr],
+    result: "void",
+  },
+
+  getBufferSubData: {
+    parameters: [GLenum, GLintptr, GLsizeiptr, GLvoidptr],
+    result: "void",
+  },
+
+  /// 3.7.4 Framebuffer objects
+
+  blitFramebuffer: {
+    parameters: [
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLbitfield,
+      GLenum,
+    ],
+    result: "void",
+  },
+
+  framebufferTextureLayer: {
+    parameters: [GLenum, GLenum, GLuint, GLint, GLint],
+    result: "void",
+  },
+
+  invalidateFramebuffer: {
+    parameters: [GLenum, GLsizei, GLenumv],
+    result: "void",
+  },
+
+  invalidateSubFramebuffer: {
+    parameters: [GLenum, GLsizei, GLenumv, GLint, GLint, GLsizei, GLsizei],
+    result: "void",
+  },
+
+  readBuffer: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  /// 3.7.5 Renderbuffer objects
+
+  getInternalformativ: {
+    parameters: [
+      GLenum,
+      GLenum,
+      GLenum,
+      GLsizei,
+      GLintv,
+    ],
+    result: "void",
+  },
+
+  renderbufferStorageMultisample: {
+    parameters: [
+      GLenum,
+      GLsizei,
+      GLenum,
+      GLsizei,
+      GLsizei,
+    ],
+    result: "void",
+  },
+
+  /// 3.7.6 Texture objects
+
+  getTexParameterfv: {
+    parameters: [GLenum, GLenum, GLfloatv],
+    result: "void",
+  },
+
+  texStorage2D: {
+    parameters: [GLenum, GLsizei, GLenum, GLsizei, GLsizei],
+    result: "void",
+  },
+
+  texStorage3D: {
+    parameters: [GLenum, GLsizei, GLenum, GLsizei, GLsizei, GLsizei],
+    result: "void",
+  },
+
+  /// 3.7.11 Multiple render targets
+
+  drawBuffers: {
+    parameters: [GLsizei, GLenumv],
+    result: "void",
+  },
+
+  /// 3.7.17 Vertex Array objects
+
+  bindVertexArray: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  genVertexArrays: {
+    parameters: [GLuint, GLuintv],
+    result: GLuint,
+  },
+
+  deleteVertexArrays: {
+    parameters: [GLuint, GLuintv],
+    result: "void",
+  },
+
+  isVertexArray: {
     parameters: [GLuint],
     result: GLboolean,
   },

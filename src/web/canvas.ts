@@ -1,5 +1,5 @@
 import { cstr, gl, glfw, initGL } from "../core/mod.ts";
-import { WebGLRenderingContext } from "./context.ts";
+import { WebGL2RenderingContext } from "./context.ts";
 import { HTMLElement } from "./element.ts";
 
 let init = false;
@@ -25,6 +25,7 @@ export class GlfwCanvas extends HTMLElement {
     }
 
     this.#title = title;
+    // glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
     this.handle = glfw.createWindow(width, height, cstr(title), null, null);
     if (this.handle.value === 0n) {
       const errptr = new BigUint64Array(1);
@@ -87,15 +88,29 @@ export class GlfwCanvas extends HTMLElement {
     switch (type) {
       case "webgl":
       case "webgl2": {
-        return new WebGLRenderingContext(this, {
+        const ctx = new WebGL2RenderingContext(this, {
           alpha: false,
           depth: false,
           stencil: false,
-          antialias: false,
+          antialias: true,
           premultipliedAlpha: false,
           preserveDrawingBuffer: false,
           powerPreference: "default",
         });
+        // return new Proxy(ctx, {
+        //   get: (t, p) => {
+        //     const v = (t as any)[p];
+        //     if (typeof v === "function") {
+        //       return (...args: any[]) => {
+        //         console.log("call", p, args);
+        //         return v.bind(t)(...args);
+        //       };
+        //     } else {
+        //       return v;
+        //     }
+        //   },
+        // });
+        return ctx;
       }
 
       default:

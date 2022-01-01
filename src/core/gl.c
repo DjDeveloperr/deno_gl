@@ -43,6 +43,7 @@ typedef float          GLfloat;
 typedef float          GLclampf;
 typedef void           GLvoid;
 typedef char           GLchar;
+typedef long long      GLint64;
 
 /// 5.14.3 Setting and getting state
 
@@ -1285,6 +1286,222 @@ void glDeleteVertexArraysOES(
 }
 
 GLboolean glIsVertexArrayOES(
+  GLboolean (*fnptr)(GLuint),
+  GLuint array
+) {
+  return (*fnptr)(array);
+}
+
+/// WebGL 2
+
+void glGetInteger64v(
+  void (*fnptr)(GLenum, GLint64*),
+  GLenum pname,
+  GLint64* data
+) {
+  (*fnptr)(pname, data);
+}
+
+void glGetIntegeri_v(
+  void (*fnptr)(GLenum, GLuint, GLint*),
+  GLenum target,
+  GLuint index,
+  GLint* data
+) {
+  (*fnptr)(target, index, data);
+}
+
+void glGetInteger64i_v(
+  void (*fnptr)(GLenum, GLuint, GLint64*),
+  GLenum target,
+  GLuint index,
+  GLint64* data
+) {
+  (*fnptr)(target, index, data);
+}
+
+void glGetBufferParameteri64v(
+  void (*fnptr)(GLenum, GLenum, GLint64*),
+  GLenum target,
+  GLenum pname,
+  GLint64* params
+) {
+  (*fnptr)(target, pname, params);
+}
+
+void glCopyBufferSubData(
+  void (*fnptr)(GLenum, GLenum, GLintptr, GLintptr, GLsizeiptr),
+  GLenum readTarget,
+  GLenum writeTarget,
+  GLintptr readOffset,
+  GLintptr writeOffset,
+  GLsizeiptr size
+) {
+  (*fnptr)(readTarget, writeTarget, readOffset, writeOffset, size);
+}
+
+void glGetBufferSubData(
+  void (*fnptr)(GLenum, GLintptr, GLsizeiptr, void*),
+  GLenum target,
+  GLintptr offset,
+  GLsizeiptr size,
+  void* data
+) {
+  (*fnptr)(target, offset, size, data);
+}
+
+/// 3.7.4 Framebuffer objects
+
+void glBlitFramebuffer(
+  void (*fnptr)(GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLint, GLbitfield, GLenum),
+  GLint srcX0,
+  GLint srcY0,
+  GLint srcX1,
+  GLint srcY1,
+  GLint dstX0,
+  GLint dstY0,
+  GLint dstX1,
+  GLint dstY1,
+  GLbitfield mask,
+  GLenum filter
+) {
+  (*fnptr)(srcX0, srcY0, srcX1, srcY1, dstX0, dstY0, dstX1, dstY1, mask, filter);
+}
+
+void glFramebufferTextureLayer(
+  void (*fnptr)(GLenum, GLenum, GLuint, GLint, GLint),
+  GLenum target,
+  GLenum attachment,
+  GLuint texture,
+  GLint level,
+  GLint layer
+) {
+  (*fnptr)(target, attachment, texture, level, layer);
+}
+
+void glInvalidateFramebuffer(
+  void (*fnptr)(GLenum, GLsizei, const GLenum*),
+  GLenum target,
+  GLsizei numAttachments,
+  const GLenum* attachments
+) {
+  (*fnptr)(target, numAttachments, attachments);
+}
+
+void glInvalidateSubFramebuffer(
+  void (*fnptr)(GLenum, GLsizei, const GLenum*, GLint, GLint, GLsizei, GLsizei),
+  GLenum target,
+  GLsizei numAttachments,
+  const GLenum* attachments,
+  GLint x,
+  GLint y,
+  GLsizei width,
+  GLsizei height
+) {
+  (*fnptr)(target, numAttachments, attachments, x, y, width, height);
+}
+
+void glReadBuffer(
+  void (*fnptr)(GLenum),
+  GLenum src
+) {
+  (*fnptr)(src);
+}
+
+/// 3.7.5 Renderbuffer objects
+
+void glGetInternalformativ(
+  void (*fnptr)(GLenum, GLenum, GLenum, GLsizei, GLint*),
+  GLenum target,
+  GLenum internalformat,
+  GLenum pname,
+  GLsizei bufSize,
+  GLint* params
+) {
+  (*fnptr)(target, internalformat, pname, bufSize, params);
+}
+
+void glRenderbufferStorageMultisample(
+  void (*fnptr)(GLenum, GLsizei, GLenum, GLsizei, GLsizei),
+  GLenum target,
+  GLsizei samples,
+  GLenum internalformat,
+  GLsizei width,
+  GLsizei height
+) {
+  (*fnptr)(target, samples, internalformat, width, height);
+}
+
+/// 3.7.6 Texture objects
+
+void glGetTexParameterfv(
+  void (*fnptr)(GLenum, GLenum, GLfloat*),
+  GLenum target,
+  GLenum pname,
+  GLfloat* params
+) {
+  (*fnptr)(target, pname, params);
+}
+
+void glTexStorage2D(
+  void (*fnptr)(GLenum, GLsizei, GLenum, GLsizei, GLsizei),
+  GLenum target,
+  GLsizei levels,
+  GLenum internalformat,
+  GLsizei width,
+  GLsizei height
+) {
+  (*fnptr)(target, levels, internalformat, width, height);
+}
+
+void glTexStorage3D(
+  void (*fnptr)(GLenum, GLsizei, GLenum, GLsizei, GLsizei, GLsizei),
+  GLenum target,
+  GLsizei levels,
+  GLenum internalformat,
+  GLsizei width,
+  GLsizei height,
+  GLsizei depth
+) {
+  (*fnptr)(target, levels, internalformat, width, height, depth);
+}
+
+/// 3.7.11 Multiple render targets
+
+void glDrawBuffers(
+  void (*fnptr)(GLsizei, const GLenum*),
+  GLsizei n,
+  const GLenum* bufs
+) {
+  (*fnptr)(n, bufs);
+}
+
+/// 3.7.17 Vertex Array objects
+
+void glBindVertexArray(
+  void (*fnptr)(GLuint),
+  GLuint array
+) {
+  (*fnptr)(array);
+}
+
+void glDeleteVertexArrays(
+  void (*fnptr)(GLsizei, const GLuint*),
+  GLsizei n,
+  const GLuint* arrays
+) {
+  (*fnptr)(n, arrays);
+}
+
+void glGenVertexArrays(
+  void (*fnptr)(GLsizei, GLuint*),
+  GLsizei n,
+  GLuint* arrays
+) {
+  (*fnptr)(n, arrays);
+}
+
+GLboolean glIsVertexArray(
   GLboolean (*fnptr)(GLuint),
   GLuint array
 ) {
