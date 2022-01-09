@@ -44,6 +44,7 @@ typedef float          GLclampf;
 typedef void           GLvoid;
 typedef char           GLchar;
 typedef long long      GLint64;
+typedef unsigned long long GLuint64;
 
 /// 5.14.3 Setting and getting state
 
@@ -1506,4 +1507,115 @@ GLboolean glIsVertexArray(
   GLuint array
 ) {
   return (*fnptr)(array);
+}
+
+/// 3.7.12 Query objects
+
+void glGenQueries(
+  void (*fnptr)(GLsizei, GLuint*),
+  GLsizei n,
+  GLuint* ids
+) {
+  (*fnptr)(n, ids);
+}
+
+void glDeleteQueries(
+  void (*fnptr)(GLsizei, const GLuint*),
+  GLsizei n,
+  const GLuint* ids
+) {
+  (*fnptr)(n, ids);
+}
+
+GLboolean glIsQuery(
+  GLboolean (*fnptr)(GLuint),
+  GLuint id
+) {
+  return (*fnptr)(id);
+}
+
+void glBeginQuery(
+  void (*fnptr)(GLenum, GLuint),
+  GLenum target,
+  GLuint id
+) {
+  (*fnptr)(target, id);
+}
+
+void glEndQuery(
+  void (*fnptr)(GLenum),
+  GLenum target
+) {
+  (*fnptr)(target);
+}
+
+void glGetQueryiv(
+  void (*fnptr)(GLenum, GLenum, GLint*),
+  GLenum target,
+  GLenum pname,
+  GLint* params
+) {
+  (*fnptr)(target, pname, params);
+}
+
+void glGetQueryObjectuiv(
+  void (*fnptr)(GLuint, GLenum, GLuint*),
+  GLuint id,
+  GLenum pname,
+  GLuint* params
+) {
+  (*fnptr)(id, pname, params);
+}
+
+/// 3.7.14 Sync objects
+
+GLuint glFenceSync(
+  GLuint (*fnptr)(GLenum, GLbitfield),
+  GLenum condition,
+  GLbitfield flags
+) {
+  return (*fnptr)(condition, flags);
+}
+
+GLboolean glIsSync(
+  GLboolean (*fnptr)(GLuint),
+  GLuint sync
+) {
+  return (*fnptr)(sync);
+}
+
+void glDeleteSync(
+  void (*fnptr)(GLuint),
+  GLuint sync
+) {
+  (*fnptr)(sync);
+}
+
+GLenum glClientWaitSync(
+  GLenum (*fnptr)(GLuint, GLbitfield, GLuint64),
+  GLuint sync,
+  GLbitfield flags,
+  GLuint64 timeout
+) {
+  return (*fnptr)(sync, flags, timeout);
+}
+
+void glWaitSync(
+  void (*fnptr)(GLuint, GLbitfield, GLuint64),
+  GLuint sync,
+  GLbitfield flags,
+  GLuint64 timeout
+) {
+  (*fnptr)(sync, flags, timeout);
+}
+
+void glGetSynciv(
+  void (*fnptr)(GLuint, GLenum, GLsizei, GLsizei*, GLint*),
+  GLuint sync,
+  GLenum pname,
+  GLsizei bufSize,
+  GLsizei* length,
+  GLint* values
+) {
+  (*fnptr)(sync, pname, bufSize, length, values);
 }

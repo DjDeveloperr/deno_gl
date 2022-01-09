@@ -18,7 +18,7 @@ export class GlfwCanvas extends HTMLElement {
       glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
+      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 0);
       glfw.windowHint(glfw.RESIZABLE, glfw.FALSE);
 
       init = true;
@@ -97,20 +97,24 @@ export class GlfwCanvas extends HTMLElement {
           preserveDrawingBuffer: false,
           powerPreference: "default",
         });
-        // return new Proxy(ctx, {
-        //   get: (t, p) => {
-        //     const v = (t as any)[p];
-        //     if (typeof v === "function") {
-        //       return (...args: any[]) => {
-        //         console.log("call", p, args);
-        //         return v.bind(t)(...args);
-        //       };
-        //     } else {
-        //       return v;
-        //     }
-        //   },
-        // });
-        return ctx;
+        return new Proxy(ctx, {
+          get: (t, p) => {
+            const v = (t as any)[p];
+            if (typeof v === "function") {
+              return (...args: any[]) => {
+                const result = v.apply(t, args);
+                // console.log(p, args, "->", result);
+                return result;
+              };
+            } else {
+              if (v === undefined) {
+                throw new Error(`${String(p)} is undefined`);
+              }
+              return v;
+            }
+          },
+        });
+        // return ctx;
       }
 
       default:

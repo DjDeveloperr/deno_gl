@@ -13,6 +13,7 @@ export const GLsizeiptr = "u64" as const;
 export const GLubyte = "u8" as const;
 export const GLushort = "u16" as const;
 export const GLuint = "u32" as const;
+export const GLuint64 = "u64" as const;
 export const GLfloat = "f32" as const;
 export const GLclampf = "f32" as const;
 export const GLfloatv = "pointer" as const;
@@ -975,6 +976,75 @@ export const symbols = {
   isVertexArray: {
     parameters: [GLuint],
     result: GLboolean,
+  },
+
+  /// 3.7.12 Query objects
+
+  genQueries: {
+    parameters: [GLsizei, GLuintv],
+    result: GLuint,
+  },
+
+  deleteQueries: {
+    parameters: [GLsizei, GLuintv],
+    result: "void",
+  },
+  
+  isQuery: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  beginQuery: {
+    parameters: [GLenum, GLuint],
+    result: "void",
+  },
+
+  endQuery: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  getQueryiv: {
+    parameters: [GLenum, GLenum, GLintv],
+    result: "void",
+  },
+
+  getQueryObjectuiv: {
+    parameters: [GLuint, GLenum, GLuintv],
+    result: "void",
+  },
+
+  /// 3.7.14 Sync objects
+
+  fenceSync: {
+    parameters: [GLenum, GLbitfield],
+    result: GLuint,
+  },
+
+  isSync: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  deleteSync: {
+    parameters: [GLuint],
+    result: "void",
+  },
+
+  clientWaitSync: {
+    parameters: [GLuint, GLbitfield, GLuint64],
+    result: GLenum,
+  },
+
+  waitSync: {
+    parameters: [GLuint, GLbitfield, GLuint64],
+    result: "void",
+  },
+
+  getSynciv: {
+    parameters: [GLuint, GLenum, GLsizei, GLuintv, GLintv],
+    result: "void",
   },
 } as const;
 

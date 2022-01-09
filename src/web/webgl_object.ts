@@ -7,5 +7,12 @@ export class WebGLObject {
 
   constructor(name: number) {
     this[_name] = name;
+    if (name === 0) {
+      console.log("warn: GL object created with zero name");
+    }
+  }
+
+  [Symbol.for("Deno.customInspect")]() {
+    return `GLObject(${this[_name]})`;
   }
 }

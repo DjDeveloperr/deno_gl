@@ -18,6 +18,8 @@ export type GLushort = number;
 export type GLuint = number;
 export type GLfloat = number;
 export type GLclampf = number;
+export type GLuint64 = number;
+export type GLint64 = number;
 
 const TYPE_SIZE = {
   [gl.UNSIGNED_BYTE]: 1,
@@ -86,6 +88,10 @@ export class WebGLUniformLocation {
 
   constructor(location: number) {
     this[_uniformLocation] = location;
+  }
+
+  [Symbol.for("Deno.customInspect")]() {
+    return `WebGLUniformLocation(${this[_uniformLocation]})`;
   }
 }
 
@@ -816,7 +822,9 @@ export class WebGL2RenderingContext {
       case this.STENCIL_TEST:
       case this.RASTERIZER_DISCARD:
       case this.TRANSFORM_FEEDBACK_ACTIVE:
-      case this.TRANSFORM_FEEDBACK_PAUSED: {
+      case this.TRANSFORM_FEEDBACK_PAUSED:
+      // GPU_DISJOINT_EXT
+      case 0x8FBB: {
         const data = new Uint8Array(1);
         gl.getBooleanv(pname, data);
         return Boolean(data[0]);
@@ -2126,8 +2134,11 @@ export class WebGL2RenderingContext {
   getUniformLocation(
     program: WebGLProgram,
     name: string,
-  ): WebGLUniformLocation {
+  ): WebGLUniformLocation | null {
     const loc = gl.getUniformLocation(program[_name], cstr(name));
+    if (loc < 0) {
+      return null;
+    }
     return new WebGLUniformLocation(loc);
   }
 
@@ -2330,9 +2341,12 @@ export class WebGL2RenderingContext {
   }
 
   uniform3iv(
-    location: WebGLUniformLocation,
+    location: WebGLUniformLocation | null,
     v: Int32Array | GLint[],
   ): void {
+    if (location === null) {
+      return console.warn("uniform3iv: got null location")
+    }
     gl.uniform3iv(
       location[_uniformLocation],
       1,
@@ -2563,12 +2577,15 @@ export class WebGL2RenderingContext {
   }
 
   getExtension(name: string): any {
-    if (!(name in extensions)) {
-      return null;
-    }
+    const idx = name.indexOf("_webgl");
+    name = name.substring(0, idx < 0 ? name.length : idx);
 
     if (!glfw.extensionSupported(cstr("GL_" + name))) {
       return null;
+    }
+
+    if (!(name in extensions)) {
+      throw new Error("Extension supported but not implemented: " + name);
     }
 
     return new (extensions as any)[name]();
@@ -3087,6 +3104,106 @@ export class WebGL2RenderingContext {
 
   drawBuffers(buffers: GLenum[]): void {
     gl.drawBuffers(buffers.length, new Uint32Array(buffers));
+  }
+
+  /// 3.7.12 Query objects
+
+  createQuery(): WebGLQuery {
+    const query = new Uint32Array(1);
+    gl.genQueries(1, query);
+    return new WebGLQuery(query[0]);
+  }
+
+  deleteQuery(query: WebGLQuery | null): void {
+    gl.deleteQueries(1, new Uint32Array([query?.[_name] ?? 0]));
+  }
+
+  isQuery(query: WebGLQuery | null): GLboolean {
+    return Boolean(gl.isQuery(query?.[_name] ?? 0));
+  }
+
+  beginQuery(target: GLenum, query: WebGLQuery): void {
+    gl.beginQuery(target, query[_name]);
+  }
+
+  endQuery(target: GLenum): void {
+    gl.endQuery(target);
+  }
+
+  getQuery(target: GLenum, pname: GLenum): any {
+    switch (pname) {
+      case this.CURRENT_QUERY: {
+        const query = new Uint32Array(1);
+        gl.getQueryiv(target, pname, query);
+        return query[0] ? new WebGLQuery(query[0]) : null;
+      }
+
+      default:
+        return null;
+    }
+  }
+
+  getQueryParameter(query: WebGLQuery, pname: GLenum): any {
+    switch (pname) {
+      case this.QUERY_RESULT: {
+        const result = new Uint32Array(1);
+        gl.getQueryObjectuiv(query[_name], pname, result);
+        return result[0];
+      }
+
+      case this.QUERY_RESULT_AVAILABLE: {
+        const result = new Uint32Array(1);
+        gl.getQueryObjectuiv(query[_name], pname, result);
+        return result[0] === 1;
+      }
+
+      default:
+        return null;
+    }
+  }
+
+  /// 3.7.14 Sync objects
+
+  fenceSync(condition: GLenum, flags: GLbitfield): WebGLSync {
+    const sync = gl.fenceSync(condition, flags);
+    return new WebGLSync(sync);
+  }
+
+  isSync(sync: WebGLSync | null): GLboolean {
+    return Boolean(gl.isSync(sync?.[_name] ?? 0));
+  }
+
+  deleteSync(sync: WebGLSync | null): void {
+    gl.deleteSync(sync?.[_name] ?? 0);
+  }
+
+  clientWaitSync(
+    sync: WebGLSync,
+    flags: GLbitfield,
+    timeout: GLuint64,
+  ): GLenum {
+    return gl.clientWaitSync(sync[_name], flags, timeout);
+  }
+
+  waitSync(sync: WebGLSync, flags: GLbitfield, timeout: GLint64): void {
+    gl.waitSync(sync[_name], flags, timeout);
+  }
+
+  getSyncParameter(sync: WebGLSync, pname: GLenum): any {
+    switch (pname) {
+      case this.OBJECT_TYPE:
+      case this.SYNC_STATUS:
+      case this.SYNC_CONDITION:
+      case this.SYNC_FLAGS: {
+        const result = new Int32Array(1);
+        const outLen = new Uint32Array(1);
+        gl.getSynciv(sync[_name], pname, 1, outLen, result);
+        return result[0];
+      }
+
+      default:
+        return null;
+    }
   }
 
   /// 3.7.17 Vertex Array objects

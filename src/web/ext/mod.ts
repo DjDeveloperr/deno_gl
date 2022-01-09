@@ -14,7 +14,7 @@ export const extensions = {
   EXT_blend_minmax: EXTBlendMinmax,
   EXT_color_buffer_float: EXTColorBufferFloat,
   EXT_color_buffer_half_float: EXTColorBufferHalfFloat,
-  // EXT_disjoint_timer_query: EXTDisjointTimerQuery,
+  EXT_disjoint_timer_query: EXTDisjointTimerQuery,
   EXT_float_blend: EXTFloatBlend,
   EXT_frag_depth: EXTFragDepth,
   EXT_shader_texture_lod: EXTShaderTextureLod,

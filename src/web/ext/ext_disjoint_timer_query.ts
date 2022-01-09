@@ -6,20 +6,4 @@ export class EXTDisjointTimerQuery {
   TIME_ELAPSED_EXT = 0x88BF;
   TIMESTAMP_EXT = 0x8E28;
   GPU_DISJOINT_EXT = 0x8FBB;
-
-  createQueryEXT() {}
-
-  deleteQueryEXT() {}
-
-  isQueryEXT() {}
-
-  beginQueryEXT() {}
-
-  endQueryEXT() {}
-
-  queryCounterEXT() {}
-
-  getQueryEXT() {}
-
-  getQueryObjectEXT() {}
 }
