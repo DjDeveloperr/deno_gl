@@ -3,6 +3,7 @@ import type { GlfwCanvas } from "./canvas.ts";
 import type { Image } from "./image.ts";
 import { extensions } from "./ext/mod.ts";
 import { _invalidated, _name, WebGLObject } from "./webgl_object.ts";
+import * as PNG from "https://deno.land/x/pngs@0.1.1/mod.ts";
 
 export type GLenum = number;
 export type GLboolean = boolean;
@@ -1714,11 +1715,11 @@ export class WebGL2RenderingContext {
         args[5].width,
         args[5].height,
         0,
-        args[3],
-        args[4],
+        this.RGBA,
+        this.UNSIGNED_BYTE,
         this.#unpackPixels(
-          args[3],
-          args[4],
+          this.RGBA,
+          this.UNSIGNED_BYTE,
           args[5].width,
           args[5].height,
           args[5].rawData,
@@ -1804,6 +1805,13 @@ export class WebGL2RenderingContext {
         args[8] as Uint8Array,
       );
     } else if (args.length === 7) {
+      const pixels = this.#unpackPixels(
+        args[4],
+        args[5],
+        args[6].width,
+        args[6].height,
+        args[6].rawData,
+      );
       gl.texSubImage2D(
         args[0],
         args[1],
@@ -1813,13 +1821,7 @@ export class WebGL2RenderingContext {
         args[6].height,
         args[4],
         args[5],
-        this.#unpackPixels(
-          args[4],
-          args[5],
-          args[6].width,
-          args[6].height,
-          args[6].rawData,
-        ),
+        pixels,
       );
     }
   }

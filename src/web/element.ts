@@ -1,10 +1,11 @@
-import type { GlfwCanvas } from "./canvas.ts";
 import type { FakeDocument } from "./document.ts";
 
 export class Element extends EventTarget {
   clientTop = 0;
   clientLeft = 0;
   children = [];
+
+  focus() {}
 
   get ownerDocument(): FakeDocument {
     return (globalThis as unknown as { document: FakeDocument }).document;

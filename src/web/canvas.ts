@@ -84,6 +84,17 @@ export class GlfwCanvas extends HTMLElement {
     glfw.setWindowSize(this.handle, this.width, value);
   }
 
+  offsetLeft = 0;
+  offsetTop = 0;
+
+  get offsetWidth() {
+    return this.width;
+  }
+
+  get offsetHeight() {
+    return this.height;
+  }
+
   getContext(type: string) {
     switch (type) {
       case "webgl":
@@ -97,13 +108,13 @@ export class GlfwCanvas extends HTMLElement {
           preserveDrawingBuffer: false,
           powerPreference: "default",
         });
-        return new Proxy(ctx, {
+        /*if (Deno.env.get("DEBUG_DENO_GL") === "1")*/ return new Proxy(ctx, {
           get: (t, p) => {
             const v = (t as any)[p];
             if (typeof v === "function") {
               return (...args: any[]) => {
                 const result = v.apply(t, args);
-                // console.log(p, args, "->", result);
+                // if (p.toString().match(/tex/i)) console.log(p, args, "->", result);
                 return result;
               };
             } else {
@@ -114,7 +125,7 @@ export class GlfwCanvas extends HTMLElement {
             }
           },
         });
-        // return ctx;
+        return ctx;
       }
 
       default:
@@ -172,6 +183,10 @@ export class GlfwCanvas extends HTMLElement {
     const cursorPosY = new Float64Array(1);
     glfw.getCursorPos(this.handle, cursorPosX, cursorPosY);
     return {
+      keyW: glfw.getKey(this.handle, glfw.KEY_W) === glfw.TRUE,
+      keyA: glfw.getKey(this.handle, glfw.KEY_A) === glfw.TRUE,
+      keyS: glfw.getKey(this.handle, glfw.KEY_S) === glfw.TRUE,
+      keyD: glfw.getKey(this.handle, glfw.KEY_D) === glfw.TRUE,
       mouseButtonLeft: Boolean(
         glfw.getMouseButton(this.handle, glfw.MOUSE_BUTTON_LEFT),
       ),
@@ -188,10 +203,14 @@ export class GlfwCanvas extends HTMLElement {
     };
   }
 
+  dispatchEvent(event: Event) {
+    return super.dispatchEvent(event) && window.dispatchEvent(event);
+  }
+
   updateEvents() {
     const oldState = this.state;
     this.state = this.getCurrentState();
-    const changed = [];
+    const changed: string[] = [];
     for (const prop in oldState) {
       if (oldState[prop] !== this.state[prop]) {
         changed.push(prop);
@@ -242,5 +261,20 @@ export class GlfwCanvas extends HTMLElement {
       this.dispatchEvent(Object.assign(new Event("pointerup"), data));
       this.dispatchEvent(Object.assign(new Event("mouseup"), data));
     }
+
+    ["keyW", "keyA", "keyS", "keyD"].forEach((key) => {
+      if (!changed.includes(key)) return;
+      if (this.state[key]) {
+        const data = {
+          code: key[0].toUpperCase() + key.slice(1),
+        };
+        this.dispatchEvent(Object.assign(new Event("keydown"), data));
+      } else {
+        const data = {
+          code: key[0].toUpperCase() + key.slice(1),
+        };
+        this.dispatchEvent(Object.assign(new Event("keyup"), data));
+      }
+    });
   }
 }
