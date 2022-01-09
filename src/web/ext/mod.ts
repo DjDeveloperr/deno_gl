@@ -7,6 +7,8 @@ import { EXTFloatBlend } from "./ext_float_blend.ts";
 import { EXTFragDepth } from "./ext_frag_depth.ts";
 import { EXTShaderTextureLod } from "./ext_shader_texture_lod.ts";
 import { EXTSRGB } from "./ext_srgb.ts";
+import { EXTTextureFilterAnisotropic } from "./ext_texture_filter_anisotropic.ts";
+import { OESTextureFloatLinear } from "./oes_texture_float_linear.ts";
 import { OESTextureHalfFloat } from "./oes_texture_half_float.ts";
 
 export const extensions = {
@@ -20,4 +22,6 @@ export const extensions = {
   EXT_shader_texture_lod: EXTShaderTextureLod,
   EXT_sRGB: EXTSRGB,
   OES_texture_half_float: OESTextureHalfFloat,
+  OES_texture_float_linear: OESTextureFloatLinear,
+  EXT_texture_filter_anisotropic: EXTTextureFilterAnisotropic,
 };

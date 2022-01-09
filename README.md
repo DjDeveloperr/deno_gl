@@ -2,6 +2,12 @@
 
 WIP Low-level OpenGL (GLFW) bindings and WebGL API implementation for Deno.
 
+## TODO
+
+There are couple of bugs to fix yet. Most of them are unknown, which simply
+cause libraries like Tensorflow.js WebGL backend to return values zeroed
+out, or cause rendering bugs like in THREE.js (some examples do work well though!).
+
 ## Building
 
 1. Make `dist` directory if it doesn't exist.

@@ -1668,7 +1668,26 @@ export class WebGL2RenderingContext {
     type: GLenum,
     image: Image,
   ): void;
-  texImage2D(...args: any[]): void {
+  texImage2D(
+    ...args: [
+      target: GLenum,
+      level: GLint,
+      internalformat: GLenum,
+      width: GLsizei,
+      height: GLsizei,
+      border: GLint,
+      format: GLenum,
+      type: GLenum,
+      pixels: ArrayBufferView | null,
+    ] | [
+      target: GLenum,
+      level: GLint,
+      internalformat: GLenum,
+      format: GLenum,
+      type: GLenum,
+      image: Image,
+    ]
+  ): void {
     if (args.length === 9) {
       if (args[8] === null) {
         // Initialize the pixels buffer to sufficient size.
@@ -1681,21 +1700,12 @@ export class WebGL2RenderingContext {
           args[7],
           args[3],
           args[4],
-          args[8],
+          args[8] as Uint8Array,
         );
       }
 
-      gl.texImage2D(
-        args[0],
-        args[1],
-        args[2],
-        args[3],
-        args[4],
-        args[5],
-        args[6],
-        args[7],
-        args[8],
-      );
+      // @ts-ignore
+      gl.texImage2D(...args);
     } else if (args.length === 6) {
       gl.texImage2D(
         args[0],
@@ -1707,10 +1717,10 @@ export class WebGL2RenderingContext {
         args[3],
         args[4],
         this.#unpackPixels(
-          args[5].width,
-          args[5].height,
           args[3],
           args[4],
+          args[5].width,
+          args[5].height,
           args[5].rawData,
         ),
       );
@@ -1745,7 +1755,27 @@ export class WebGL2RenderingContext {
     type: GLenum,
     image: Image,
   ): void;
-  texSubImage2D(...args: any[]): void {
+  texSubImage2D(
+    ...args: [
+      target: GLenum,
+      level: GLint,
+      xoffset: GLint,
+      yoffset: GLint,
+      width: GLsizei,
+      height: GLsizei,
+      format: GLenum,
+      type: GLenum,
+      pixels: ArrayBufferView | null,
+    ] | [
+      target: GLenum,
+      level: GLint,
+      xoffset: GLint,
+      yoffset: GLint,
+      format: GLenum,
+      type: GLenum,
+      image: Image,
+    ]
+  ): void {
     if (args.length === 9) {
       if (args[8] === null) {
         // Initialize the pixels buffer to sufficient size.
@@ -1756,9 +1786,9 @@ export class WebGL2RenderingContext {
         args[8] = this.#unpackPixels(
           args[6],
           args[7],
-          args[3],
           args[4],
-          args[8],
+          args[5],
+          args[8] as Uint8Array,
         );
       }
 
@@ -1771,7 +1801,7 @@ export class WebGL2RenderingContext {
         args[5],
         args[6],
         args[7],
-        args[8],
+        args[8] as Uint8Array,
       );
     } else if (args.length === 7) {
       gl.texSubImage2D(
@@ -1784,10 +1814,10 @@ export class WebGL2RenderingContext {
         args[4],
         args[5],
         this.#unpackPixels(
-          args[6].width,
-          args[6].height,
           args[4],
           args[5],
+          args[6].width,
+          args[6].height,
           args[6].rawData,
         ),
       );
@@ -2345,7 +2375,7 @@ export class WebGL2RenderingContext {
     v: Int32Array | GLint[],
   ): void {
     if (location === null) {
-      return console.warn("uniform3iv: got null location")
+      return console.warn("uniform3iv: got null location");
     }
     gl.uniform3iv(
       location[_uniformLocation],
