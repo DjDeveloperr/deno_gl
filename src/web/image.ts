@@ -81,3 +81,7 @@ export class Image extends HTMLElement {
     return `Image ${this.#data ? `<${this.width}x${this.height}>` : "<unresolved>"} { ${this.src} }`;
   }
 }
+
+Object.defineProperty(window, "Image", {
+  value: Image,
+});

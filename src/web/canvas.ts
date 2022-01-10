@@ -95,6 +95,14 @@ export class GlfwCanvas extends HTMLElement {
     return this.height;
   }
 
+  get clientWidth() {
+    return this.width;
+  }
+
+  get clientHeight() {
+    return this.height;
+  }
+
   getContext(type: string) {
     switch (type) {
       case "webgl":

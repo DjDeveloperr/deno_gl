@@ -43,6 +43,7 @@ const TYPE_COMPONENTS = {
 const FORMAT_COMPONENTS = {
   [gl.RGBA]: 4,
   [gl.RGB]: 3,
+  [gl.RG]: 2,
   [gl.LUMINANCE_ALPHA]: 2,
   [gl.LUMINANCE]: 1,
   [gl.ALPHA]: 1,
@@ -1711,7 +1712,7 @@ export class WebGL2RenderingContext {
       gl.texImage2D(
         args[0],
         args[1],
-        args[2],
+        this.RGBA,
         args[5].width,
         args[5].height,
         0,
