@@ -257,6 +257,11 @@ export class GlfwCanvas extends HTMLElement {
         clientY: this.state.cursorY,
         pageX: this.state.cursorX,
         pageY: this.state.cursorY,
+        button: !this.state.mouseButtonLeft
+          ? 0
+          : !this.state.mouseButtonMiddle
+          ? 1
+          : 2,
       };
       this.dispatchEvent(Object.assign(new Event("pointerup"), data));
       this.dispatchEvent(Object.assign(new Event("mouseup"), data));

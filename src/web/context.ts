@@ -1598,12 +1598,12 @@ export class WebGL2RenderingContext {
     const data = new Uint8Array(imageSize);
 
     if (this[_unpackFlipY]) {
-      for (let i = 0; i < height; i++) {
+      for (let i = 0, j = height - 1; j >= 0; ++i, --j) {
         const src = pixels.subarray(
           i * rowSize,
           (i + 1) * rowSize,
         );
-        data.set(src, i * rowSize);
+        data.set(src, j * rowSize);
       }
     } else {
       data.set(pixels);
