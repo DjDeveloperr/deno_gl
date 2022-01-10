@@ -1,30 +1,30 @@
 import { GL_CONST } from "./const.ts";
 import { MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
 
-export const GLenum = "u32" as const;
-export const GLboolean = "u8" as const;
-export const GLbitfield = "u32" as const;
-export const GLbyte = "i8" as const;
-export const GLshort = "i16" as const;
-export const GLint = "i32" as const;
-export const GLsizei = "i32" as const;
-export const GLintptr = "u64" as const;
-export const GLsizeiptr = "u64" as const;
-export const GLubyte = "u8" as const;
-export const GLushort = "u16" as const;
-export const GLuint = "u32" as const;
-export const GLuint64 = "u64" as const;
-export const GLfloat = "f32" as const;
-export const GLclampf = "f32" as const;
-export const GLfloatv = "pointer" as const;
-export const GLbooleanv = "pointer" as const;
-export const GLubyteptr = "pointer" as const;
-export const GLvoidptr = "pointer" as const;
-export const GLuintv = "pointer" as const;
-export const GLintv = "pointer" as const;
-export const GLcharptr = "pointer" as const;
-export const GLenumv = "pointer" as const;
-export const GLint64v = "pointer" as const;
+const GLenum = "u32" as const;
+const GLboolean = "u8" as const;
+const GLbitfield = "u32" as const;
+// const GLbyte = "i8" as const;
+// const GLshort = "i16" as const;
+const GLint = "i32" as const;
+const GLsizei = "i32" as const;
+const GLintptr = "u64" as const;
+const GLsizeiptr = "u64" as const;
+// const GLubyte = "u8" as const;
+// const GLushort = "u16" as const;
+const GLuint = "u32" as const;
+const GLuint64 = "u64" as const;
+const GLfloat = "f32" as const;
+const GLclampf = "f32" as const;
+const GLfloatv = "pointer" as const;
+const GLbooleanv = "pointer" as const;
+const GLubyteptr = "pointer" as const;
+const GLvoidptr = "pointer" as const;
+const GLuintv = "pointer" as const;
+const GLintv = "pointer" as const;
+const GLcharptr = "pointer" as const;
+const GLenumv = "pointer" as const;
+const GLint64v = "pointer" as const;
 
 export const symbols = {
   /// 5.14.3 Setting and getting state
@@ -949,6 +949,23 @@ export const symbols = {
     result: "void",
   },
 
+  texSubImage3D: {
+    parameters: [
+      GLenum,
+      GLint,
+      GLint,
+      GLint,
+      GLint,
+      GLsizei,
+      GLsizei,
+      GLsizei,
+      GLenum,
+      GLenum,
+      GLvoidptr,
+    ],
+    result: "void",
+  },
+
   /// 3.7.11 Multiple render targets
 
   drawBuffers: {
@@ -1046,6 +1063,23 @@ export const symbols = {
     parameters: [GLuint, GLenum, GLsizei, GLuintv, GLintv],
     result: "void",
   },
+
+  /// 3.7.16 Uniform Buffer objects
+
+  bindBufferBase: {
+    parameters: [GLenum, GLuint, GLuint],
+    result: "void",
+  },
+
+  getUniformBlockIndex: {
+    parameters: [GLuint, GLcharptr],
+    result: GLuint,
+  },
+
+  uniformBlockBinding: {
+    parameters: [GLuint, GLuint, GLuint],
+    result: "void",
+  },
 } as const;
 
 export type Symbols = {
@@ -1101,20 +1135,20 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
       : ((...args: any[]) => {
         // if (glName != "glGetError") console.log(name, args);
         const res = cbind[glName](ptr, ...args);
-        let err;
-        while (
-          DEBUG && name !== "getError" && (err = gl.getError()) != gl.NO_ERROR
-        ) {
-          console.error(
-            `%cerror%c: ${glName}(${
-              args.map((e) => Deno.inspect(e, { colors: true })).join(", ")
-            }) threw 0x${err.toString(16)} (and returned ${
-              Deno.inspect(res, { colors: true })
-            })`,
-            "color: red",
-            "",
-          );
-        }
+        // let err;
+        // while (
+        //   DEBUG && name !== "getError" && (err = gl.getError()) != gl.NO_ERROR
+        // ) {
+        //   console.error(
+        //     `%cerror%c: ${glName}(${
+        //       args.map((e) => Deno.inspect(e, { colors: true })).join(", ")
+        //     }) threw 0x${err.toString(16)} (and returned ${
+        //       Deno.inspect(res, { colors: true })
+        //     })`,
+        //     "color: red",
+        //     "",
+        //   );
+        // }
         return res;
       }) as any;
   }

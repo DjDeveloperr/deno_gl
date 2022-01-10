@@ -7,14 +7,14 @@ export class DocumentBody extends HTMLElement {}
 
 export class DocumentElement extends HTMLElement {}
 
-export class FakeDocument {
+export class FakeDocument extends EventTarget {
   documentElement = new DocumentElement();
 
   createElement(tagName: string) {
     if (tagName === "img") {
       return new Image();
     } else if (tagName === "canvas") {
-      glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
+      // glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
       return new GlfwCanvas("GLFW Canvas", 800, 600);
     } else {
       return new HTMLElement();

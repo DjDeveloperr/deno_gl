@@ -1,6 +1,6 @@
 import { cstr, gl, glfw } from "../core/mod.ts";
 import type { GlfwCanvas } from "./canvas.ts";
-import type { Image } from "./image.ts";
+import { Image } from "./image.ts";
 import { extensions } from "./ext/mod.ts";
 import { _invalidated, _name, WebGLObject } from "./webgl_object.ts";
 import * as PNG from "https://deno.land/x/pngs@0.1.1/mod.ts";
@@ -2803,6 +2803,7 @@ export class WebGL2RenderingContext {
   FRAMEBUFFER_INCOMPLETE_MULTISAMPLE = 0x8D56;
   MAX_SAMPLES = 0x8D57;
   HALF_FLOAT = 0x140B;
+  HALF_FLOAT_OES = 0x140B; // 0x8D61;
   RG = 0x8227;
   RG_INTEGER = 0x8228;
   R8 = 0x8229;
@@ -3128,6 +3129,36 @@ export class WebGL2RenderingContext {
     gl.texStorage3D(target, levels, internalformat, width, height, depth);
   }
 
+  texSubImage3D(
+    target: GLenum,
+    level: GLint,
+    xoffset: GLint,
+    yoffset: GLint,
+    zoffset: GLint,
+    width: GLsizei,
+    height: GLsizei,
+    depth: GLsizei,
+    format: GLenum,
+    type: GLenum,
+    pixels: ArrayBufferView | Image | null,
+    // TODO: handle this
+    _srcOffset?: GLuint,
+  ): void {
+    gl.texSubImage3D(
+      target,
+      level,
+      xoffset,
+      yoffset,
+      zoffset,
+      width,
+      height,
+      depth,
+      format,
+      type,
+      pixels instanceof Image ? pixels.rawData : (pixels as Uint8Array),
+    );
+  }
+
   /// TODO: texImage2D overload
   /// TODO: texSubImage2D overload
   /// TODO: texImage3D
@@ -3237,6 +3268,31 @@ export class WebGL2RenderingContext {
       default:
         return null;
     }
+  }
+
+  /// 3.7.16 Uniform Buffer objects
+
+  bindBufferBase(target: GLenum, index: GLuint, buffer: WebGLBuffer | null): void {
+    gl.bindBufferBase(target, index, buffer?.[_name] ?? 0);
+  }
+
+  getUniformBlockIndex(
+    program: WebGLProgram,
+    uniformBlockName: string,
+  ): GLuint {
+    return gl.getUniformBlockIndex(program[_name], cstr(uniformBlockName));
+  }
+
+  uniformBlockBinding(
+    program: WebGLProgram,
+    uniformBlockIndex: GLuint,
+    uniformBlockBinding: GLuint,
+  ): void {
+    gl.uniformBlockBinding(
+      program[_name],
+      uniformBlockIndex,
+      uniformBlockBinding,
+    );
   }
 
   /// 3.7.17 Vertex Array objects

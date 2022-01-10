@@ -116,7 +116,7 @@ export class GlfwCanvas extends HTMLElement {
           preserveDrawingBuffer: false,
           powerPreference: "default",
         });
-        /*if (Deno.env.get("DEBUG_DENO_GL") === "1")*/ return new Proxy(ctx, {
+        if (Deno.env.get("DEBUG_DENO_GL") === "1") return new Proxy(ctx, {
           get: (t, p) => {
             const v = (t as any)[p];
             if (typeof v === "function") {

@@ -1467,6 +1467,23 @@ void glTexStorage3D(
   (*fnptr)(target, levels, internalformat, width, height, depth);
 }
 
+void glTexSubImage3D(
+  void (*fnptr)(GLenum, GLint, GLint, GLint, GLint, GLsizei, GLsizei, GLsizei, GLenum, GLenum, const void*),
+  GLenum target,
+  GLint level,
+  GLint xoffset,
+  GLint yoffset,
+  GLint zoffset,
+  GLsizei width,
+  GLsizei height,
+  GLsizei depth,
+  GLenum format,
+  GLenum type,
+  const void* pixels
+) {
+  (*fnptr)(target, level, xoffset, yoffset, zoffset, width, height, depth, format, type, pixels);
+}
+
 /// 3.7.11 Multiple render targets
 
 void glDrawBuffers(
@@ -1618,4 +1635,32 @@ void glGetSynciv(
   GLint* values
 ) {
   (*fnptr)(sync, pname, bufSize, length, values);
+}
+
+/// 3.7.16 Uniform Buffer objects
+
+void glBindBufferBase(
+  void (*fnptr)(GLenum, GLuint, GLuint),
+  GLenum target,
+  GLuint index,
+  GLuint buffer
+) {
+  (*fnptr)(target, index, buffer);
+}
+
+GLuint glGetUniformBlockIndex(
+  GLuint (*fnptr)(GLuint, const GLchar*),
+  GLuint program,
+  const GLchar* uniformBlockName
+) {
+  return (*fnptr)(program, uniformBlockName);
+}
+
+void glUniformBlockBinding(
+  void (*fnptr)(GLuint, GLuint, GLuint),
+  GLuint program,
+  GLuint uniformBlockIndex,
+  GLuint uniformBlockBinding
+) {
+  (*fnptr)(program, uniformBlockIndex, uniformBlockBinding);
 }
