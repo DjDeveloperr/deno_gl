@@ -1,6 +1,6 @@
 # deno_gl
 
-WebGL API implementation for Deno.
+WebGL API implementation for Deno, built on GLFW using FFI.
 
 ## TODO
 
