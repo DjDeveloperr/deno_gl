@@ -18,7 +18,7 @@ export class GlfwCanvas extends HTMLElement {
       glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 0);
+      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
       glfw.windowHint(glfw.RESIZABLE, glfw.FALSE);
 
       init = true;
@@ -44,7 +44,8 @@ export class GlfwCanvas extends HTMLElement {
     initGL();
 
     gl.enable(gl.DEBUG_OUTPUT);
-    // gl.debugMessageCallback();
+    // TODO: once FFI supports callbacks
+    // gl.debugMessageCallback(cb);
   }
 
   get title() {

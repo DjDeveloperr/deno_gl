@@ -12,7 +12,7 @@ if (!glfw.init()) {
 
 glfw.windowHint(glfw.SAMPLES, 4);
 glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 0);
+glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
 glfw.windowHint(glfw.OPENGL_FORWARD_COMPAT, gl.TRUE);
 
 const width = 600, height = 500;
@@ -35,7 +35,7 @@ initGL();
 glfw.setInputMode(win, glfw.STICKY_KEYS, gl.TRUE);
 
 gl.enable(gl.DEBUG_OUTPUT);
-gl.debugMessageCallback();
+// gl.debugMessageCallback();
 
 gl.enable(gl.DEPTH_TEST);
 gl.depthFunc(gl.LESS);
