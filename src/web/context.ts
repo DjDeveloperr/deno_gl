@@ -3272,7 +3272,11 @@ export class WebGL2RenderingContext {
 
   /// 3.7.16 Uniform Buffer objects
 
-  bindBufferBase(target: GLenum, index: GLuint, buffer: WebGLBuffer | null): void {
+  bindBufferBase(
+    target: GLenum,
+    index: GLuint,
+    buffer: WebGLBuffer | null,
+  ): void {
     gl.bindBufferBase(target, index, buffer?.[_name] ?? 0);
   }
 

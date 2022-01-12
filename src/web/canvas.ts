@@ -44,7 +44,7 @@ export class GlfwCanvas extends HTMLElement {
     initGL();
 
     gl.enable(gl.DEBUG_OUTPUT);
-    gl.debugMessageCallback();
+    // gl.debugMessageCallback();
   }
 
   get title() {
@@ -116,23 +116,25 @@ export class GlfwCanvas extends HTMLElement {
           preserveDrawingBuffer: false,
           powerPreference: "default",
         });
-        if (Deno.env.get("DEBUG_DENO_GL") === "1") return new Proxy(ctx, {
-          get: (t, p) => {
-            const v = (t as any)[p];
-            if (typeof v === "function") {
-              return (...args: any[]) => {
-                const result = v.apply(t, args);
-                // if (p.toString().match(/tex/i)) console.log(p, args, "->", result);
-                return result;
-              };
-            } else {
-              if (v === undefined) {
-                throw new Error(`${String(p)} is undefined`);
+        if (Deno.env.get("DEBUG_DENO_GL") === "1") {
+          return new Proxy(ctx, {
+            get: (t, p) => {
+              const v = (t as any)[p];
+              if (typeof v === "function") {
+                return (...args: any[]) => {
+                  const result = v.apply(t, args);
+                  // if (p.toString().match(/tex/i)) console.log(p, args, "->", result);
+                  return result;
+                };
+              } else {
+                if (v === undefined) {
+                  throw new Error(`${String(p)} is undefined`);
+                }
+                return v;
               }
-              return v;
-            }
-          },
-        });
+            },
+          });
+        }
         return ctx;
       }
 

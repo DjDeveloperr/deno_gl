@@ -7,7 +7,7 @@ function pngDecode(data: Uint8Array) {
   if (result.colorType === PNG.ColorType.RGB) {
     // convert to RGBA.
     const rgba = new Uint8Array(result.width * result.height * 4);
-    for (let i = 0; i < result.width * result.height; i ++) {
+    for (let i = 0; i < result.width * result.height; i++) {
       const rgbi = i * 3;
       const rgbai = i * 4;
       rgba.set([
@@ -55,7 +55,9 @@ export class Image extends HTMLElement {
         this.#width = img.width;
         this.#height = img.height;
         this.#data = img.data;
-        console.log(`[loader] Loaded image ${src}: ${this.#width}x${this.#height}`);
+        console.log(
+          `[loader] Loaded image ${src}: ${this.#width}x${this.#height}`,
+        );
         this.dispatchEvent(new Event("load", { cancelable: false }));
       })
       .catch((e) => {
@@ -78,7 +80,9 @@ export class Image extends HTMLElement {
   }
 
   [Symbol.for("Deno.customInspect")]() {
-    return `Image ${this.#data ? `<${this.width}x${this.height}>` : "<unresolved>"} { ${this.src} }`;
+    return `Image ${
+      this.#data ? `<${this.width}x${this.height}>` : "<unresolved>"
+    } { ${this.src} }`;
   }
 }
 

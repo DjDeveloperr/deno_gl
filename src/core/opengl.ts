@@ -140,7 +140,7 @@ export const symbols = {
   },
 
   debugMessageCallback: {
-    parameters: [],
+    parameters: ["pointer"],
     result: "void",
   },
 
@@ -1006,7 +1006,7 @@ export const symbols = {
     parameters: [GLsizei, GLuintv],
     result: "void",
   },
-  
+
   isQuery: {
     parameters: [GLuint],
     result: GLboolean,
@@ -1096,61 +1096,46 @@ function prefixGl(name: string) {
   return `gl${name[0].toUpperCase()}${name.slice(1)}`;
 }
 
-// TODO: Should FFI support dynamic calls (via pointers)?
-export const LIB_PATH = new URL(
-  `../../dist/${OS_LIB_PREFIX}gl.${OS_LIB_SUFFIX}`,
-  import.meta.url,
-);
+const DEBUG = Deno.env.get("DENO_GL_DEBUG") === "1";
 
-const cbind = Deno.dlopen(
-  LIB_PATH,
-  Object.fromEntries(
-    Object.entries(symbols).map(([name, def]) => {
-      return [prefixGl(name), {
-        parameters: ["pointer", ...def.parameters],
-        result: def.result,
-      }];
-    }),
-  ) as unknown as Record<
-    string,
-    Deno.ForeignFunction
-  >,
-).symbols;
-
-const DEBUG = true;
+function checkErrors(name: string, args: any[], res: any) {
+  if (!DEBUG) return;
+  let err;
+  while (
+    name !== "getError" && (err = gl.getError()) != gl.NO_ERROR
+  ) {
+    console.error(
+      `%cerror%c: ${name}(${
+        args.map((e) => Deno.inspect(e, { colors: true })).join(", ")
+      }) threw 0x${err.toString(16)} (and returned ${
+        Deno.inspect(res, { colors: true })
+      })`,
+      "color: red",
+      "",
+    );
+  }
+}
 
 export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
   for (const name in symbols) {
     const glName = prefixGl(name);
+
     const ptr = GetProcAddress(glName);
-    // For testing
+
     if (ptr.value === 0n) {
-      throw new Error(`Failed to load symbol: ${glName}`);
+      throw new Error(`GetProcAddress(${glName}) returned nullptr`);
     }
-    gl[name as keyof Symbols] = ptr.value === 0n
-      ? (() => {
-        // Lazy errors in case of older OpenGL versions being used.
-        throw new Error(`Failed to load symbol: ${glName}`);
-      })
-      : ((...args: any[]) => {
-        // if (glName != "glGetError") console.log(name, args);
-        const res = cbind[glName](ptr, ...args);
-        // let err;
-        // while (
-        //   DEBUG && name !== "getError" && (err = gl.getError()) != gl.NO_ERROR
-        // ) {
-        //   console.error(
-        //     `%cerror%c: ${glName}(${
-        //       args.map((e) => Deno.inspect(e, { colors: true })).join(", ")
-        //     }) threw 0x${err.toString(16)} (and returned ${
-        //       Deno.inspect(res, { colors: true })
-        //     })`,
-        //     "color: red",
-        //     "",
-        //   );
-        // }
-        return res;
-      }) as any;
+
+    const fnptr = new Deno.UnsafeFnPointer(
+      ptr,
+      (symbols as Record<string, Deno.ForeignFunction>)[name],
+    );
+
+    gl[name as keyof Symbols] = ((...args: any[]) => {
+      const res = fnptr.call(...args);
+      checkErrors(name, args, res);
+      return res;
+    }) as any;
   }
 }
 
