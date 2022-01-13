@@ -6,6 +6,11 @@ of work which I'm not going to do right now. And just dropping macOS support is
 not an option for me. Feel free to contribute Desktop GL support if you wanna
 work on it.
 
+However, there is another great and recommended API for GPU stuff - WebGPU,
+which Deno supports out of the box. There is no windowing support though, which
+the team does not want to add in Deno itself either so I have a WIP
+implementation for that [here](https://github.com/DjDeveloperr/deno_desktop).
+
 # deno_gl
 
 WebGL API implementation for Deno, built on GLFW using FFI.
