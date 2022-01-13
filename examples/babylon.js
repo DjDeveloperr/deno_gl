@@ -1,12 +1,12 @@
-import { GlfwCanvas } from "../mod.ts";
+import { Canvas } from "../mod.ts";
 import "https://cdn.babylonjs.com/babylon.max.js";
 import "https://deno.land/x/xhr@0.1.0/mod.ts";
 
-const canvas = new GlfwCanvas(
-  "Babylon.js",
-  800,
-  600,
-);
+const canvas = new Canvas({
+  title: "Babylon.js",
+  width: 800,
+  height: 600,
+});
 
 window.innerWidth = canvas.width;
 window.innerHeight = canvas.height;

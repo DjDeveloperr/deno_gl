@@ -4,6 +4,8 @@ export class Element extends EventTarget {
   clientTop = 0;
   clientLeft = 0;
   children = [];
+  offsetLeft = 0;
+  offsetTop = 0;
 
   focus() {}
 
@@ -12,8 +14,8 @@ export class Element extends EventTarget {
   }
 
   appendChild(element: Element) {
-    // if (element.constructor.name === "GlfwCanvas") {
-    //   (element as GlfwCanvas).show();
+    // if (element.constructor.name === "Canvas") {
+    //   (element as Canvas).show();
     // }
   }
 }

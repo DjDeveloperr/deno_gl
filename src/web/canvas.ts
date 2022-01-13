@@ -1,15 +1,24 @@
 import { cstr, gl, glfw, initGL } from "../core/mod.ts";
-import { WebGL2RenderingContext } from "./context.ts";
+import { WebGL2RenderingContext, WebGLContextAttributes } from "./context.ts";
 import { HTMLElement } from "./element.ts";
 
 let init = false;
 
-export class GlfwCanvas extends HTMLElement {
+export interface CanvasOptions {
+  title: string;
+  width: number;
+  height: number;
+  visible?: boolean;
+  resizable?: boolean;
+}
+
+export class Canvas extends HTMLElement {
   handle: Deno.UnsafePointer;
   #title: string;
 
-  constructor(title: string, width: number, height: number) {
+  constructor(options: CanvasOptions) {
     super();
+
     if (!init) {
       if (!glfw.init()) {
         throw new Error("Failed to initialize GLFW");
@@ -19,14 +28,29 @@ export class GlfwCanvas extends HTMLElement {
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
       glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
-      glfw.windowHint(glfw.RESIZABLE, glfw.FALSE);
 
       init = true;
     }
 
-    this.#title = title;
-    // glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
-    this.handle = glfw.createWindow(width, height, cstr(title), null, null);
+    this.#title = options.title;
+
+    glfw.windowHint(
+      glfw.VISIBLE,
+      options.visible === false ? glfw.FALSE : glfw.TRUE,
+    );
+    glfw.windowHint(
+      glfw.RESIZABLE,
+      options.resizable === true ? glfw.TRUE : glfw.FALSE,
+    );
+
+    this.handle = glfw.createWindow(
+      options.width,
+      options.height,
+      cstr(options.title),
+      null,
+      null,
+    );
+
     if (this.handle.value === 0n) {
       const errptr = new BigUint64Array(1);
       throw new Error(
@@ -85,9 +109,6 @@ export class GlfwCanvas extends HTMLElement {
     glfw.setWindowSize(this.handle, this.width, value);
   }
 
-  offsetLeft = 0;
-  offsetTop = 0;
-
   get offsetWidth() {
     return this.width;
   }
@@ -104,19 +125,22 @@ export class GlfwCanvas extends HTMLElement {
     return this.height;
   }
 
-  getContext(type: string) {
+  getContext(type: string, attrs?: WebGLContextAttributes) {
     switch (type) {
-      case "webgl":
+      // case "webgl":
       case "webgl2": {
-        const ctx = new WebGL2RenderingContext(this, {
-          alpha: false,
-          depth: false,
-          stencil: false,
-          antialias: true,
-          premultipliedAlpha: false,
-          preserveDrawingBuffer: false,
-          powerPreference: "default",
-        });
+        const ctx = new WebGL2RenderingContext(
+          this,
+          Object.assign({
+            alpha: false,
+            depth: false,
+            stencil: false,
+            antialias: true,
+            premultipliedAlpha: false,
+            preserveDrawingBuffer: false,
+            powerPreference: "default",
+          }, attrs),
+        );
         if (Deno.env.get("DEBUG_DENO_GL") === "1") {
           return new Proxy(ctx, {
             get: (t, p) => {
@@ -160,6 +184,10 @@ export class GlfwCanvas extends HTMLElement {
     glfw.hideWindow(this.handle);
   }
 
+  focus() {
+    glfw.focusWindow(this.handle);
+  }
+
   restore() {
     glfw.restoreWindow(this.handle);
   }
@@ -186,6 +214,9 @@ export class GlfwCanvas extends HTMLElement {
       bottom: this.height,
     };
   }
+
+  // TODO: switch to callback-based events once FFI supports them.
+  // they're likely more efficient.
 
   state: any = {};
 
@@ -292,5 +323,9 @@ export class GlfwCanvas extends HTMLElement {
         this.dispatchEvent(Object.assign(new Event("keyup"), data));
       }
     });
+  }
+
+  [Symbol.for("Deno.customInspect")]() {
+    return `Canvas {}`;
   }
 }

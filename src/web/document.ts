@@ -1,5 +1,5 @@
 import { glfw } from "../core/mod.ts";
-import { GlfwCanvas } from "./canvas.ts";
+import { Canvas } from "./canvas.ts";
 import { HTMLElement } from "./element.ts";
 import { Image } from "./image.ts";
 
@@ -15,7 +15,7 @@ export class FakeDocument extends EventTarget {
       return new Image();
     } else if (tagName === "canvas") {
       // glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
-      return new GlfwCanvas("GLFW Canvas", 800, 600);
+      return new Canvas({ title: "GLFW Canvas", width: 800, height: 600 });
     } else {
       return new HTMLElement();
     }

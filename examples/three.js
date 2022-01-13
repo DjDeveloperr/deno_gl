@@ -1,7 +1,7 @@
 // Copied from https://github.com/mrdoob/three.js/blob/master/examples/webgl_interactive_cubes_gpu.html
 // Copyright © 2010-2021 three.js authors
 
-import { GlfwCanvas } from "../mod.ts";
+import { Canvas } from "../mod.ts";
 import * as THREE from "https://raw.githubusercontent.com/mrdoob/three.js/master/build/three.module.js";
 import * as BufferGeometryUtils from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/utils/BufferGeometryUtils.js";
 import { TrackballControls } from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/controls/TrackballControls.js";
@@ -9,11 +9,12 @@ import { TrackballControls } from "https://raw.githubusercontent.com/mrdoob/thre
 window.innerWidth = 1200;
 window.innerHeight = 680;
 
-const canvas = new GlfwCanvas(
-  "THREE.js Interactive Example",
-  window.innerWidth,
-  window.innerHeight,
-);
+const canvas = new Canvas({
+  title: "THREE.js Interactive Example",
+  width: window.innerWidth,
+  height: window.innerHeight,
+  resizable: true,
+});
 
 let camera, controls, scene, renderer;
 let pickingTexture, pickingScene;

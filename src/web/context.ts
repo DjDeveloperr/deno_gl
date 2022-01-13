@@ -1,5 +1,5 @@
 import { cstr, gl, glfw } from "../core/mod.ts";
-import type { GlfwCanvas } from "./canvas.ts";
+import type { Canvas } from "./canvas.ts";
 import { Image } from "./image.ts";
 import { extensions } from "./ext/mod.ts";
 import { _invalidated, _name, WebGLObject } from "./webgl_object.ts";
@@ -123,7 +123,7 @@ export interface WebGLContextAttributes {
 
 export class WebGL2RenderingContext {
   /// Internal slots
-  [_canvas]: GlfwCanvas;
+  [_canvas]: Canvas;
   [_contextLost] = false;
   [_attributes]: WebGLContextAttributes;
 
@@ -132,9 +132,9 @@ export class WebGL2RenderingContext {
   [_unpackFlipY] = false;
   [_unpackPremultiplyAlpha] = false;
 
-  /// Constructor used by GlfwCanvas
+  /// Constructor used by Canvas
   constructor(
-    canvas: GlfwCanvas,
+    canvas: Canvas,
     attributes: WebGLContextAttributes,
   ) {
     this[_canvas] = canvas;
