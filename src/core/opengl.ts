@@ -812,28 +812,6 @@ export const symbols = {
     result: "void",
   },
 
-  /// EXT: OES_vertex_array_object
-
-  bindVertexArrayOES: {
-    parameters: [GLuint],
-    result: "void",
-  },
-
-  genVertexArraysOES: {
-    parameters: [GLuint, GLuintv],
-    result: GLuint,
-  },
-
-  deleteVertexArraysOES: {
-    parameters: [GLuint, GLuintv],
-    result: "void",
-  },
-
-  isVertexArrayOES: {
-    parameters: [GLuint],
-    result: GLboolean,
-  },
-
   //// WebGL 2
 
   /// 3.7.2 Setting and getting state

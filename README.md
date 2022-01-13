@@ -1,3 +1,11 @@
+## Note
+
+I'm no longer working on this project because I have just realized macOS does
+not support OpenGL ES API, and adding Desktop GL backend to this module is a lot
+of work which I'm not going to do right now. And just dropping macOS support is
+not an option for me. Feel free to contribute Desktop GL support if you wanna
+work on it.
+
 # deno_gl
 
 WebGL API implementation for Deno, built on GLFW using FFI.
