@@ -806,7 +806,8 @@ export class WebGL2RenderingContext {
       case this.UNIFORM_BUFFER_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLBuffer(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLBuffer.make(data[0]);
       }
 
       // Return type: GLboolean
@@ -869,7 +870,8 @@ export class WebGL2RenderingContext {
       case this.CURRENT_PROGRAM: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLProgram(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLProgram.make(data[0]);
       }
 
       // Return type: GLfloat
@@ -892,7 +894,8 @@ export class WebGL2RenderingContext {
       case this.READ_FRAMEBUFFER_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLFramebuffer(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLFramebuffer.make(data[0]);
       }
 
       // Return type: Int32Array(2)
@@ -908,7 +911,8 @@ export class WebGL2RenderingContext {
       case this.RENDERBUFFER_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLRenderbuffer(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLRenderbuffer.make(data[0]);
       }
 
       // Return type: string
@@ -921,7 +925,14 @@ export class WebGL2RenderingContext {
         if (ptr.value === 0n) {
           return null;
         } else {
-          return new Deno.UnsafePointerView(ptr).getCString();
+          const str = new Deno.UnsafePointerView(ptr).getCString();
+          if (pname === this.VERSION) {
+            return `WebGL 2.0 (${str})`;
+          } else if (pname === this.SHADING_LANGUAGE_VERSION) {
+            return `WebGL GLSL ES 3.00 (${str})`;
+          } else {
+            return str;
+          }
         }
       }
 
@@ -953,7 +964,8 @@ export class WebGL2RenderingContext {
       case this.TEXTURE_BINDING_3D: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLTexture(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLTexture.make(data[0]);
       }
 
       // Return type: GLint64
@@ -965,7 +977,7 @@ export class WebGL2RenderingContext {
       case this.MAX_UNIFORM_BLOCK_SIZE: {
         const data = new BigInt64Array(1);
         gl.getInteger64v(pname, data);
-        return data[0];
+        return Number(data[0]);
       }
 
       // Return type: WebGLSampler
@@ -973,7 +985,8 @@ export class WebGL2RenderingContext {
       case this.SAMPLER_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLSampler(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLSampler.make(data[0]);
       }
 
       // Return type: WebGLTransformFeedback
@@ -981,7 +994,8 @@ export class WebGL2RenderingContext {
       case this.TRANSFORM_FEEDBACK_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLTransformFeedback(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLTransformFeedback.make(data[0]);
       }
 
       // Return type: WebGLVertexArrayObject
@@ -989,7 +1003,8 @@ export class WebGL2RenderingContext {
       case this.VERTEX_ARRAY_BINDING: {
         const data = new Uint32Array(1);
         gl.getIntegerv(pname, data);
-        return new WebGLVertexArrayObject(data[0]);
+        if (data[0] === 0) return null;
+        return WebGLVertexArrayObject.make(data[0]);
       }
 
       /// WebGL special
@@ -1049,6 +1064,9 @@ export class WebGL2RenderingContext {
         break;
 
       default:
+        if (typeof pname !== "number" || (typeof param !== "number" && typeof param !== "boolean")) {
+          return;
+        }
         gl.pixelStorei(pname, Number(param));
         break;
     }
@@ -1161,7 +1179,7 @@ export class WebGL2RenderingContext {
     if (buffer[0] === 0) {
       return null;
     }
-    return new WebGLBuffer(buffer[0]);
+    return WebGLBuffer.make(buffer[0]);
   }
 
   deleteBuffer(buffer: WebGLBuffer | null): void {
@@ -1173,7 +1191,7 @@ export class WebGL2RenderingContext {
       case this.BUFFER_SIZE: {
         const data = new BigUint64Array(1);
         gl.getBufferParameteri64v(target, pname, data);
-        return data[0];
+        return Number(data[0]);
       }
 
       case this.BUFFER_USAGE: {
@@ -1219,7 +1237,7 @@ export class WebGL2RenderingContext {
     if (framebuffer[0] === 0) {
       return null;
     }
-    return new WebGLFramebuffer(framebuffer[0]);
+    return WebGLFramebuffer.make(framebuffer[0]);
   }
 
   deleteFramebuffer(framebuffer: WebGLFramebuffer | null): void {
@@ -1261,6 +1279,10 @@ export class WebGL2RenderingContext {
     attachment: GLenum,
     pname: GLenum,
   ): any {
+    if (typeof target !== "number" || typeof attachment !== "number" || typeof pname !== "number") {
+      return null;
+    }
+
     switch (pname) {
       case this.FRAMEBUFFER_ATTACHMENT_OBJECT_TYPE:
       case this.FRAMEBUFFER_ATTACHMENT_COLOR_ENCODING:
@@ -1285,7 +1307,7 @@ export class WebGL2RenderingContext {
           pname,
           data,
         );
-        return data[0] === 0 ? null : new WebGLRenderbuffer(data[0]);
+        return data[0] === 0 ? null : WebGLRenderbuffer.make(data[0]);
       }
 
       case this.FRAMEBUFFER_ATTACHMENT_TEXTURE_LEVEL:
@@ -1342,7 +1364,7 @@ export class WebGL2RenderingContext {
     if (renderbuffer[0] === 0) {
       return null;
     }
-    return new WebGLRenderbuffer(renderbuffer[0]);
+    return WebGLRenderbuffer.make(renderbuffer[0]);
   }
 
   deleteRenderbuffer(renderbuffer: WebGLRenderbuffer | null): void {
@@ -1507,7 +1529,7 @@ export class WebGL2RenderingContext {
     if (texture[0] === 0) {
       return null;
     }
-    return new WebGLTexture(texture[0]);
+    return WebGLTexture.make(texture[0]);
   }
 
   deleteTexture(texture: WebGLTexture | null): void {
@@ -1846,7 +1868,7 @@ export class WebGL2RenderingContext {
     if (program === 0) {
       return null;
     }
-    return new WebGLProgram(program);
+    return WebGLProgram.make(program);
   }
 
   createShader(type: GLenum): WebGLShader | null {
@@ -1854,7 +1876,7 @@ export class WebGL2RenderingContext {
     if (shader === 0) {
       return null;
     }
-    return new WebGLShader(shader);
+    return WebGLShader.make(shader);
   }
 
   deleteProgram(program: WebGLProgram | null): void {
@@ -2183,7 +2205,8 @@ export class WebGL2RenderingContext {
       case this.VERTEX_ATTRIB_ARRAY_BUFFER_BINDING: {
         const result = new Uint32Array(1);
         gl.getVertexAttribiv(index, pname, result);
-        return new WebGLBuffer(result[0]);
+        if (result[0] === 0) return null;
+        return WebGLBuffer.make(result[0]);
       }
 
       case this.VERTEX_ATTRIB_ARRAY_ENABLED:
@@ -2803,7 +2826,8 @@ export class WebGL2RenderingContext {
   FRAMEBUFFER_INCOMPLETE_MULTISAMPLE = 0x8D56;
   MAX_SAMPLES = 0x8D57;
   HALF_FLOAT = 0x140B;
-  HALF_FLOAT_OES = 0x140B; // 0x8D61;
+  // To make CTS pass
+  // HALF_FLOAT_OES = 0x140B; // 0x8D61;
   RG = 0x8227;
   RG_INTEGER = 0x8228;
   R8 = 0x8229;
@@ -2908,7 +2932,7 @@ export class WebGL2RenderingContext {
       case this.UNIFORM_BUFFER_BINDING: {
         const result = new Uint32Array(1);
         gl.getIntegeri_v(target, index, result);
-        return new WebGLBuffer(result[0]);
+        return WebGLBuffer.make(result[0]);
       }
 
       case this.TRANSFORM_FEEDBACK_BUFFER_SIZE:
@@ -3175,7 +3199,7 @@ export class WebGL2RenderingContext {
   createQuery(): WebGLQuery {
     const query = new Uint32Array(1);
     gl.genQueries(1, query);
-    return new WebGLQuery(query[0]);
+    return WebGLQuery.make(query[0]);
   }
 
   deleteQuery(query: WebGLQuery | null): void {
@@ -3199,7 +3223,7 @@ export class WebGL2RenderingContext {
       case this.CURRENT_QUERY: {
         const query = new Uint32Array(1);
         gl.getQueryiv(target, pname, query);
-        return query[0] ? new WebGLQuery(query[0]) : null;
+        return query[0] ? WebGLQuery.make(query[0]) : null;
       }
 
       default:
@@ -3308,7 +3332,7 @@ export class WebGL2RenderingContext {
   createVertexArray(): WebGLVertexArrayObject {
     const vao = new Uint32Array(1);
     gl.genVertexArrays(1, vao);
-    const result = new WebGLVertexArrayObject(vao[0]);
+    const result = WebGLVertexArrayObject.make(vao[0]);
     return result;
   }
 

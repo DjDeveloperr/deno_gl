@@ -31,3 +31,13 @@ export class HTMLElement extends Element {
   setPointerCapture() {}
   releasePointerCapture() {}
 }
+
+Object.defineProperty(globalThis, "HTMLElement", {
+  value: HTMLElement,
+  writable: false,
+});
+
+Object.defineProperty(globalThis, "Element", {
+  value: Element,
+  writable: false,
+});

@@ -32,6 +32,10 @@ export class FakeDocument extends EventTarget {
   getElementById(_id: string) {
     return new HTMLElement();
   }
+
+  getElementsByTagName(_tagName: string) {
+    return [];
+  }
 }
 
 export const document = new FakeDocument();
