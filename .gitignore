@@ -6,3 +6,5 @@ dist/
 .vscode/
 # temp testing
 three
+# temp test data for debugging
+tools/test

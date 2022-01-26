@@ -24,6 +24,10 @@ export class Canvas extends HTMLElement {
         throw new Error("Failed to initialize GLFW");
       }
 
+      if (Deno.build.os === "darwin") {
+        glfw.windowHint(glfw.CONTEXT_CREATION_API, glfw.EGL_CONTEXT_API)
+      }
+
       glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
@@ -128,7 +132,8 @@ export class Canvas extends HTMLElement {
 
   getContext(type: string, attrs?: WebGLContextAttributes) {
     switch (type) {
-      // case "webgl":
+      case "webgl":
+      case "experimental-webgl":
       case "webgl2": {
         const ctx = new WebGL2RenderingContext(
           this,

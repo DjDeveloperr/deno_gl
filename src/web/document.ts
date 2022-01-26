@@ -14,8 +14,12 @@ export class FakeDocument extends EventTarget {
     if (tagName === "img") {
       return new Image();
     } else if (tagName === "canvas") {
-      // glfw.windowHint(glfw.VISIBLE, glfw.FALSE);
-      return new Canvas({ title: "GLFW Canvas", width: 800, height: 600 });
+      return new Canvas({
+        title: "GLFW Canvas",
+        width: window.innerWidth ?? 800,
+        height: window.innerWidth ?? 600,
+        visible: !(globalThis as any).HEADLESS,
+      });
     } else {
       return new HTMLElement();
     }
