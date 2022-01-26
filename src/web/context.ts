@@ -3321,6 +3321,10 @@ export class WebGL2RenderingContext {
   }
 }
 
+Object.defineProperty(window, "WebGLRenderingContext", {
+  value: WebGL2RenderingContext,
+});
+
 Object.defineProperty(window, "WebGL2RenderingContext", {
   value: WebGL2RenderingContext,
 });

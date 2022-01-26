@@ -66,6 +66,7 @@ Deno.test("WebGL CTS", async (t) => {
 
           code += `globalThis.LOCATION = new URL(${JSON.stringify(url.href)});\n`;
           code += `globalThis.HEADLESS = true;\n`;
+          code += `globalThis.EXIT_CODE = 0;\n`;
           code += "globalThis.parent = {};\n";
           code += `globalThis.parent.webglTestHarness = {};`;
           code += `globalThis.parent.webglTestHarness.reportResults = (path, success, msg, skipped = false) => {\n`;
@@ -75,6 +76,9 @@ Deno.test("WebGL CTS", async (t) => {
           code += `    console.error("Message:", msg);\n`;
           code += `    Deno.exit(1);\n`;
           code += `  }\n`;
+          code += "};\n";
+          code += `globalThis.parent.webglTestHarness.notifyFinished = (path) => {\n`;
+          code += `  Deno.exit(globalThis.EXIT_CODE);\n`;
           code += "};\n";
           code += "\n";
 
