@@ -45,6 +45,9 @@ Object.defineProperties(window, {
       const scaleX = new Float32Array(1);
       const scaleY = new Float32Array(1);
       glfw.getWindowContentScale(window, scaleX, scaleY);
+      if (scaleX[0] !== 1 || scaleY[0] !== 1) {
+        console.log("devicePixelRatio", scaleX[0], scaleY[0]);
+      }
       return scaleX[0];
     },
   },
