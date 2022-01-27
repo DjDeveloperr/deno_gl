@@ -1121,9 +1121,9 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
 
     const ptr = GetProcAddress(glName);
 
-    // if (ptr.value === 0n) {
-    //   throw new Error(`GetProcAddress(${glName}) returned nullptr`);
-    // }
+    if (ptr.value === 0n) {
+      console.error(`GetProcAddress(${glName}) returned nullptr`);
+    }
 
     const fnptr = new Deno.UnsafeFnPointer(
       ptr,
