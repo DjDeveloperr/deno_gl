@@ -10,10 +10,16 @@ if (!glfw.init()) {
   throw new Error("Failed to initialize GLFW");
 }
 
+if (Deno.build.os === "darwin") {
+  // For using ANGLE
+  glfw.windowHint(glfw.CONTEXT_CREATION_API, glfw.EGL_CONTEXT_API);
+}
+
 glfw.windowHint(glfw.SAMPLES, 4);
+glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
 glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
-glfw.windowHint(glfw.OPENGL_FORWARD_COMPAT, gl.TRUE);
+glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 0);
+glfw.windowHint(glfw.OPENGL_FORWARD_COMPAT, glfw.OPENGL_CORE_PROFILE);
 
 const width = 600, height = 500;
 
