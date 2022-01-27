@@ -1065,7 +1065,7 @@ export const symbols = {
     result: "void",
   },
 
-  glGetActiveUniformsiv: {
+  getActiveUniformsiv: {
     parameters: [GLuint, GLsizei, GLuintv, GLenum, GLintv],
     result: "void",
   },
