@@ -8,6 +8,7 @@ import { EXTFragDepth } from "./ext_frag_depth.ts";
 import { EXTShaderTextureLod } from "./ext_shader_texture_lod.ts";
 import { EXTSRGB } from "./ext_srgb.ts";
 import { EXTTextureFilterAnisotropic } from "./ext_texture_filter_anisotropic.ts";
+import { KHRParallelShaderCompile } from "./khr_parallel_shader_compile.ts";
 import { OESTextureFloatLinear } from "./oes_texture_float_linear.ts";
 import { OESTextureHalfFloat } from "./oes_texture_half_float.ts";
 
@@ -24,4 +25,5 @@ export const extensions = {
   OES_texture_half_float: OESTextureHalfFloat,
   OES_texture_float_linear: OESTextureFloatLinear,
   EXT_texture_filter_anisotropic: EXTTextureFilterAnisotropic,
+  KHR_parallel_shader_compile: KHRParallelShaderCompile,
 };
