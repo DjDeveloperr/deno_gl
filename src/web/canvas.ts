@@ -32,7 +32,7 @@ export class Canvas extends HTMLElement {
       glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);
       glfw.windowHint(glfw.CONTEXT_VERSION_MAJOR, 3);
-      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 2);
+      glfw.windowHint(glfw.CONTEXT_VERSION_MINOR, 0);
       glfw.windowHint(glfw.OPENGL_FORWARD_COMPAT, glfw.OPENGL_CORE_PROFILE);
 
       init = true;
