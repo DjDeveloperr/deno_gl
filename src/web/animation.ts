@@ -40,7 +40,14 @@ Object.defineProperties(window, {
     writable: false,
   },
   devicePixelRatio: {
-    value: 1,
+    get: () => {
+      const window = glfw.getCurrentContext();
+      const monitor = glfw.getWindowMonitor(window);
+      const scaleX = new Float32Array(1);
+      const scaleY = new Float32Array(1);
+      glfw.getMonitorContentScale(monitor, scaleX, scaleY);
+      return scaleX[0] / scaleY[0];
+    },
   },
   pageXOffset: {
     value: 0,
