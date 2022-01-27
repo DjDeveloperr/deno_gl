@@ -1132,7 +1132,8 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
 
     gl[name as keyof Symbols] = ((...args: any[]) => {
       if (ptr.value === 0n) {
-        throw new Error(`GetProcAddress(${glName}) returned nullptr`);
+        // throw new Error(`GetProcAddress(${glName}) returned nullptr`);
+        return;
       }
       const res = fnptr.call(...args);
       checkErrors(name, args, res);
