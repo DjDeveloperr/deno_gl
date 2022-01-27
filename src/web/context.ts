@@ -634,7 +634,7 @@ export class WebGL2RenderingContext {
   }
 
   clearDepth(depth: GLclampf): void {
-    gl.clearDepth(depth);
+    gl.clearDepthf(depth);
   }
 
   clearStencil(s: GLint): void {
@@ -663,7 +663,7 @@ export class WebGL2RenderingContext {
   }
 
   depthRange(zNear: GLclampf, zFar: GLclampf): void {
-    gl.depthRange(zNear, zFar);
+    gl.depthRangef(zNear, zFar);
   }
 
   disable(cap: GLenum): void {
@@ -2987,12 +2987,13 @@ export class WebGL2RenderingContext {
     srcByteOffset: GLintptr,
     dstData: ArrayBufferView,
   ): void {
-    gl.getBufferSubData(
-      target,
-      srcByteOffset,
-      dstData.byteLength,
-      dstData as Uint8Array,
-    );
+    const mapped = gl.mapBufferRange(target, srcByteOffset, dstData.byteLength, 0x0001);
+    if (mapped.value === 0n) {
+      return;
+    }
+    const view = new Deno.UnsafePointerView(mapped);
+    view.copyInto(dstData as Uint8Array, 0);
+    gl.unmapBuffer(target);
   }
 
   /// 3.7.4 Framebuffer objects
@@ -3342,6 +3343,31 @@ export class WebGL2RenderingContext {
     pname: GLenum,
   ): any {
     switch (pname) {
+      case this.UNIFORM_SIZE:
+      case this.UNIFORM_TYPE: {
+        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const data = new Uint32Array(activeUniforms);
+        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
+        return [...data];
+      }
+
+      case this.UNIFORM_BLOCK_INDEX:
+      case this.UNIFORM_OFFSET:
+      case this.UNIFORM_ARRAY_STRIDE:
+      case this.UNIFORM_MATRIX_STRIDE: {
+        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const data = new Int32Array(activeUniforms);
+        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
+        return [...data];
+      }
+
+      case this.UNIFORM_IS_ROW_MAJOR: {
+        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const data = new Int32Array(activeUniforms);
+        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
+        return [...data].map(e => Boolean(e));
+      }
+
       default:
         return null;
     }
@@ -3352,6 +3378,50 @@ export class WebGL2RenderingContext {
     uniformBlockName: string,
   ): GLuint {
     return gl.getUniformBlockIndex(program[_name], cstr(uniformBlockName));
+  }
+
+  getActiveUniformBlockParameter(
+    program: WebGLProgram,
+    uniformBlockIndex: GLuint,
+    pname: GLenum,
+  ): any {
+    switch (pname) {
+      case this.UNIFORM_BLOCK_BINDING:
+      case this.UNIFORM_BLOCK_DATA_SIZE:
+      case this.UNIFORM_BLOCK_ACTIVE_UNIFORMS: {
+        const result = new Int32Array(1);
+        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, result);
+        return result[0];
+      }
+
+      case this.UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES: {
+        const activeUniforms = this.getProgramParameter(program, this.UNIFORM_BLOCK_ACTIVE_UNIFORMS);
+        const data = new Uint32Array(activeUniforms);
+        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, data);
+        return [...data];
+      }
+
+      case this.UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER:
+      case this.UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER: {
+        const result = new Int32Array(1);
+        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, result);
+        return Boolean(result[0]);
+      }
+
+      default:
+        return null;
+    }
+  }
+
+  getActiveUniformBlockName(
+    program: WebGLProgram,
+    uniformBlockIndex: GLuint,
+  ): string {
+    const length = new Uint32Array(1);
+    gl.getActiveUniformBlockName(program[_name], uniformBlockIndex, 0, length, null);
+    const result = new Uint8Array(length[0]);
+    gl.getActiveUniformBlockName(program[_name], uniformBlockIndex, length[0], null, result);
+    return new TextDecoder().decode(result);
   }
 
   uniformBlockBinding(

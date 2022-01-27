@@ -24,10 +24,10 @@ export class Canvas extends HTMLElement {
         throw new Error("Failed to initialize GLFW");
       }
 
-      if (Deno.build.os === "darwin") {
+      // if (Deno.build.os === "darwin") {
         // For using ANGLE
         glfw.windowHint(glfw.CONTEXT_CREATION_API, glfw.EGL_CONTEXT_API);
-      }
+      // }
 
       glfw.windowHint(glfw.SAMPLES, 4);
       glfw.windowHint(glfw.CLIENT_API, glfw.OPENGL_ES_API);

@@ -142,8 +142,8 @@ for (const [group, tests] of groups) {
     const canvas = document.getElementsByTagName("canvas")[0];
     if (canvas) {
       code += "\n";
-      code += `window.innerWidth = ${canvas.getAttribute("width")?.replaceAll("px", "")};\n`;
-      code += `window.innerHeight = ${canvas.getAttribute("height")?.replaceAll("px", "")};\n`;
+      code += `window._width = ${canvas.getAttribute("width")?.replaceAll("px", "")};\n`;
+      code += `window._height = ${canvas.getAttribute("height")?.replaceAll("px", "")};\n`;
       code += "\n";
     }
 

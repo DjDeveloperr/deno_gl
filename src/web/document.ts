@@ -16,8 +16,8 @@ export class FakeDocument extends EventTarget {
     } else if (tagName === "canvas") {
       return new Canvas({
         title: "GLFW Canvas",
-        width: (globalThis as any).innerWidth ?? 800,
-        height: (globalThis as any).innerWidth ?? 600,
+        width: (globalThis as any)._width ?? 800,
+        height: (globalThis as any)._height ?? 600,
         visible: !(globalThis as any).HEADLESS,
       });
     } else {

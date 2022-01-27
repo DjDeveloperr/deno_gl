@@ -64,7 +64,7 @@ export const symbols = {
     result: "void",
   },
 
-  clearDepth: {
+  clearDepthf: {
     parameters: [GLclampf],
     result: "void",
   },
@@ -94,7 +94,7 @@ export const symbols = {
     result: "void",
   },
 
-  depthRange: {
+  depthRangef: {
     parameters: [GLclampf, GLclampf],
     result: "void",
   },
@@ -843,9 +843,19 @@ export const symbols = {
     result: "void",
   },
 
-  getBufferSubData: {
-    parameters: [GLenum, GLintptr, GLsizeiptr, GLvoidptr],
-    result: "void",
+  mapBufferRange: {
+    parameters: [
+      GLenum,
+      GLintptr,
+      GLsizeiptr,
+      GLbitfield,
+    ],
+    result: GLvoidptr,
+  },
+
+  unmapBuffer: {
+    parameters: [GLenum],
+    result: GLboolean,
   },
 
   /// 3.7.4 Framebuffer objects
@@ -1073,6 +1083,16 @@ export const symbols = {
   getUniformBlockIndex: {
     parameters: [GLuint, GLcharptr],
     result: GLuint,
+  },
+
+  getActiveUniformBlockiv: {
+    parameters: [GLuint, GLuint, GLenum, GLintv],
+    result: "void",
+  },
+
+  getActiveUniformBlockName: {
+    parameters: [GLuint, GLuint, GLsizei, GLvoidptr, GLcharptr],
+    result: "void",
   },
 
   uniformBlockBinding: {
