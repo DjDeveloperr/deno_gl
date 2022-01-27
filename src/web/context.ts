@@ -143,6 +143,9 @@ export class WebGL2RenderingContext {
 
   /// Constants
 
+  FALSE = 0;
+  TRUE = 1;
+
   /* ClearBufferMask */
   DEPTH_BUFFER_BIT = 0x00000100;
   STENCIL_BUFFER_BIT = 0x00000400;
@@ -2939,14 +2942,14 @@ export class WebGL2RenderingContext {
       case this.UNIFORM_BUFFER_SIZE: {
         const result = new BigUint64Array(1);
         gl.getInteger64i_v(target, index, result);
-        return result[0];
+        return Number(result[0]);
       }
 
       case this.TRANSFORM_FEEDBACK_BUFFER_START:
       case this.UNIFORM_BUFFER_START: {
         const result = new BigInt64Array(1);
         gl.getInteger64i_v(target, index, result);
-        return result[0];
+        return Number(result[0]);
       }
 
       default:
@@ -3302,6 +3305,46 @@ export class WebGL2RenderingContext {
     buffer: WebGLBuffer | null,
   ): void {
     gl.bindBufferBase(target, index, buffer?.[_name] ?? 0);
+  }
+
+  bindBufferRange(
+    target: GLenum,
+    index: GLuint,
+    buffer: WebGLBuffer | null,
+    offset: GLintptr,
+    size: GLsizeiptr,
+  ): void {
+    gl.bindBufferRange(target, index, buffer?.[_name] ?? 0, offset, size);
+  }
+
+  getUniformIndices(
+    program: WebGLProgram,
+    uniformNames: string[],
+  ): GLuint[] {
+    const indices = new Uint32Array(uniformNames.length);
+    const pointers = new BigUint64Array(uniformNames.length);
+    const cstrs = uniformNames.map(cstr);
+    cstrs.forEach((e, i) => {
+      pointers[i] = Deno.UnsafePointer.of(e).value;
+    });
+    gl.getUniformIndices(
+      program[_name],
+      uniformNames.length,
+      pointers,
+      indices,
+    );
+    return [...indices];
+  }
+
+  getActiveUniforms(
+    program: WebGLProgram,
+    uniformIndices: GLuint[],
+    pname: GLenum,
+  ): any {
+    switch (pname) {
+      default:
+        return null;
+    }
   }
 
   getUniformBlockIndex(

@@ -87,6 +87,7 @@ for (const [group, tests] of groups) {
     code += `globalThis.SKIPPED = 0;\n`;
     code += `globalThis.GLSLConformanceTester = {};\n`;
     code += `globalThis.successfullyParsed = true;\n`;
+    code += `globalThis.sourceSubRectangleString = "";\n`;
     code += "globalThis.parent = {};\n";
     code += `globalThis.parent.webglTestHarness = {};\n`;
     code +=
@@ -141,8 +142,8 @@ for (const [group, tests] of groups) {
     const canvas = document.getElementsByTagName("canvas")[0];
     if (canvas) {
       code += "\n";
-      code += `window.innerWidth = ${canvas.getAttribute("width")};\n`;
-      code += `window.innerHeight = ${canvas.getAttribute("height")};\n`;
+      code += `window.innerWidth = ${canvas.getAttribute("width")?.replaceAll("px", "")};\n`;
+      code += `window.innerHeight = ${canvas.getAttribute("height")?.replaceAll("px", "")};\n`;
       code += "\n";
     }
 
@@ -209,8 +210,10 @@ for (const [group, tests] of groups) {
       stderr: "piped",
     });
 
-    const stdout = new TextDecoder().decode(await result.output()).trim().replaceAll("\r\n", "\n").split("\n").filter(e => e !== "");
-    const stderr = new TextDecoder().decode(await result.stderrOutput()).trim().replaceAll("\r\n", "\n").split("\n").filter(e => e !== "");
+    const [status, output, stderrOutput] = await Promise.all([result.status(), result.output(), result.stderrOutput()]);
+
+    const stdout = new TextDecoder().decode(output).trim().replaceAll("\r\n", "\n").split("\n").filter(e => e !== "");
+    const stderr = new TextDecoder().decode(stderrOutput).trim().replaceAll("\r\n", "\n").split("\n").filter(e => e !== "");
 
     result.close();
 
@@ -231,6 +234,8 @@ for (const [group, tests] of groups) {
       groupPassed += passed;
       groupFailed += failed;
       groupSkipped += skipped;
+    } else {
+      console.log(`    error: test didn't finish (code: ${status.code})`);
     }
   }
 

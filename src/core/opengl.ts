@@ -1049,6 +1049,22 @@ export const symbols = {
     result: "void",
   },
 
+  bindBufferRange: {
+    parameters: [
+      GLenum,
+      GLuint,
+      GLuint,
+      GLintptr,
+      GLsizeiptr,
+    ],
+    result: "void",
+  },
+
+  getUniformIndices: {
+    parameters: [GLuint, GLsizei, GLcharptr, GLuintv],
+    result: "void",
+  },
+
   getUniformBlockIndex: {
     parameters: [GLuint, GLcharptr],
     result: GLuint,

@@ -25,7 +25,8 @@ export class Canvas extends HTMLElement {
       }
 
       if (Deno.build.os === "darwin") {
-        glfw.windowHint(glfw.CONTEXT_CREATION_API, glfw.EGL_CONTEXT_API)
+        // For using ANGLE
+        glfw.windowHint(glfw.CONTEXT_CREATION_API, glfw.EGL_CONTEXT_API);
       }
 
       glfw.windowHint(glfw.SAMPLES, 4);

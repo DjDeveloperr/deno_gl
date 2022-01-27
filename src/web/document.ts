@@ -1,4 +1,3 @@
-import { glfw } from "../core/mod.ts";
 import { Canvas } from "./canvas.ts";
 import { HTMLElement } from "./element.ts";
 import { Image } from "./image.ts";
@@ -9,6 +8,7 @@ export class DocumentElement extends HTMLElement {}
 
 export class FakeDocument extends EventTarget {
   documentElement = new DocumentElement();
+  body = new DocumentBody();
 
   createElement(tagName: string) {
     if (tagName === "img") {
@@ -16,8 +16,8 @@ export class FakeDocument extends EventTarget {
     } else if (tagName === "canvas") {
       return new Canvas({
         title: "GLFW Canvas",
-        width: window.innerWidth ?? 800,
-        height: window.innerWidth ?? 600,
+        width: (globalThis as any).innerWidth ?? 800,
+        height: (globalThis as any).innerWidth ?? 600,
         visible: !(globalThis as any).HEADLESS,
       });
     } else {
@@ -35,6 +35,10 @@ export class FakeDocument extends EventTarget {
 
   getElementsByTagName(_tagName: string) {
     return [];
+  }
+
+  createTextNode(_text: string) {
+    return new HTMLElement();
   }
 }
 
