@@ -55,11 +55,19 @@ Object.defineProperties(window, {
     value: 0,
   },
   innerHeight: {
-    value: 600,
-    writable: true,
+    get: () => {
+      const window = glfw.getCurrentContext();
+      const height = new Int32Array(1);
+      glfw.getWindowSize(window, null, height);
+      return height[0];
+    },
   },
   innerWidth: {
-    value: 800,
-    writable: true,
+    get: () => {
+      const window = glfw.getCurrentContext();
+      const width = new Int32Array(1);
+      glfw.getWindowSize(window, width, null);
+      return width[0];
+    },
   },
 });

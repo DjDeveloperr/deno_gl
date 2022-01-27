@@ -6,15 +6,15 @@ import * as THREE from "https://raw.githubusercontent.com/mrdoob/three.js/master
 import * as BufferGeometryUtils from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/utils/BufferGeometryUtils.js";
 import { TrackballControls } from "https://raw.githubusercontent.com/mrdoob/three.js/master/examples/jsm/controls/TrackballControls.js";
 
-window.innerWidth = 1200;
-window.innerHeight = 680;
-
 const canvas = new Canvas({
   title: "THREE.js Interactive Example",
-  width: window.innerWidth,
-  height: window.innerHeight,
+  width: 1200,
+  height: 680,
   resizable: true,
 });
+
+let prevW = canvas.width;
+let prevH = canvas.height;
 
 let camera, controls, scene, renderer;
 let pickingTexture, pickingScene;
@@ -218,7 +218,19 @@ function pick() {
   }
 }
 
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+
 function render() {
+  if (prevW !== canvas.width || prevH !== canvas.height) {
+    onWindowResize();
+    prevW = canvas.width;
+    prevH = canvas.height;
+  }
+
   controls.update();
 
   pick();
