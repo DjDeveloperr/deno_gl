@@ -199,6 +199,11 @@ export const symbols = {
     result: "void",
   },
 
+  stencilOpSeparate: {
+    parameters: [GLenum, GLenum, GLenum, GLenum],
+    result: "void",
+  },
+
   /// 5.14.4 Viewing and clipping
 
   scissor: {
@@ -954,10 +959,79 @@ export const symbols = {
     result: "void",
   },
 
+  /// 3.7.7 Programs and Shaders
+
+  getFragDataLocation: {
+    parameters: [GLuint, GLcharptr],
+    result: GLint,
+  },
+
   /// 3.7.11 Multiple render targets
 
   drawBuffers: {
     parameters: [GLsizei, GLenumv],
+    result: "void",
+  },
+
+  clearBufferfv: {
+    parameters: [GLenum, GLint, GLfloatv],
+    result: "void",
+  },
+
+  clearBufferiv: {
+    parameters: [GLenum, GLint, GLintv],
+    result: "void",
+  },
+
+  clearBufferuiv: {
+    parameters: [GLenum, GLint, GLuintv],
+    result: "void",
+  },
+
+  clearBufferfi: {
+    parameters: [GLenum, GLint, GLfloat, GLint],
+    result: "void",
+  },
+
+  /// 3.7.13 Sampler objects
+
+  genSamplers: {
+    parameters: [GLsizei, GLuintv],
+    result: "void",
+  },
+
+  deleteSamplers: {
+    parameters: [GLsizei, GLuintv],
+    result: "void",
+  },
+
+  isSampler: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  bindSampler: {
+    parameters: [GLuint, GLuint],
+    result: "void",
+  },
+
+  samplerParameteri: {
+    parameters: [GLuint, GLenum, GLint],
+    result: "void",
+  },
+
+  samplerParameterf: {
+    parameters: [GLuint, GLenum, GLfloat],
+    result: "void",
+  },
+
+  getSamplerParameterfv: {
+    parameters: [GLuint, GLenum, GLfloatv],
+    result: "void",
+  },
+
+  getSamplerParameteriv: {
+    parameters: [GLuint, GLenum, GLintv],
     result: "void",
   },
 
@@ -1049,6 +1123,71 @@ export const symbols = {
 
   getSynciv: {
     parameters: [GLuint, GLenum, GLsizei, GLuintv, GLintv],
+    result: "void",
+  },
+
+  /// 3.7.15 Transform feedback
+
+  genTransformFeedbacks: {
+    parameters: [GLsizei, GLuintv],
+    result: "void",
+  },
+  
+  deleteTransformFeedbacks: {
+    parameters: [GLsizei, GLuintv],
+    result: "void",
+  },
+
+  isTransformFeedback: {
+    parameters: [GLuint],
+    result: GLboolean,
+  },
+
+  bindTransformFeedback: {
+    parameters: [GLenum, GLuint],
+    result: "void",
+  },
+
+  beginTransformFeedback: {
+    parameters: [GLenum],
+    result: "void",
+  },
+
+  endTransformFeedback: {
+    parameters: [],
+    result: "void",
+  },
+
+  pauseTransformFeedback: {
+    parameters: [],
+    result: "void",
+  },
+
+  resumeTransformFeedback: {
+    parameters: [],
+    result: "void",
+  },
+
+  transformFeedbackVaryings: {
+    parameters: [
+      GLuint,
+      GLsizei,
+      GLcharptr,
+      GLenum,
+    ],
+    result: "void",
+  },
+
+  getTransformFeedbackVarying: {
+    parameters: [
+      GLuint,
+      GLuint,
+      GLsizei,
+      GLvoidptr,
+      GLvoidptr,
+      GLvoidptr,
+      GLcharptr,
+    ],
     result: "void",
   },
 

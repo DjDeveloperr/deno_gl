@@ -143,8 +143,8 @@ export class WebGL2RenderingContext {
 
   /// Constants
 
-  FALSE = 0;
-  TRUE = 1;
+  // FALSE = 0;
+  // TRUE = 1;
 
   /* ClearBufferMask */
   DEPTH_BUFFER_BIT = 0x00000100;
@@ -1067,7 +1067,10 @@ export class WebGL2RenderingContext {
         break;
 
       default:
-        if (typeof pname !== "number" || (typeof param !== "number" && typeof param !== "boolean")) {
+        if (
+          typeof pname !== "number" ||
+          (typeof param !== "number" && typeof param !== "boolean")
+        ) {
           return;
         }
         gl.pixelStorei(pname, Number(param));
@@ -1106,6 +1109,15 @@ export class WebGL2RenderingContext {
 
   stencilOp(fail: GLenum, zfail: GLenum, zpass: GLenum): void {
     gl.stencilOp(fail, zfail, zpass);
+  }
+
+  stencilOpSeparate(
+    face: GLenum,
+    fail: GLenum,
+    zfail: GLenum,
+    zpass: GLenum,
+  ): void {
+    gl.stencilOpSeparate(face, fail, zfail, zpass);
   }
 
   /// 5.14.4 Viewing and clipping
@@ -1282,7 +1294,10 @@ export class WebGL2RenderingContext {
     attachment: GLenum,
     pname: GLenum,
   ): any {
-    if (typeof target !== "number" || typeof attachment !== "number" || typeof pname !== "number") {
+    if (
+      typeof target !== "number" || typeof attachment !== "number" ||
+      typeof pname !== "number"
+    ) {
       return null;
     }
 
@@ -1919,8 +1934,16 @@ export class WebGL2RenderingContext {
 
       case this.ATTACHED_SHADERS:
       case this.ACTIVE_ATTRIBUTES:
-      case this.ACTIVE_UNIFORMS: {
+      case this.ACTIVE_UNIFORMS:
+      case this.TRANSFORM_FEEDBACK_VARYINGS:
+      case this.ACTIVE_UNIFORM_BLOCKS: {
         const result = new Int32Array(1);
+        gl.getProgramiv(program[_name], pname, result);
+        return result[0];
+      }
+
+      case this.TRANSFORM_FEEDBACK_BUFFER_MODE: {
+        const result = new Uint32Array(1);
         gl.getProgramiv(program[_name], pname, result);
         return result[0];
       }
@@ -2555,7 +2578,7 @@ export class WebGL2RenderingContext {
       index,
       Number(size),
       Number(type),
-      Number(normalized),
+      Number(normalized ?? 0),
       Number(stride),
       new Deno.UnsafePointer(BigInt(offset)),
     );
@@ -2987,7 +3010,12 @@ export class WebGL2RenderingContext {
     srcByteOffset: GLintptr,
     dstData: ArrayBufferView,
   ): void {
-    const mapped = gl.mapBufferRange(target, srcByteOffset, dstData.byteLength, 0x0001);
+    const mapped = gl.mapBufferRange(
+      target,
+      srcByteOffset,
+      dstData.byteLength,
+      0x0001,
+    );
     if (mapped.value === 0n) {
       return;
     }
@@ -3192,10 +3220,54 @@ export class WebGL2RenderingContext {
   /// TODO: texImage3D
   /// TODO: texSubImage3D
 
+  /// 3.7.7 Programs and Shaders
+
+  getFragDataLocation(
+    program: WebGLProgram,
+    name: string,
+  ): GLint {
+    return gl.getFragDataLocation(program[_name], cstr(name));
+  }
+
+  /// getProgramParameter extension covered in old method.
+
   /// 3.7.11 Multiple render targets
 
   drawBuffers(buffers: GLenum[]): void {
     gl.drawBuffers(buffers.length, new Uint32Array(buffers));
+  }
+
+  clearBufferfv(
+    buffer: GLenum,
+    drawbuffer: GLint,
+    values: GLfloat[] | Float32Array,
+  ): void {
+    gl.clearBufferfv(buffer, drawbuffer, new Float32Array(values));
+  }
+
+  clearBufferiv(
+    buffer: GLenum,
+    drawbuffer: GLint,
+    values: GLint[] | Int32Array,
+  ): void {
+    gl.clearBufferiv(buffer, drawbuffer, new Int32Array(values));
+  }
+
+  clearBufferuiv(
+    buffer: GLenum,
+    drawbuffer: GLint,
+    values: GLuint[] | Uint32Array,
+  ): void {
+    gl.clearBufferuiv(buffer, drawbuffer, new Uint32Array(values));
+  }
+
+  clearBufferfi(
+    buffer: GLenum,
+    drawbuffer: GLint,
+    depth: GLfloat,
+    stencil: GLint,
+  ): void {
+    gl.clearBufferfi(buffer, drawbuffer, depth, stencil);
   }
 
   /// 3.7.12 Query objects
@@ -3254,6 +3326,71 @@ export class WebGL2RenderingContext {
     }
   }
 
+  /// 3.7.13 Sampler objects
+
+  createSampler(): WebGLSampler {
+    const sampler = new Uint32Array(1);
+    gl.genSamplers(1, sampler);
+    return WebGLSampler.make(sampler[0]);
+  }
+
+  deleteSampler(sampler: WebGLSampler | null): void {
+    gl.deleteSamplers(1, new Uint32Array([sampler?.[_name] ?? 0]));
+  }
+
+  isSampler(sampler: WebGLSampler | null): GLboolean {
+    return Boolean(gl.isSampler(sampler?.[_name] ?? 0));
+  }
+
+  bindSampler(unit: GLuint, sampler: WebGLSampler | null): void {
+    gl.bindSampler(unit, sampler?.[_name] ?? 0);
+  }
+
+  samplerParameteri(
+    sampler: WebGLSampler,
+    pname: GLenum,
+    param: GLint,
+  ): void {
+    gl.samplerParameteri(sampler[_name], pname, param);
+  }
+
+  samplerParameterf(
+    sampler: WebGLSampler,
+    pname: GLenum,
+    param: GLfloat,
+  ): void {
+    gl.samplerParameterf(sampler[_name], pname, param);
+  }
+
+  getSamplerParameter(
+    sampler: WebGLSampler,
+    pname: GLenum,
+  ): any {
+    switch (pname) {
+      case this.TEXTURE_COMPARE_FUNC:
+      case this.TEXTURE_COMPARE_MODE:
+      case this.TEXTURE_MAG_FILTER:
+      case this.TEXTURE_MIN_FILTER:
+      case this.TEXTURE_WRAP_R:
+      case this.TEXTURE_WRAP_S:
+      case this.TEXTURE_WRAP_T: {
+        const result = new Uint32Array(1);
+        gl.getSamplerParameteriv(sampler[_name], pname, result);
+        return result[0];
+      }
+
+      case this.TEXTURE_MAX_LOD:
+      case this.TEXTURE_MIN_LOD: {
+        const result = new Float32Array(1);
+        gl.getSamplerParameterfv(sampler[_name], pname, result);
+        return result[0];
+      }
+
+      default:
+        return null;
+    }
+  }
+
   /// 3.7.14 Sync objects
 
   fenceSync(condition: GLenum, flags: GLbitfield): WebGLSync {
@@ -3296,6 +3433,89 @@ export class WebGL2RenderingContext {
       default:
         return null;
     }
+  }
+
+  /// 3.7.15 Transform feedback
+
+  createTransformFeedback(): WebGLTransformFeedback {
+    const feedback = new Uint32Array(1);
+    gl.genTransformFeedbacks(1, feedback);
+    return WebGLTransformFeedback.make(feedback[0]);
+  }
+
+  deleteTransformFeedback(
+    transformFeedback: WebGLTransformFeedback | null,
+  ): void {
+    gl.deleteTransformFeedbacks(
+      1,
+      new Uint32Array([transformFeedback?.[_name] ?? 0]),
+    );
+  }
+
+  isTransformFeedback(
+    transformFeedback: WebGLTransformFeedback | null,
+  ): GLboolean {
+    return Boolean(gl.isTransformFeedback(transformFeedback?.[_name] ?? 0));
+  }
+
+  bindTransformFeedback(
+    target: GLenum,
+    transformFeedback: WebGLTransformFeedback | null,
+  ): void {
+    gl.bindTransformFeedback(target, transformFeedback?.[_name] ?? 0);
+  }
+
+  beginTransformFeedback(target: GLenum): void {
+    gl.beginTransformFeedback(target);
+  }
+
+  endTransformFeedback(): void {
+    gl.endTransformFeedback();
+  }
+
+  pauseTransformFeedback(): void {
+    gl.pauseTransformFeedback();
+  }
+
+  resumeTransformFeedback(): void {
+    gl.resumeTransformFeedback();
+  }
+
+  transformFeedbackVaryings(
+    program: WebGLProgram,
+    varyings: string[],
+    bufferMode: GLenum,
+  ): void {
+    const varyingCstrs = varyings.map(cstr);
+    const ptrs = new BigUint64Array(varyings.length);
+    for (let i = 0; i < varyings.length; i++) {
+      ptrs[i] = Deno.UnsafePointer.of(varyingCstrs[i]).value;
+    }
+    gl.transformFeedbackVaryings(program[_name], ptrs.length, ptrs, bufferMode);
+  }
+
+  getTransformFeedbackVarying(
+    program: WebGLProgram,
+    index: GLuint,
+  ): WebGLActiveInfo | null {
+    const name = new Uint8Array(128);
+    const length = new Uint32Array(1);
+    const size = new Uint32Array(1);
+    const type = new Uint32Array(1);
+    gl.getTransformFeedbackVarying(
+      program[_name],
+      index,
+      name.length,
+      length,
+      size,
+      type,
+      name,
+    );
+    return {
+      name: new TextDecoder().decode(name.subarray(0, length[0])),
+      size: size[0],
+      type: type[0],
+    };
   }
 
   /// 3.7.16 Uniform Buffer objects
@@ -3345,9 +3565,18 @@ export class WebGL2RenderingContext {
     switch (pname) {
       case this.UNIFORM_SIZE:
       case this.UNIFORM_TYPE: {
-        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const activeUniforms = this.getProgramParameter(
+          program,
+          this.ACTIVE_UNIFORMS,
+        );
         const data = new Uint32Array(activeUniforms);
-        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
+        gl.getActiveUniformsiv(
+          program[_name],
+          uniformIndices.length,
+          new Uint32Array(uniformIndices),
+          pname,
+          data,
+        );
         return [...data];
       }
 
@@ -3355,17 +3584,35 @@ export class WebGL2RenderingContext {
       case this.UNIFORM_OFFSET:
       case this.UNIFORM_ARRAY_STRIDE:
       case this.UNIFORM_MATRIX_STRIDE: {
-        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const activeUniforms = this.getProgramParameter(
+          program,
+          this.ACTIVE_UNIFORMS,
+        );
         const data = new Int32Array(activeUniforms);
-        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
+        gl.getActiveUniformsiv(
+          program[_name],
+          uniformIndices.length,
+          new Uint32Array(uniformIndices),
+          pname,
+          data,
+        );
         return [...data];
       }
 
       case this.UNIFORM_IS_ROW_MAJOR: {
-        const activeUniforms = this.getProgramParameter(program, this.ACTIVE_UNIFORMS);
+        const activeUniforms = this.getProgramParameter(
+          program,
+          this.ACTIVE_UNIFORMS,
+        );
         const data = new Int32Array(activeUniforms);
-        gl.getActiveUniformsiv(program[_name], uniformIndices.length, new Uint32Array(uniformIndices), pname, data);
-        return [...data].map(e => Boolean(e));
+        gl.getActiveUniformsiv(
+          program[_name],
+          uniformIndices.length,
+          new Uint32Array(uniformIndices),
+          pname,
+          data,
+        );
+        return [...data].map((e) => Boolean(e));
       }
 
       default:
@@ -3390,21 +3637,39 @@ export class WebGL2RenderingContext {
       case this.UNIFORM_BLOCK_DATA_SIZE:
       case this.UNIFORM_BLOCK_ACTIVE_UNIFORMS: {
         const result = new Int32Array(1);
-        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, result);
+        gl.getActiveUniformBlockiv(
+          program[_name],
+          uniformBlockIndex,
+          pname,
+          result,
+        );
         return result[0];
       }
 
       case this.UNIFORM_BLOCK_ACTIVE_UNIFORM_INDICES: {
-        const activeUniforms = this.getProgramParameter(program, this.UNIFORM_BLOCK_ACTIVE_UNIFORMS);
+        const activeUniforms = this.getProgramParameter(
+          program,
+          this.UNIFORM_BLOCK_ACTIVE_UNIFORMS,
+        );
         const data = new Uint32Array(activeUniforms);
-        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, data);
+        gl.getActiveUniformBlockiv(
+          program[_name],
+          uniformBlockIndex,
+          pname,
+          data,
+        );
         return [...data];
       }
 
       case this.UNIFORM_BLOCK_REFERENCED_BY_VERTEX_SHADER:
       case this.UNIFORM_BLOCK_REFERENCED_BY_FRAGMENT_SHADER: {
         const result = new Int32Array(1);
-        gl.getActiveUniformBlockiv(program[_name], uniformBlockIndex, pname, result);
+        gl.getActiveUniformBlockiv(
+          program[_name],
+          uniformBlockIndex,
+          pname,
+          result,
+        );
         return Boolean(result[0]);
       }
 
@@ -3418,9 +3683,21 @@ export class WebGL2RenderingContext {
     uniformBlockIndex: GLuint,
   ): string {
     const length = new Uint32Array(1);
-    gl.getActiveUniformBlockName(program[_name], uniformBlockIndex, 0, length, null);
+    gl.getActiveUniformBlockName(
+      program[_name],
+      uniformBlockIndex,
+      0,
+      length,
+      null,
+    );
     const result = new Uint8Array(length[0]);
-    gl.getActiveUniformBlockName(program[_name], uniformBlockIndex, length[0], null, result);
+    gl.getActiveUniformBlockName(
+      program[_name],
+      uniformBlockIndex,
+      length[0],
+      null,
+      result,
+    );
     return new TextDecoder().decode(result);
   }
 

@@ -155,6 +155,7 @@ for (const [group, tests] of groups) {
       code += `CTS_SHADERS.push({\n`;
       code += `  name: ${JSON.stringify(name)},\n`;
       code += `  type: "${shader.type}",\n`;
+      code += `  src: "",\n`;
       code += `  text: ` + JSON.stringify(shader.source) + `,\n`;
       code += "});\n\n";
     }
