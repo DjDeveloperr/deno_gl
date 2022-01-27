@@ -1,5 +1,5 @@
 import { GL_CONST } from "./const.ts";
-import { MapFFI, OS_LIB_PREFIX, OS_LIB_SUFFIX } from "./util.ts";
+import { MapFFI } from "./util.ts";
 
 const GLenum = "u32" as const;
 const GLboolean = "u8" as const;
@@ -1065,6 +1065,11 @@ export const symbols = {
     result: "void",
   },
 
+  glGetActiveUniformsiv: {
+    parameters: [GLuint, GLsizei, GLuintv, GLenum, GLintv],
+    result: "void",
+  },
+
   getUniformBlockIndex: {
     parameters: [GLuint, GLcharptr],
     result: GLuint,
@@ -1116,9 +1121,9 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
 
     const ptr = GetProcAddress(glName);
 
-    if (ptr.value === 0n) {
-      throw new Error(`GetProcAddress(${glName}) returned nullptr`);
-    }
+    // if (ptr.value === 0n) {
+    //   throw new Error(`GetProcAddress(${glName}) returned nullptr`);
+    // }
 
     const fnptr = new Deno.UnsafeFnPointer(
       ptr,
@@ -1126,6 +1131,9 @@ export function init(GetProcAddress: (name: string) => Deno.UnsafePointer) {
     );
 
     gl[name as keyof Symbols] = ((...args: any[]) => {
+      if (ptr.value === 0n) {
+        throw new Error(`GetProcAddress(${glName}) returned nullptr`);
+      }
       const res = fnptr.call(...args);
       checkErrors(name, args, res);
       return res;
