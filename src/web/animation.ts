@@ -45,7 +45,7 @@ Object.defineProperties(window, {
       const scaleX = new Float32Array(1);
       const scaleY = new Float32Array(1);
       glfw.getWindowContentScale(window, scaleX, scaleY);
-      return scaleX[0] / scaleY[0];
+      return scaleX[0];
     },
   },
   pageXOffset: {

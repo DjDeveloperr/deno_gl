@@ -8,9 +8,6 @@ const canvas = new Canvas({
   height: 600,
 });
 
-window.innerWidth = canvas.width;
-window.innerHeight = canvas.height;
-
 const engine = new BABYLON.Engine(canvas, true, {
   preserveDrawingBuffer: true,
   stencil: true,
