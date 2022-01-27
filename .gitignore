@@ -2,6 +2,7 @@
 *.bat
 # dlls etc
 dist/
+*.dll
 # vscode config
 .vscode/
 # temp testing
